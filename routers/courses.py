@@ -1,6 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from pydantic import BaseModel
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -41,9 +44,11 @@ def read_course_by_title(title: str):
         HTTPException: If the course is not found, a 404 error is raised.
 
     """
+    logger.info(f"Fetching course with title {title}")
     course = next((course for course in online_courses if course.title == title), None)
     if course is None:
-        raise HTTPException(status_code=404, detail="Course not found")
+        logger.error(f"Course with title {title} not found")
+        raise HTTPException(status_code=404, detail=f"Course with title '{title}' not found")
     return course
 
 @router.get("/", response_model=List[OnlineCourse], description="Get a list of all online courses", tags=["Courses"])
@@ -77,43 +82,49 @@ def create_course(course: OnlineCourse):
 
 @router.put("/{title}", response_model=OnlineCourse, description="Updates an existing online course.", tags=["Courses"])
 def update_course(title: str, course: OnlineCourse):
-    """Updates an existing online course.
+    """Update a specific online course.
 
-    This endpoint updates an existing online course based on the provided title.
+    This endpoint updates a specific online course and returns it.
 
     Args:
-        title (str): The title of the course to update.
-        course (OnlineCourse): The new course object to replace the existing one.
+        title (str): The title of the course.
+        course (OnlineCourse): The new course data.
 
     Returns:
-        OnlineCourse: The updated course object.
+        OnlineCourse: The updated course.
 
     Raises:
         HTTPException: If the course is not found, a 404 error is raised.
 
     """
+    logger.info(f"Updating course with title {title}")
     for index, existing_course in enumerate(online_courses):
-        if existing_course.title.lower() == title.lower():
+        if existing_course.title == title:
             online_courses[index] = course
             return course
-    raise HTTPException(status_code=404, detail="Course not found")
+    logger.error(f"Course with title {title} not found")
+    raise HTTPException(status_code=404, detail=f"Course with title '{title}' not found")
 
-
-@router.delete("/{title}", response_model=None, description="Deletes an existing online course.", status_code=204, tags=["Courses"])
+@router.delete("/{title}", description="Deletes a specific online course.", tags=["Courses"])
 def delete_course(title: str):
-    """Deletes an existing online course.
+    """Delete a specific online course.
 
-    This endpoint deletes an existing online course based on the provided title.
+    This endpoint deletes a specific online course.
 
     Args:
-        title (str): The title of the course to delete.
+        title (str): The title of the course.
+
+    Returns:
+        dict: A dictionary containing a confirmation message.
 
     Raises:
         HTTPException: If the course is not found, a 404 error is raised.
 
     """
+    logger.info(f"Deleting course with title {title}")
     for index, existing_course in enumerate(online_courses):
-        if existing_course.title.lower() == title.lower():
+        if existing_course.title == title:
             del online_courses[index]
-            return
-    raise HTTPException(status_code=404, detail="Course not found")
+            return {"detail": "Course deleted"}
+    logger.error(f"Course with title {title} not found")
+    raise HTTPException(status_code=404, detail=f"Course with title '{title}' not found")

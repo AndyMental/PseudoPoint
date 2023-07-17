@@ -1,6 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Celebrity(BaseModel):
     name: str
@@ -39,9 +42,11 @@ def read_celebrity_by_name(name: str):
         HTTPException: If the celebrity is not found, a 404 error is raised.
 
     """
+    logger.info(f"Fetching celebrity with name {name}")
     matching_celebrities = [celebrity for celebrity in celebrities if celebrity.name.lower() == name.lower()]
     if not matching_celebrities:
-        raise HTTPException(status_code=404, detail="Celebrity not found")
+        logger.error(f"Celebrity with name {name} not found")
+        raise HTTPException(status_code=404, detail=f"Celebrity with name {name} not found")
     return matching_celebrities[0]
 
 @router.get("/", response_model=List[Celebrity], description="Returns a list of all celebrities.", tags=["Celebrities"])
@@ -90,12 +95,13 @@ def update_celebrity(name: str, celebrity: Celebrity):
         HTTPException: If the celebrity is not found, a 404 error is raised.
 
     """
+    logger.info(f"Updating celebrity with name {name}")
     for index, existing_celebrity in enumerate(celebrities):
         if existing_celebrity.name.lower() == name.lower():
             celebrities[index] = celebrity
             return celebrity
-    raise HTTPException(status_code=404, detail="Celebrity not found")
-
+    logger.error(f"Celebrity with name {name} not found")
+    raise HTTPException(status_code=404, detail=f"Celebrity with name {name} not found")
 
 @router.delete("/{name}", response_model=None, description="Deletes an existing celebrity.", status_code=204, tags=["Celebrities"])
 def delete_celebrity(name: str):
@@ -110,8 +116,10 @@ def delete_celebrity(name: str):
         HTTPException: If the celebrity is not found, a 404 error is raised.
 
     """
+    logger.info(f"Deleting celebrity with name {name}")
     for index, existing_celebrity in enumerate(celebrities):
         if existing_celebrity.name.lower() == name.lower():
             celebrities.pop(index)
             return
-    raise HTTPException(status_code=404, detail="Celebrity not found")
+    logger.error(f"Celebrity with name {name} not found")
+    raise HTTPException(status_code=404, detail=f"Celebrity with name {name} not found")

@@ -1,6 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
+import logging
+
+logger = logging.getLogger(__name__)
 
 class NewsArticle(BaseModel):
     title: str
@@ -34,7 +37,7 @@ news_articles = [
 
 router = APIRouter()
 
-@router.get("/{title}", response_model=NewsArticle, description="Returns a news article with the given title.", tags=["News Articles"], response_model_exclude_unset=True, response_model_exclude_defaults=True, response_model_exclude_none=True)
+@router.get("/{title}", response_model=NewsArticle, description="Returns a news article with the given title.", tags=["News Articles"])
 def read_article_by_title(title: str):
     """Get a news article by title.
 
@@ -50,9 +53,11 @@ def read_article_by_title(title: str):
         HTTPException: If the news article is not found, a 404 error is raised.
 
     """
+    logger.info(f"Fetching article with title {title}")
     article = next((article for article in news_articles if article.title == title), None)
     if article is None:
-        raise HTTPException(status_code=404, detail="Article not found")
+        logger.error(f"Article with title {title} not found")
+        raise HTTPException(status_code=404, detail=f"Article with title '{title}' not found")
     return article
 
 @router.get("/", response_model=List[NewsArticle], description="Returns a list of all news articles.", tags=["News Articles"], response_model_exclude_unset=True, response_model_exclude_defaults=True, response_model_exclude_none=True)
@@ -89,14 +94,24 @@ def update_article(title: str, article: NewsArticle):
 
     This endpoint updates a specific news article and returns it.
 
+    Args:
+        title (str): The title of the news article.
+        article (NewsArticle): The new article data.
+
     Returns:
         NewsArticle: The updated news article.
+
+    Raises:
+        HTTPException: If the news article is not found, a 404 error is raised.
+
     """
+    logger.info(f"Updating article with title {title}")
     for index, existing_article in enumerate(news_articles):
         if existing_article.title == title:
             news_articles[index] = article
             return article
-    raise HTTPException(status_code=404, detail="Article not found")
+    logger.error(f"Article with title {title} not found")
+    raise HTTPException(status_code=404, detail=f"Article with title '{title}' not found")
 
 @router.delete("/{title}", description="Deletes a specific news article.", tags=["News Articles"])
 def delete_article(title: str):
@@ -104,11 +119,20 @@ def delete_article(title: str):
 
     This endpoint deletes a specific news article.
 
+    Args:
+        title (str): The title of the news article.
+
     Returns:
         dict: A dictionary containing a confirmation message.
+
+    Raises:
+        HTTPException: If the news article is not found, a 404 error is raised.
+
     """
+    logger.info(f"Deleting article with title {title}")
     for index, existing_article in enumerate(news_articles):
         if existing_article.title == title:
             del news_articles[index]
             return {"detail": "Article deleted"}
-    raise HTTPException(status_code=404, detail="Article not found")
+    logger.error(f"Article with title {title} not found")
+    raise HTTPException(status_code=404, detail=f"Article with title '{title}' not found")

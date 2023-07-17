@@ -1,33 +1,15 @@
+import logging
 from fastapi import FastAPI
-from routers import billing, projects, geolocation, weather, users, products, notifications, oauth, ecommerce, stocks, songs, flights, reviews, menu, courses, articles, events, recipes, vehicles, trivia, wildlife, geographical, weight_conversion, historical_events, wine_ratings, quotes, celebrities, cricket
+from routers import get_all_routers
 
+# Configure logging to output at the INFO level
+logging.basicConfig(level=logging.INFO)
+
+# Instantiate the FastAPI application
 app = FastAPI()
 
-app.include_router(billing.router, prefix="/billing", tags=["Billing"])
-app.include_router(projects.router, prefix="/projects", tags=["Projects"])
-app.include_router(geolocation.router, prefix="/geolocation", tags=["Geolocation"])
-app.include_router(weather.router, prefix="/weather", tags=["Weather"])
-app.include_router(users.router, prefix="/users", tags=["Users"])
-app.include_router(products.router, prefix="/products", tags=["Products"])
-app.include_router(notifications.router, prefix="/notifications", tags=["Notifications"])
-app.include_router(oauth.router, prefix="/oauth", tags=["OAuth"])
-app.include_router(ecommerce.router, prefix="/ecommerce", tags=["Ecommerce"])
-app.include_router(stocks.router, prefix="/stocks", tags=["Stocks"])
-app.include_router(songs.router, prefix="/songs", tags=["Songs"])
-app.include_router(flights.router, prefix="/flights", tags=["Flights"])
-app.include_router(reviews.router, prefix="/reviews", tags=["Reviews"])
-app.include_router(menu.router, prefix="/menu", tags=["Menu"])
-app.include_router(courses.router, prefix="/courses", tags=["Courses"])
-app.include_router(articles.router, prefix="/articles", tags=["Articles"])
-app.include_router(events.router, prefix="/events", tags=["Events"])
-app.include_router(recipes.router, prefix="/recipes", tags=["Recipes"])
-app.include_router(vehicles.router, prefix="/vehicles", tags=["Vehicles"])
-app.include_router(trivia.router, prefix="/trivia", tags=["Trivia"])
-app.include_router(wildlife.router, prefix="/wildlife", tags=["Wildlife"])
-app.include_router(geographical.router, prefix="/geographical", tags=["Geographical"])
-app.include_router(weight_conversion.router, prefix="/weight_conversion", tags=["Weight Conversion"])
-app.include_router(historical_events.router, prefix="/historical_events", tags=["Historical Events"])
-app.include_router(wine_ratings.router, prefix="/wine_ratings", tags=["Wine Ratings"])
-app.include_router(quotes.router, prefix="/quotes", tags=["Quotes"])
-app.include_router(celebrities.router, prefix="/celebrities", tags=["Celebrities"])
-app.include_router(cricket.router, prefix="/cricket", tags=["Cricket"])
+# Include all routers from the routers module
+for router_info in get_all_routers():
+    # Each router handles a different part of the API, specified by the prefix
+    # The tags argument is used for organizing the routes in the API documentation
+    app.include_router(router_info["router"], prefix=router_info["prefix"], tags=router_info["tags"])

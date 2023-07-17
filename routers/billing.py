@@ -1,9 +1,9 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
-from faker import Faker
 from typing import List
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+import logging
 
-fake = Faker()
+logger = logging.getLogger(__name__)
 
 class Billing(BaseModel):
     id: int
@@ -19,9 +19,9 @@ class BulkDelete(BaseModel):
 
 router = APIRouter()
 
-@router.get("/", description="Get a list of billing records", tags=["Billing"])
-def read_billing():
-    """Get a list of billing records.
+@router.get("/billing", response_model=List[Billing], description="Returns a list of billing records.")
+def read_billing_records():
+    """Get billing records.
 
     This endpoint returns a list of 10 fake billing records. Each record contains a unique ID, name, address, and credit card number.
 
@@ -29,83 +29,51 @@ def read_billing():
         dict: A dictionary containing the billing records.
 
     """
-    billing = [Billing(id=i, name=fake.name(), address=fake.address(), credit_card=fake.credit_card_number()) for i in range(1, 11)]
-    return {"billing": billing}
+    logger.info("Fetching billing records")
+    billing_records = [Billing(id=i, name=f"Name {i}", address=f"Address {i}", credit_card=f"CreditCard {i}") for i in range(1, 11)]
+    return billing_records
 
-@router.post("/", description="Create a new billing record", status_code=201, tags=["Billing"])
-def create_billing():
+@router.post("/billing", response_model=Response, description="Creates a new billing record and returns a confirmation message.")
+def create_billing_record(billing_record: Billing):
     """Create a new billing record.
 
-    This endpoint creates a new billing record and returns a confirmation message.
+    This endpoint creates a new billing record and returns a confirmation message. The ID and amount are randomly generated.
 
     Returns:
-        Response: The confirmation message.
+        dict: A dictionary containing a confirmation message.
 
     """
+    logger.info("Creating new billing record")
     return Response(message="Billing record created")
 
-from fastapi import HTTPException
+@router.put("/billing/{billing_id}", response_model=Response, description="Updates a billing record with the given id and returns a confirmation message.")
+def update_billing_record(billing_id: int, billing_record: Billing):
+    """Update a billing record.
 
-@router.put("/{billing_id}", description="Update a billing record by ID", tags=["Billing"])
-def update_billing(billing_id: int):
-    if billing_id <= 0:
-        raise HTTPException(status_code=400, detail="Invalid billing_id. It must be greater than 0.")
-    """Update a billing record by ID.
-
-    This endpoint updates a billing record with the given ID and returns a confirmation message.
+    This endpoint updates a billing record with the given id and returns a confirmation message. The ID and amount are randomly generated.
 
     Args:
         billing_id (int): The ID of the billing record to update.
 
     Returns:
-        Response: The confirmation message.
+        dict: A dictionary containing a confirmation message.
 
     """
+    logger.info(f"Updating billing record with id {billing_id}")
     return Response(message="Billing record updated")
 
-@router.get("/{billing_id}", description="Get a billing record by ID", tags=["Billing"])
-def get_billing(billing_id: int):
-    """Get a billing record by ID.
+@router.delete("/billing", response_model=Response, description="Deletes a billing record with the given id and returns a confirmation message.")
+def delete_billing_record(bulk_delete: BulkDelete):
+    """Delete a billing record.
 
-    This endpoint returns a billing record with the given ID.
-
-    Args:
-        billing_id (int): The ID of the billing record to get.
-
-    Returns:
-        Billing: The requested billing record.
-
-    """
-    # This is a placeholder. Replace with your actual code to get a billing record.
-    return Billing(id=billing_id, name=fake.name(), address=fake.address(), credit_card=fake.credit_card_number())
-
-@router.delete("/{billing_id}", description="Delete a billing record by ID", tags=["Billing"])
-def delete_billing(billing_id: int):
-    """Delete a billing record by ID.
-
-    This endpoint deletes a billing record with the given ID and returns a confirmation message.
+    This endpoint deletes a billing record with the given id and returns a confirmation message. The ID and amount are randomly generated.
 
     Args:
         billing_id (int): The ID of the billing record to delete.
 
     Returns:
-        Response: The confirmation message.
+        dict: A dictionary containing a confirmation message.
 
     """
+    logger.info(f"Deleting billing record with id {bulk_delete.ids}")
     return Response(message="Billing record deleted")
-
-@router.delete("/bulk", description="Bulk delete billing records", tags=["Billing"])
-def bulk_delete(billing: BulkDelete):
-    """Bulk delete billing records.
-
-    This endpoint deletes multiple billing records and returns a confirmation message.
-
-    Args:
-        billing (BulkDelete): A model containing a list of IDs to be deleted.
-
-    Returns:
-        Response: The confirmation message.
-
-    """
-    # This is a placeholder. Replace with your actual code to perform the deletion.
-    return Response(message="Billing records deleted")
