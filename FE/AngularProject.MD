@@ -1,0 +1,1 @@
+This is the space to spin up the Angular front end, use common boiler plate and get started.
