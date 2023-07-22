@@ -1,0 +1,177 @@
+<div
+  class="relative z-10"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+>
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+  <div class="fixed inset-0 z-10 overflow-y-auto">
+    <div
+      class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+    >
+      <div
+        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl pt-5"
+      >
+        <form
+          [formGroup]="reviewForm"
+          class="bg-white rounded px-8 pt-6 pb-8 mb-5"
+        >
+          <div class="flex w-full">
+            <div class="mb-5 w-1/2 mr-5">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="title"
+              >
+                Title
+              </label>
+              <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="title"
+                type="text"
+                formControlName="title"
+                placeholder="Title"
+                required
+              />
+              <div
+                *ngIf="title.invalid && title.touched"
+                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              >
+                <div *ngIf="title.errors?.['required']">
+                  Review Number is required.
+                </div>
+                <div *ngIf="title.errors?.['minlength']">
+                  Review Number must be at least 4 characters long.
+                </div>
+                <div *ngIf="title.errors?.['maxlength']">
+                  Review Number must not be at 15 characters long.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-5 w-1/2">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="reviewer"
+              >
+                Reviewer Name
+              </label>
+              <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="reviewer"
+                type="text"
+                formControlName="reviewer"
+                placeholder="Reviewer Name"
+              />
+              <div
+                *ngIf="reviewer.invalid && reviewer.touched"
+                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              >
+                <div *ngIf="reviewer.errors?.['required']">
+                  Reviewer name is required.
+                </div>
+                <div *ngIf="reviewer.errors?.['minlength']">
+                  Reviewer name must be at least 4 characters long.
+                </div>
+                <div *ngIf="reviewer.errors?.['maxlength']">
+                  Reviewer must not be at 25 characters long.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex w-full">
+            <div class="mb-5 w-1/2 mr-5">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="rating"
+              >
+                Rating
+              </label>
+              <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="rating"
+                type="number"
+                min="0"
+                max="5"
+                formControlName="rating"
+                placeholder="Origin"
+              />
+              <div
+                *ngIf="rating.invalid && rating.touched"
+                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              >
+                <div *ngIf="rating.errors?.['required']">
+                  Rating is required.
+                </div>
+                <div *ngIf="rating.errors?.['min'] || rating.errors?.['max']">
+                  Rating must be between 0 to 5.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-5 w-1/2">
+              <label
+                class="block text-gray-700 text-sm font-bold mb-2"
+                for="review_text"
+              >
+                Review Text
+              </label>
+              <textarea
+                class="shadow appearance-none border rounded w-full py-2 px-3 -mb-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="review_text"
+                type="text"
+                formControlName="review_text"
+                placeholder="Review Text"
+              ></textarea>
+              <div
+                *ngIf="review_text.invalid && review_text.touched"
+                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              >
+                <div *ngIf="review_text.errors?.['required']">
+                  Review text is required.
+                </div>
+                <div *ngIf="review_text.errors?.['minlength']">
+                  Review text must be at least 10 characters long.
+                </div>
+                <div *ngIf="review_text.errors?.['maxlength']">
+                  Review text must not be at 150 characters long.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-4">
+            <button
+              class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-60 disabled:hover:bg-blue-500"
+              type="submit"
+              (click)="addReview()"
+              *ngIf="!review; else update"
+              [disabled]="reviewForm.invalid"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              (click)="closeDailog()"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #update>
+  <button
+    class="bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-60 disabled:hover:bg-green-500"
+    type="submit"
+    (click)="updateReview()"
+    [disabled]="reviewForm.invalid"
+  >
+    Update
+  </button>
+</ng-template>
