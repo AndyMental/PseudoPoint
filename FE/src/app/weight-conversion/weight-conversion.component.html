@@ -1,0 +1,197 @@
+
+<div
+  class="position-fixed rounded-lg text-center p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] m-5 dark:bg-neutral-700"
+>
+  <h5
+    class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"
+  >
+    Celestial Weight Conversion
+  </h5>
+  <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200"></p>
+  <button
+    class="bg-gray-800 text-white font-bold py-2 px-4 rounded"
+    (click)="openFormDialog(false)"
+  >
+    Get By Celestial
+  </button>
+  <button
+    class="bg-gray-800 text-white font-bold py-2 m-4 px-4 rounded"
+    (click)="post = true"
+  >
+    All Celestial Weight
+  </button>
+  <button
+    type="submit"
+    class="bg-gray-800 text-white font-bold py-2 px-4 rounded"
+    (click)="openFormDialog(true)"
+  >
+    Add Row
+  </button>
+</div>
+
+
+<div id="results" *ngIf="display">
+  <div class="flex-container w-1/2 ml-96">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     
+      <table class="w-full table-auto">
+        <thead>
+          <tr>
+            <th class="px-4 py-2 bg-gray-100 border-b border-gray-200">
+              SI No
+            </th>
+            <th class="px-4 py-2 bg-gray-100 border-b border-gray-200">
+              Celestial Object
+            </th>
+            <th class="px-4 py-2 bg-gray-100 border-b border-gray-200">
+              Weight on Object
+            </th>
+            <button class="text-red-500 mb-2" (click)="display=false">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16" width="16" height="16">
+                <path d="M8 1a7 7 0 0 0 0 14A7 7 0 0 0 8 1zm3.354 3.354a.5.5 0 1 1 .708.708L8.707 8l2.354 2.354a.5.5 0 0 1-.708.708L8 8.707l-2.354 2.354a.5.5 0 0 1-.708-.708L7.293 8 4.94 5.646a.5.5 0 1 1 .708-.708L8 7.293l2.354-2.354a.5.5 0 0 1 .708 0z"/>
+              </svg>
+            <i class="bi bi-x-circle"></i> 
+          </button>
+          </tr>
+         
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let result of results.slice(0, 12); let i = index"
+            class="bg-gray-50"
+          >
+            <td class="px-4 py-2 border-b border-gray-200">{{ i + 1 }}</td>
+            <td class="px-4 py-2 border-b border-gray-200">
+              {{ result.celestial_object }}
+            </td>
+            <td class="px-4 py-2 border-b border-gray-200">
+              {{ result.weight }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="flex flex-col items-center mt-3 ml-16">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+      <div class="overflow-hidden">
+        <table
+          class="min-w-full border text-center text-sm font-light dark:border-neutral-500"
+        >
+          <thead class="border-b font-medium dark:border-neutral-500">
+            <tr>
+              <th
+                scope="col"
+                class="border-r px-3 py-4 dark:border-neutral-500"
+              >
+                SI No
+              </th>
+
+              <th
+                scope="col"
+                class="border-r px-3 py-4 dark:border-neutral-500"
+              >
+                Celestial Object
+              </th>
+              <th
+                scope="col"
+                class="border-r px-3 py-4 dark:border-neutral-500"
+              >
+                Factor
+              </th>
+              <th scope="col" class="px-3 py-4"><button>Actions</button></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="border-b dark:border-neutral-500"
+              *ngFor="
+                let celestialObj of celestialData | keyvalue;
+                let i = index
+              "
+            >
+              <td
+                class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
+              >
+                {{ i + 1 }}
+              </td>
+
+              <td
+                class="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500"
+              >
+                {{ celestialObj.key }}
+              </td>
+              <td
+                class="whitespace-nowrap border-r px-6 py-4 dark:border-neutral-500"
+              >
+                {{ celestialObj.value }}
+              </td>
+
+              <td
+                class="whitespace-nowrap border-r px-6 py-4 dark:border-neutral-500"
+              >
+              <button mat-raised-button color="warn"
+                  (click)="deleteCelestial(celestialObj.key)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  
+  <div class="flex-container">
+    <div *ngIf="post">
+      <div class="fixed inset-0 z-50 flex items-center justify-center">
+        <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-xl">
+          <h2 class="text-xl font-semibold mb-4">Weight Conversion</h2>
+          <form>
+            <label for="weightInput" class="block mb-2"
+              >Enter Weight (in kilograms):</label
+            >
+            <input
+              type="number"
+              id="weightInput"
+              step="0.01"
+              [(ngModel)]="weightInput"
+              name="weightInput"
+              class="w-full border rounded px-3 py-2 mb-4"
+            />
+
+            <div class="flex justify-end">
+              <button
+                type="button"
+                class="px-4 py-2 mr-2 bg-gray-400 text-white rounded"
+                (click)="post = false"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="px-4 py-2 bg-blue-600 text-white rounded"
+                (click)="convertWeight()"
+                [disabled]="loading"
+              >
+                Convert Weight
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-delete-dialog
+  *ngIf="showDeleteConfirmationModal"
+  (confirmDelete)="deleteItemConfirmed()"
+  (cancelDelete)="closeDeleteConfirmationModal()"
+></app-delete-dialog>

@@ -1,0 +1,94 @@
+<form
+  [formGroup]="newEventForm"
+  (ngSubmit)="onSave()"
+  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+>
+    <div>
+      <label for="year">Year</label>
+      <input
+        type="number"
+        id="year"
+        ng-disabled="!isEditMode"
+        formControlName="year"
+        class="block w-full mt-2 form-control"
+        [max]="getYear()"
+        style="
+          border: 1px solid rgb(18, 1, 1);
+          border-radius: 4px;
+          padding: 5px;
+        "
+      />
+      <div
+        *ngIf="
+          newEventForm.get('year')?.invalid &&
+          (newEventForm.get('year')?.dirty || newEventForm.get('year')?.touched)
+        "
+        class="alert"
+      >
+        <div
+          *ngIf="newEventForm.get('year')?.errors?.['required']"
+          [ngStyle]="{ color: 'red' }"
+        >
+          Year is Required
+        </div>
+        <div
+          *ngIf="newEventForm.get('year')?.errors?.['max']"
+          [ngStyle]="{ color: 'red' }"
+        >
+          Year should be less than current year
+        </div>
+      </div>
+    </div>
+    <!-- <div> -->
+    <label for="event">Event Name</label>
+    <input
+      type="text"
+      id="event"
+      formControlName="event"
+      class="block w-full mt-2 form-control"
+      style="
+        border: 1px solid rgb(30, 3, 3);
+        border-radius: 4px;
+        padding: 5px;
+        background-color: rgba(255, 255, 255, 0.436);
+      "
+    />
+    <div
+      *ngIf="
+        newEventForm.get('event')?.invalid &&
+        (newEventForm.get('event')?.dirty || newEventForm.get('event')?.touched)
+      "
+      class="alert"
+    >
+      <div
+        *ngIf="newEventForm.get('event')?.errors?.['required']"
+        [ngStyle]="{ color: 'red' }"
+      >
+        Event Name is Required
+      </div>
+      <div
+        *ngIf="newEventForm.get('event')?.errors?.['minlength']"
+        [ngStyle]="{ color: 'red' }"
+      >
+        Name Must be at least 4 characters long
+      </div>
+    </div>
+  <!-- </div> -->
+
+  <div>
+    <button
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-600 text-black font-semibold px-4 py-2 rounded"
+    >
+      {{ data.editMode ? "Update data" : "Add Event" }}
+    </button>
+
+    <button
+      type="button"
+      class="bg-gray-500 text-white px-4 ml-4 py-2 mt-4 rounded"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
