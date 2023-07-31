@@ -1,0 +1,21 @@
+<div class="example-container">
+  <h2>{{ data.editMode ? 'Edit Notification Data' : 'Add Notification Data' }}</h2>
+  <form [formGroup]="formData" (ngSubmit)="notificationFormSubmit()">
+    <mat-form-field class="mb-4">
+      <mat-label>title</mat-label>
+      <input matInput formControlName="title" required>
+      <mat-error *ngIf="formData.get('title').invalid && formData.get('title').touched">Name is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="mb-4">
+      <mat-label>message</mat-label>
+      <input matInput formControlName="message" required>
+      <mat-error *ngIf="formData.get('message').invalid && formData.get('message').touched">Email is required.</mat-error>
+    </mat-form-field>
+  
+
+    <div class="example-button-row">
+      <button mat-stroked-button color="primary" type="submit">{{ data.editMode ? 'Update' : 'Add' }}</button>
+      <button mat-stroked-button color="warn" (click)="notificationFormCancel()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,33 @@
+<div class="example-container">
+  <h2>{{ editMode ? 'Edit Product' : 'Add Product' }}</h2>
+  <form [formGroup]="formData" (ngSubmit)="productFormSubmit()">
+  
+    <mat-form-field class="mb-4">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" type="text" required>
+      <mat-error *ngIf="formData.get('name').invalid && formData.get('name').touched">
+        <span *ngIf="formData.get('name').hasError('required')">Name is required.</span>
+        <span *ngIf="formData.get('name').hasError('pattern')">Name should not start with a number.</span>
+        <span *ngIf="formData.get('name').hasError('minlength')">Name should be at least 4 characters long.</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="mb-4">
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" type="number" required>
+      <mat-error *ngIf="formData.get('price').invalid && formData.get('price').touched">
+        <span *ngIf="formData.get('price').hasError('required')">Price is required.</span>
+        <span *ngIf="formData.get('price').hasError('min')">Price cannot be negative.</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="mb-4">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" type="text" required>
+      <mat-error *ngIf="formData.get('description').invalid && formData.get('description').touched">Description is required.</mat-error>
+    </mat-form-field>
+
+    <div class="example-button-row">
+      <button mat-stroked-button color="primary" type="submit">{{ editMode ? 'Update' : 'Add' }}</button>
+      <button mat-stroked-button color="warn" (click)="productFormCancel()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,54 @@
+<h1 style="text-align: center; font-weight: bold;">OAuth Component</h1>
+
+<div class="add-button-container ">
+  <!-- Add Data Button -->
+  <button mat-stroked-button  (click)="createOAuth()">Add Data</button>
+</div>
+<div class="table-container ml-80">
+  <div *ngIf="dataSource.length > 0">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="names">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.names}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="access_token">
+        <th mat-header-cell *matHeaderCellDef> AccessToken </th>
+        <td mat-cell *matCellDef="let element"> {{element.access_token}} </td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="example-button-row">
+            <button mat-stroked-button  (click)="updateOAuth(element)">Edit</button>
+            <button mat-stroked-button  (click)="deleteOAuth(element.names)">Delete</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <div *ngIf="dataSource.length === 0">
+    <p>No OAuth data available.</p>
+  </div>
+</div>
