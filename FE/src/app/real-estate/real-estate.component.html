@@ -1,0 +1,60 @@
+<span class="text-2xl font-bold mb-4 ml-80">Real Estate Listings</span>
+<div class="flex justify-between mb-4">
+  <button (click)="openForm()" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded ml-80">
+    Add New Property
+  </button>
+</div>
+
+<div class="mat-elevation-z8 ml-80 mr-10">
+  <table mat-table [dataSource]="realEstateListings" class="w-3/4">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let listing">{{ listing.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>Address</th>
+      <td mat-cell *matCellDef="let listing">{{ listing.address }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let listing">{{ listing.price | currency }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bedrooms">
+      <th mat-header-cell *matHeaderCellDef>Bedrooms</th>
+      <td mat-cell *matCellDef="let listing">{{ listing.bedrooms }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bathrooms">
+      <th mat-header-cell *matHeaderCellDef>Bathrooms</th>
+      <td mat-cell *matCellDef="let listing">{{ listing.bathrooms }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="square_feet">
+      <th mat-header-cell *matHeaderCellDef>Square Feet</th>
+      <td mat-cell *matCellDef="let listing">{{ listing.square_feet }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let listing">{{ listing.description }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef colspan="2">Actions</th>
+      <td mat-cell *matCellDef="let listing" colspan="2">
+        <button (click)="openForm(listing)" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Edit</button>
+        <span class="button-space"></span>
+        <button (click)="openConfirmationModal(listing.id)" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['id', 'address', 'price', 'bedrooms', 'bathrooms', 'square_feet', 'description', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'address', 'price', 'bedrooms', 'bathrooms', 'square_feet', 'description', 'actions']" class="odd:bg-white even:bg-slate-50"></tr>
+  </table>
+</div>
+<app-error-toast *ngIf="errorMessage" [errorMessage]="errorMessage"></app-error-toast>
+

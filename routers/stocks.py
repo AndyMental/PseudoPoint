@@ -1,57 +1,66 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-
+from pydantic import BaseModel, validator
 router = APIRouter()
 
-class Stock:
-    def __init__(self, symbol: str, name: str, price: float, change: float):
-        self.symbol = symbol
-        self.name = name
-        self.price = price
-        self.change = change
+class Stock(BaseModel):
+    id: int = None
+    symbol: str
+    name: str
+    price: float
+    change: float
 
 stocks = [
-    Stock("AAPL", "Apple Inc.", 150.25, 1.25),
-    Stock("GOOG", "Alphabet Inc.", 2500.50, -0.50),
-    Stock("MSFT", "Microsoft Corporation", 300.75, 2.75),
-    Stock("AMZN", "Amazon.com, Inc.", 3500.00, -5.00),
-    Stock("FB", "Facebook, Inc.", 350.25, 0.25),
-    Stock("TSLA", "Tesla, Inc.", 750.50, 5.50),
-    Stock("NVDA", "NVIDIA Corporation", 200.75, -1.75),
-    Stock("JPM", "JPMorgan Chase & Co.", 150.00, 0.00),
-    Stock("BAC", "Bank of America Corporation", 40.25, 0.25),
-    Stock("WMT", "Walmart Inc.", 150.50, -0.50)
+    Stock(id=1,symbol="AAPL", name="Apple Inc.", price =150.25, change =1.25),
+    Stock(id=2,symbol="GOOG", name="Alphabet Inc.", price =2500.50, change =-0.50),
+    Stock(id=3,symbol="MSFT",name="Microsoft Corporation",price = 300.75, change =2.75),
+    Stock(id=4,symbol="AMZN",name="Amazon.com, Inc.", price =3500.00, change =-5.00),
+    Stock(id=5,symbol="FB", name="Facebook, Inc.", price =350.25, change =0.25),
+    Stock(id=6,symbol="TSLA",name="Tesla, Inc.", price =750.50,change = 5.50),
+    Stock(id=7,symbol="NVDA",name="NVIDIA Corporation",price = 200.75, change =-1.75),
+    Stock(id=8,symbol="JPM", name="JPMorgan Chase & Co.",price = 150.00, change =0.00),
+    Stock(id=9,symbol="BAC", name="Bank of America Corporation", price =40.25,change = 0.25),
+    Stock(id=10,symbol="NFLX", name="Netflix Inc.", price=560.75, change=3.75),
+    Stock(id=11,symbol="DIS", name="The Walt Disney Company", price=170.50, change=-2.00),
+    Stock(id=12,symbol="V", name="Visa Inc.", price=250.25, change=1.25),
+    Stock(id=13,symbol="MA", name="Mastercard Incorporated", price=380.00, change=-0.50),
+    Stock(id=14,symbol="PYPL", name="PayPal Holdings, Inc.", price=300.25, change=2.75),
+    Stock(id=15,symbol="GOOGL", name="Alphabet Inc.", price=2950.50, change=-1.00),
+    Stock(id=16,symbol="NFLX", name="Netflix Inc.", price=560.75, change=3.75),
+    Stock(id=17,symbol="WMT",name="Walmart Inc.", price =150.50,change = -0.50)
+    # Existing stock data (you can add more stocks if needed)
 ]
 
-@router.get("/{symbol}", response_model=Stock, description="Returns a stock with the given symbol.")
-def read_stock_by_symbol(symbol: str):
-    """Get a stock by symbol.
+@router.get("/stocks", response_model=List[Stock])
+async def get_stocks():
+    return stocks
 
-    This endpoint returns a stock based on the given symbol.
+@router.get("/stocks/{stock_id}", response_model=Stock)
+async def get_stock(stock_id: int):
+    for stock in stocks:
+        if stock.id == stock_id:
+            return stock
+    raise HTTPException(status_code=404, detail="Stock not found")
 
-    Args:
-        symbol (str): The symbol of the stock.
-
-    Returns:
-        Stock: The stock with the given symbol.
-
-    Raises:
-        HTTPException: If the stock is not found.
-
-    """
-    stock = next((stock for stock in stocks if stock.symbol == symbol), None)
-    if stock is None:
-        raise HTTPException(status_code=404, detail="Stock not found")
+@router.post("/stocks", response_model=Stock)
+async def add_stock(stock: Stock):
+    new_id = max(stock.id for stock in stocks) + 1 if stocks else 1
+    stock.id = new_id
+    stocks.append(stock)
     return stock
 
-@router.get("/", response_model=List[Stock], description="Returns a list of all stocks.")
-def read_all_stocks():
-    """Get all stocks.
+@router.put("/stocks/{stock_id}", response_model=Stock)
+async def update_stock(stock_id: int, updated_stock: Stock):
+    for index, stock in enumerate(stocks):
+        if stock.id == stock_id:
+            stocks[index] = updated_stock
+            return updated_stock
+    raise HTTPException(status_code=404, detail="Stock not found")
 
-    This endpoint returns a list of all stocks.
-
-    Returns:
-        List[Stock]: A list of all stocks.
-
-    """
-    return stocks
+@router.delete("/stocks/{stock_id}", response_model=Stock)
+async def delete_stock(stock_id: int):
+    for index, stock in enumerate(stocks):
+        if stock.id == stock_id:
+            deleted_stock = stocks.pop(index)
+            return deleted_stock
+    raise HTTPException(status_code=404, detail="Stock not found")
