@@ -1,0 +1,156 @@
+<div
+  class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75"
+>
+  <div class="bg-white p-6 rounded-lg w-96">
+    <h2 mat-dialog-title>{{ isEdit ? "Edit Quote" : "Add New Quote" }}</h2>
+    <mat-dialog-content>
+      <div class="form-container">
+        <form
+          [formGroup]="quotesForm"
+          (ngSubmit)="isEdit ? update_existing_quote() : add_new_quote()"
+        >
+          <div class="">
+            <label for="id" class="block text-gray-700 font-bold mb-2"
+              >ID</label
+            >
+            <input
+              type="number"
+              id="id"
+              name="id"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="id"
+              [disabled]="isEdit"
+            />
+            <div
+              *ngIf="
+                quotesForm.get('id').errors &&
+                (quotesForm.get('id').touched || quotesForm.get('id').dirty)
+              "
+            >
+              <div
+                *ngIf="quotesForm.get('id').errors.required"
+                class="text-red-600"
+              >
+                ID is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="id" class="block text-gray-700 font-bold mb-2"
+              >Quotes</label
+            >
+            <input
+              type="text"
+              id="text"
+              name="quote"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="text"
+              [disabled]="isEdit"
+            />
+            <div
+              *ngIf="
+                quotesForm.get('text').errors &&
+                (quotesForm.get('text').touched || quotesForm.get('text').dirty)
+              "
+            >
+              <div
+                *ngIf="quotesForm.get('text').errors.required"
+                class="text-red-600"
+              >
+                Quote is required.
+              </div>
+              <div
+                *ngIf="quotesForm.get('text').errors.minlength"
+                class="text-red-600"
+              >
+                Quotes should have at least 3 characters.
+              </div>
+              <div
+                *ngIf="quotesForm.get('text').errors.maxlength"
+                class="text-red-600"
+              >
+                Quotes should have at most 85 characters.
+              </div>
+              <div
+                *ngIf="quotesForm.get('text').errors.pattern"
+                class="text-red-600"
+              >
+                Quotes should only contain letters and spaces.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="author" class="block text-gray-700 font-bold mb-2"
+              >Author</label
+            >
+            <input
+              type="text"
+              id="author"
+              name="author"
+              required
+              maxlength="10"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="author"
+            />
+            <div
+              *ngIf="
+                quotesForm.get('author').errors &&
+                (quotesForm.get('author').touched ||
+                  quotesForm.get('author').dirty)
+              "
+            >
+              <div
+                *ngIf="quotesForm.get('author').errors.required"
+                class="text-red-600"
+              >
+                Author Name is required.
+              </div>
+              <div
+                *ngIf="quotesForm.get('author').errors.minlength"
+                class="text-red-600"
+              >
+                Author Name should have at least 3 characters.
+              </div>
+              <div
+                *ngIf="quotesForm.get('author').errors.maxlength"
+                class="text-red-600"
+              >
+                Author Name should have at most 20 characters.
+              </div>
+              <div
+                *ngIf="quotesForm.get('author').errors.pattern"
+                class="text-red-600"
+              >
+                Author Name should only contain letters and spaces.
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center ml-6 mb-6">
+            <div mat-dialog-actions>
+              <button
+                mat-button
+                class="mr-2 bg-gray-200 hover:bg-gray-400 px-4 py-2 rounded"
+                (click)="cancel()"
+              >
+                Cancel
+              </button>
+              <button
+                mat-button
+                class="mr-2 bg-gray-200 hover:bg-gray-400 px-4 py-2 rounded"
+                [mat-dialog-close]="quotesForm.value"
+                cdkFocusInitial
+              >
+                {{ isEdit ? "Update" : "Add" }}
+                <!-- Display the correct button label -->
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-dialog-content>
+  </div>
+</div>

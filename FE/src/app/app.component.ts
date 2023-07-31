@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  showCoursesTable: boolean = false;
   title = 'project1';
    openSidebar() {
     document.querySelector(".sidebar").classList.toggle("hidden");
@@ -13,6 +14,9 @@ export class AppComponent {
   collapseSideBar() {
     document.querySelector(".sidebar").classList.remove("hidden");
   }
+  // toggleCoursesTable(): void {
+  //   this.showCoursesTable = !this.showCoursesTable;
+  // }
   
 }
 

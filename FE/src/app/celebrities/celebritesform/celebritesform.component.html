@@ -1,0 +1,247 @@
+<div
+  class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75"
+>
+  <div class="bg-white p-6 rounded-lg w-96">
+    <h2 mat-dialog-title>
+      {{ isEdit ? "Edit Celebrity's Details" : "Add Celebrity's Details" }}
+    </h2>
+    <mat-dialog-content>
+      <div class="form-container">
+        <form
+          [formGroup]="celebritiesForm"
+          (ngSubmit)="
+            isEdit ? update_Celebrity_Details() : add_Celebrities_Details()
+          "
+        >
+          <div class="mb-4">
+            <label for="id" class="block text-gray-700 font-bold mb-2"
+              >ID</label
+            >
+            <input
+              type="number"
+              id="id"
+              name="id"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="id"
+              [disabled]="isEdit"
+            />
+            <div
+              *ngIf="
+                celebritiesForm.get('id').errors &&
+                (celebritiesForm.get('id').touched ||
+                  celebritiesForm.get('id').dirty)
+              "
+            >
+              <div
+                *ngIf="celebritiesForm.get('id').errors.required"
+                class="text-red-600"
+              >
+                ID is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="name" class="block text-gray-700 font-bold mb-2"
+              >Celebrity Name</label
+            >
+            <input
+              type="text"
+              id="name"
+              name="celebname"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="name"
+            />
+            <div
+              *ngIf="
+                celebritiesForm.get('name').errors &&
+                (celebritiesForm.get('name').touched ||
+                  celebritiesForm.get('name').dirty)
+              "
+            >
+              <div
+                *ngIf="celebritiesForm.get('name').errors.required"
+                class="text-red-600"
+              >
+                Name is required.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('name').errors.minlength"
+                class="text-red-600"
+              >
+                Name should have at least 3 characters.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('name').errors.maxlength"
+                class="text-red-600"
+              >
+                Name should have at most 20 characters.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('name').errors.pattern"
+                class="text-red-600"
+              >
+                Name should only contain letters and spaces.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="occupation" class="block text-gray-700 font-bold mb-2"
+              >Occupation</label
+            >
+            <input
+              type="text"
+              id="occupation"
+              name="occupation"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="occupation"
+            />
+            <div
+              *ngIf="
+                celebritiesForm.get('occupation').errors &&
+                (celebritiesForm.get('occupation').touched ||
+                  celebritiesForm.get('occupation').dirty)
+              "
+            >
+              <div
+                *ngIf="celebritiesForm.get('occupation').errors.required"
+                class="text-red-600"
+              >
+                Occupation is required.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('occupation').errors.minlength"
+                class="text-red-600"
+              >
+                occupation should have at least 3 characters.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('occupation').errors.maxlength"
+                class="text-red-600"
+              >
+                occupation should have at most 20 characters.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('occupation').errors.pattern"
+                class="text-red-600"
+              >
+                occupation should only contain letters and spaces.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="date" class="block text-gray-700 font-bold mb-2"
+              >Birth Year</label
+            >
+            <input
+              type="number"
+              id="birth_year"
+              name="birth_year"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="birth_year"
+            />
+            <div
+              *ngIf="
+                celebritiesForm.get('birth_year').errors &&
+                (celebritiesForm.get('birth_year').touched ||
+                  celebritiesForm.get('birth_year').dirty)
+              "
+            >
+              <div
+                *ngIf="celebritiesForm.get('birth_year').errors.required"
+                class="text-red-600"
+              >
+                Birth Year is required.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('birth_year').errors.min"
+                class="text-red-600"
+              >
+                Birth Year should be at least 1950.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('birth_year').errors.max"
+                class="text-red-600"
+              >
+                Birth Year should be at most 2023.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('birth_year').errors.pattern"
+                class="text-red-600"
+              >
+                Birth Year should be a valid number.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="nationality" class="block text-gray-700 font-bold mb-2"
+              >Nationality</label
+            >
+            <input
+              type="text"
+              id="nation"
+              name="nationality"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="nationality"
+            />
+            <div
+              *ngIf="
+                celebritiesForm.get('nationality').errors &&
+                (celebritiesForm.get('nationality').touched ||
+                  celebritiesForm.get('nationality').dirty)
+              "
+            >
+              <div
+                *ngIf="celebritiesForm.get('nationality').errors.required"
+                class="text-red-600"
+              >
+                Nationality is required.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('nation').errors.minlength"
+                class="text-red-600"
+              >
+                Nationality should have at least 3 characters.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('nation').errors.maxlength"
+                class="text-red-600"
+              >
+                Nationality should have at most 20 characters.
+              </div>
+              <div
+                *ngIf="celebritiesForm.get('nation').errors.pattern"
+                class="text-red-600"
+              >
+                Nationality should only contain letters and spaces.
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center ml-6 mb-6">
+            <div mat-dialog-actions>
+              <button
+                class="mr-2 bg-gray-200 hover:bg-gray-400 px-4 py-2 rounded border-gray-300"
+                mat-button
+                (click)="cancel()"
+              >
+                Cancel
+              </button>
+              <button
+                class="mr-2 bg-gray-200 hover:bg-gray-400 px-4 py-2 rounded"
+                mat-button
+                [mat-dialog-close]="celebritiesForm.value"
+                cdkFocusInitial
+              >
+                {{ isEdit ? "Update" : "Add" }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-dialog-content>
+  </div>
+</div>

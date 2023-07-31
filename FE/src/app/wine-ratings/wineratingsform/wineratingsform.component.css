@@ -1,0 +1,26 @@
+/* .class1{
+    width: 500px;
+    margin-left: 100px;
+    border-radius: 10px;
+    padding: 10px 0px 0px 130px;
+} */
+/* border: 2px solid rgb(174, 171, 171); */
+.dialog-content{
+    margin-left: 150px;
+}
+
+.cancel{
+    border: 2px solid rgb(234, 10, 10);
+    
+}
+.cancel:hover {
+    background-color: rgb(244, 46, 46);
+    color: aliceblue;
+}
+.add{
+    border: 2px solid blue;
+}
+.add:hover {
+    background-color: rgb(37, 80, 233);
+    color: aliceblue;
+}

@@ -1,0 +1,186 @@
+<div class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+  <div class="bg-white p-6 rounded-lg w-96">
+    <h2 mat-dialog-title>{{ isEdit ? "Edit Wine Ratings" : "Add New Wine Rating's" }}</h2>
+    <mat-dialog-content>
+      <div class="form-container">
+        <form
+          [formGroup]="wineratingsForm"
+          (ngSubmit)="isEdit ? update_wine_details() : add_new_wine_details()"
+        >
+          <div class="mb-4">
+            <label for="id" class="block text-gray-700 font-bold mb-2">ID</label>
+            <input
+              type="number"
+              id="id"
+              name="id"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="id"
+              [disabled]="isEdit"
+            />
+            <div
+              *ngIf="
+                wineratingsForm.get('id').errors &&
+                (wineratingsForm.get('id').touched ||
+                  wineratingsForm.get('id').dirty)
+              "
+            >
+              <div
+                *ngIf="wineratingsForm.get('id').errors.required"
+                class="text-red-600"
+              >
+                ID is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="wine" class="block text-gray-700 font-bold mb-2">Wine Name</label>
+            <input
+              type="text"
+              id="wine"
+              name="wine"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="wine"
+            />
+            <div
+              *ngIf="
+                wineratingsForm.get('wine').errors &&
+                (wineratingsForm.get('wine').touched ||
+                  wineratingsForm.get('wine').dirty)
+              "
+            >
+              <div
+                *ngIf="wineratingsForm.get('wine').errors.required"
+                class="text-red-600"
+              >
+                Name is required.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('wine').errors.minlength"
+                class="text-red-600"
+              >
+                Name should have at least 3 characters.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('wine').errors.maxlength"
+                class="text-red-600"
+              >
+                Name should have at most 20 characters.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('wine').errors.pattern"
+                class="text-red-600"
+              >
+                Name should only contain letters and spaces.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="date" class="block text-gray-700 font-bold mb-2">Vintage</label>
+            <input
+              type="number"
+              id="vintage"
+              name="vintage"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="vintage"
+            />
+            <div
+              *ngIf="
+                wineratingsForm.get('vintage').errors &&
+                (wineratingsForm.get('vintage').touched ||
+                  wineratingsForm.get('vintage').dirty)
+              "
+            >
+              <div
+                *ngIf="wineratingsForm.get('vintage').errors.required"
+                class="text-red-600"
+              >
+                Vintage is required.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('vintage').errors.min"
+                class="text-red-600"
+              >
+                Vintage should be at least 1800.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('vintage').errors.max"
+                class="text-red-600"
+              >
+                Vintage should be at most 2023.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('vintage').errors.pattern"
+                class="text-red-600"
+              >
+                Vintage should be a valid number.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="date" class="block text-gray-700 font-bold mb-2">Ratings</label>
+            <input
+              type="number"
+              id="rating"
+              name="rating"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="rating"
+            />
+            <div
+              *ngIf="
+                wineratingsForm.get('rating').errors &&
+                (wineratingsForm.get('rating').touched ||
+                  wineratingsForm.get('rating').dirty)
+              "
+            >
+              <div
+                *ngIf="wineratingsForm.get('rating').errors.required"
+                class="text-red-600"
+              >
+                Ratings is required.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('rating').errors.min"
+                class="text-red-600"
+              >
+                Ratings should be at least 10.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('rating').errors.max"
+                class="text-red-600"
+              >
+                Ratings should be at most 100.
+              </div>
+              <div
+                *ngIf="wineratingsForm.get('rating').errors.pattern"
+                class="text-red-600"
+              >
+                Ratings should be a valid number.
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center ml-6 mb-6">
+            <div mat-dialog-actions>
+              <button mat-button class="mr-2 bg-gray-200 hover:bg-gray-400 px-4 py-2 rounded" (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                mat-button
+                class="mr-2 bg-gray-200 hover:bg-gray-400 px-4 py-2 rounded"
+                [mat-dialog-close]="wineratingsForm.value"
+                cdkFocusInitial
+              >
+                {{ isEdit ? "Update" : "Add" }}
+                <!-- Display the correct button label -->
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-dialog-content>
+  </div>
+</div>

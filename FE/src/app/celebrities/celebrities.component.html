@@ -1,0 +1,77 @@
+<div class="flex flex-col ml-80">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      + Add New Celebrities
+    </button>
+    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+      <div class="overflow-hidden">
+        <app-celebrities-form
+          *ngIf="showForm"
+          [showFormInput]="showForm"
+          (showFormOutput)="onShowFormChange($event)"
+          (addNewCelebs)="on_Add_New_Celeb_Details($event)"
+          (updateCelebs)="on_Update_New_Celeb_Details($event)"
+        ></app-celebrities-form>
+
+        <mat-table [dataSource]="Celeb" class="mat-elevation-z8">
+          
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let celeb">{{ celeb.id }}</mat-cell>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Celebrity Name</mat-header-cell>
+            <mat-cell *matCellDef="let celeb">{{ celeb.name }}</mat-cell>
+          </ng-container>
+
+         
+          <ng-container matColumnDef="occupation">
+            <mat-header-cell *matHeaderCellDef>Occupation</mat-header-cell>
+            <mat-cell *matCellDef="let celeb">{{ celeb.occupation }}</mat-cell>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="birth_year">
+            <mat-header-cell *matHeaderCellDef>Birth_Year</mat-header-cell>
+            <mat-cell *matCellDef="let celeb">{{ celeb.birth_year }}</mat-cell>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="nationality">
+            <mat-header-cell *matHeaderCellDef>Nationality</mat-header-cell>
+            <mat-cell *matCellDef="let celeb">{{ celeb.nationality }}</mat-cell>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let celeb">
+              <button mat-raised-button color="primary" (click)="editCelebs(celeb)">
+                Edit
+              </button>
+              <span class="button-space"></span>
+              <button mat-raised-button color="warn" (click)="delete_Celebrity_Details(celeb.id)">
+                Delete
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+          
+          <mat-row *matRowDef="let celeb; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-delete-confirm
+  *ngIf="showDeleteConfirmationModal"
+  (confirmDelete)="delete_Celebrity_Confirmation()"
+  (cancelDelete)="closeDeleteConfirmationModal()"
+></app-delete-confirm>
+

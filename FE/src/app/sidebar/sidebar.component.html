@@ -1,0 +1,121 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="/dist/tailwind.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" />
+   -->
+    <!-- Other meta tags and stylesheets -->
+    <!-- <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  
+</head> -->
+
+<body>
+  
+  
+  <div class="mainbox  mt-1 ml-44">
+    <!-- <router-outlet></router-outlet> -->
+
+    <div class="flex">
+      
+    <div class="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[280px] overflow-y-auto text-center bg-gray-900">
+      
+      <div class="text-gray-100 text-l">
+        <div class="p-2.5 mt-1 flex items-center">
+          <button>
+            <i class="bi bi-app-indicator px-2 py-1 rounded-md bg-blue-600"></i>
+          </button>
+          <h1 class="font-bold text-gray-200 text-[15px] ml-3">PseudoPoint</h1>
+        </div>
+        <div class="my-2 bg-gray-600 h-[1px]"></div>
+      </div>
+
+      
+      <details class="p-2.5 mt-16">
+        <summary class="flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+          <i class="bi bi-journal-text"></i>
+          <div class="flex justify-between w-full items-center">
+            <span class="text-[15px] ml-4 text-gray-200 font-bold uppercase">Api content </span>
+            <span class="text-sm"><i class="bi bi-chevron-down"></i></span>
+          </div>
+        </summary>
+        <div class="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold">
+          <details class="p-2.5 mt-3">
+            <summary class="flex items-center rounded-md px-4 duration-300 cursor-pointer text-white">
+              <i class="bi bi-chat-square-quote"></i>
+              <div class="flex justify-between w-full items-center">
+                 <a routerLink="/quotes"><button><span class="text-[15px] ml-4 text-gray-200 font-bold">Quotes</span></button></a>
+                
+              </div>
+
+            </summary>
+            <div class="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold">
+              
+            </div>
+          </details>
+
+          <details class="p-2.5 mt-3">
+            <summary class="flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+              <i class="bi bi-collection"></i>
+              <div class="flex justify-between w-full items-center">
+                
+                <a routerLink="/wine-rating"><button><span class="text-[15px] ml-4 text-gray-200 font-bold">Wine-Ratings</span></button></a>
+                <span class="text-sm"></span>
+              </div>
+            </summary>
+            <div class="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold">
+              
+            </div>
+          </details>
+          
+          <details class="p-2.5 mt-3">
+            <summary class="flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+              <i class="bi bi-geo"></i>
+              <div class="flex justify-between w-full items-center">
+                
+                <a routerLink="/celebrities"><button><span class="text-[15px] ml-4 text-gray-200 font-bold">Celebrities</span></button></a>
+                <span class="text-sm"></span>
+              </div>
+            </summary>
+            <div class="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold">
+             
+            </div>
+          </details>
+
+          <details class="p-2.5 mt-3">
+            <summary class="flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+              <i class="bi bi-heart"></i>
+              <div class="flex justify-between w-full items-center">
+                
+                <a routerLink="/cricketers"><button><span class="text-[15px] ml-4 text-gray-200 font-bold">Cricketets</span></button></a>
+                <span class="text-sm"></span>
+              </div>
+            </summary>
+            <div class="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold">
+              
+            </div>
+          </details>
+        </div>
+
+        <div class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span class="text-[15px] ml-4 text-gray-200 font-bold">Logout</span>
+        </div>
+      </details>
+    </div>
+    
+
+  </div>
+  
+  
+  
+</div>
+
+

@@ -1,0 +1,189 @@
+<div class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+  <div class="bg-white p-6 rounded-lg w-96">
+    <h2 mat-dialog-title>{{ isEdit ? "Edit Cricker's Details" : "Add New Cricketer's Details" }}</h2>
+    <mat-dialog-content>
+      <div class="form-container">
+        <form
+          [formGroup]="cricketersForm"
+          (ngSubmit)="isEdit ? update_details() : add_new_record()"
+        >
+          <div class="mb-4 w-30">
+            <label for="id" class="block text-gray-700 font-bold mb-2">ID</label>
+            <input
+              type="number"
+              id="id"
+              name="id"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="id"
+              [disabled]="isEdit"
+              (mouseenter)="showBanIcon = true"
+              (mouseleave)="showBanIcon = false"
+            />
+            <div
+              *ngIf="
+                cricketersForm.get('id').errors &&
+                (cricketersForm.get('id').touched ||
+                  cricketersForm.get('id').dirty)
+              "
+            >
+              <div
+                *ngIf="cricketersForm.get('id').errors.required"
+                class="text-red-600"
+              >
+                ID is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="name" class="block text-gray-700 font-bold mb-2">Cricketer Name</label>
+            <input
+              type="text"
+              id="name"
+              name="crickname"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="name"
+            />
+            <div
+              *ngIf="
+                cricketersForm.get('name').errors &&
+                (cricketersForm.get('name').touched ||
+                  cricketersForm.get('name').dirty)
+              "
+            >
+              <div
+                *ngIf="cricketersForm.get('name').errors.required"
+                class="text-red-600"
+              >
+                Name is required.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('name').errors.minlength"
+                class="text-red-600"
+              >
+                Name should have at least 3 characters.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('name').errors.maxlength"
+                class="text-red-600"
+              >
+                Name should have at most 20 characters.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('name').errors.pattern"
+                class="text-red-600"
+              >
+                Name should only contain letters and spaces.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="date" class="block font-sans">Age</label>
+            <input
+              type="number"
+              id="date"
+              name="birth_year"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="age"
+            />
+            <div
+              *ngIf="
+                cricketersForm.get('age').errors &&
+                (cricketersForm.get('age').touched ||
+                  cricketersForm.get('age').dirty)
+              "
+            >
+              <div
+                *ngIf="cricketersForm.get('age').errors.required"
+                class="text-red-600"
+              >
+                Age is required.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('age').errors.min"
+                class="text-red-600"
+              >
+                Age should be at least 19.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('age').errors.max"
+                class="text-red-600"
+              >
+                Age should be at most 44.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('age').errors.pattern"
+                class="text-red-600"
+              >
+                Age should be a valid number.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="nationality" class="block text-gray-700 font-bold mb-2">Nationality</label>
+            <input
+              type="text"
+              id="nationality"
+              name="nationality"
+              class="form-input w-full border border-gray-300 rounded-lg py-2"
+              required
+              formControlName="nation"
+            />
+            <div
+              *ngIf="
+                cricketersForm.get('nation').errors &&
+                (cricketersForm.get('nation').touched ||
+                  cricketersForm.get('nation').dirty)
+              "
+            >
+              <div
+                *ngIf="cricketersForm.get('nation').errors.required"
+                class="text-red-600"
+              >
+                Nationality is required.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('nation').errors.minlength"
+                class="text-red-600"
+              >
+                Nationality should have at least 3 characters.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('nation').errors.maxlength"
+                class="text-red-600"
+              >
+                Nationality should have at most 20 characters.
+              </div>
+              <div
+                *ngIf="cricketersForm.get('nation').errors.pattern"
+                class="text-red-600"
+              >
+                Nationality should only contain letters and spaces.
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center mr-36 mb-6">
+            <div mat-dialog-actions>
+              <button mat-button class="mr-2 bg-gray-200 hover:bg-gray-400 px-4 py-2 rounded" (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                mat-button
+                class="mr-2 bg-gray-200 hover:bg-gray-400 px-4 py-2 rounded"
+                [mat-dialog-close]="cricketersForm.value"
+                cdkFocusInitial
+              >
+                {{ isEdit ? "Update" : "Add" }}
+                
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-dialog-content>
+  </div>
+</div>

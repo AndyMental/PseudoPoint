@@ -76,6 +76,7 @@ def read_all_articles():
 read_article_by_title.example = {"title": "New Study Shows Benefits of Exercise", "author": "John Smith", "content": "A new study has found that regular exercise can improve overall health and reduce the risk of chronic diseases.", "tags": ["exercise", "health"]}
 read_all_articles.example = news_articles
 
+
 @router.post("/", response_model=NewsArticle, description="Creates a new news article.", tags=["News Articles"])
 def create_article(article: NewsArticle):
     """Create a new news article.

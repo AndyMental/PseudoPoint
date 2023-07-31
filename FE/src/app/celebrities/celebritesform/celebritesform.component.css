@@ -1,0 +1,19 @@
+.dialog-content{
+    margin-left: 150px;
+}
+
+.cancel{
+    border: 2px solid rgb(234, 10, 10);
+    
+}
+.cancel:hover {
+    background-color: rgb(244, 46, 46);
+    color: aliceblue;
+}
+.add{
+    border: 2px solid blue;
+}
+.add:hover {
+    background-color: rgb(37, 80, 233);
+    color: aliceblue;
+}
