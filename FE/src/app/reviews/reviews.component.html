@@ -1,0 +1,59 @@
+<div>
+  <button
+  mat-raised-button
+  (click)="openDailog()"
+  color="accent"
+  class="add-button"
+>
+  Add a Review
+</button>
+
+<table mat-table [dataSource]="reviews" class="mat-elevation-z8">
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Movie Title</th>
+    <td mat-cell *matCellDef="let review">
+      {{ review.title }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="reviewer">
+    <th mat-header-cell *matHeaderCellDef>Reviewer</th>
+    <td mat-cell *matCellDef="let review">{{ review.reviewer | titlecase }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="rating">
+    <th mat-header-cell *matHeaderCellDef>Rating</th>
+    <td mat-cell *matCellDef="let review">{{ review.rating }}/5</td>
+  </ng-container>
+
+  <ng-container matColumnDef="review_text">
+    <th mat-header-cell *matHeaderCellDef>Review Text</th>
+    <td mat-cell *matCellDef="let review">
+      {{ review.review_text | titlecase }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions" class="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let review">
+      <button mat-raised-button color="primary" (click)="openDailog(review)">
+        <mat-icon class="material-symbols-outlined">edit</mat-icon>
+        Edit
+      </button>
+
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="deleteReview(review.review_id, review.title)"
+      >
+        <mat-icon class="material-symbols-outlined">delete_forever</mat-icon
+        >DELETE
+      </button>
+    </td></ng-container
+  >
+
+  <tr mat-header-row *matHeaderRowDef="displayedReviewColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedReviewColumns"></tr>
+</table>
+
+</div>

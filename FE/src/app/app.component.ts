@@ -7,12 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'project1';
-   openSidebar() {
-    document.querySelector(".sidebar").classList.toggle("hidden");
-  }
-  collapseSideBar() {
-    document.querySelector(".sidebar").classList.remove("hidden");
-  }
+  
   
 }
 

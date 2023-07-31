@@ -1,0 +1,181 @@
+
+<mat-dialog-content>
+  <form [formGroup]="flightForm">
+    <div>
+      <mat-form-field>
+        <mat-label>Flight Number</mat-label>
+        <input matInput formControlName="flight_number" type="text" required />
+        <mat-error *ngIf="flight_number.invalid && flight_number.touched">
+          <div *ngIf="flight_number.errors?.required">
+            Flight Number is required.
+          </div>
+          <div *ngIf="flight_number.errors?.minlength">
+            Flight Number must be at least 4 characters long.
+          </div>
+          <div *ngIf="flight_number.errors?.maxlength">
+            Flight Number must not be 15 characters long.
+          </div>
+          <div *ngIf="flight_number.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Airline Name</mat-label>
+        <input matInput formControlName="airline" type="text" required />
+        <mat-error *ngIf="airline.invalid && airline.touched">
+          <div *ngIf="airline.errors?.required">Airline name is required.</div>
+          <div *ngIf="airline.errors?.minlength">
+            Airline name must be at least 4 characters long.
+          </div>
+          <div *ngIf="airline.errors?.maxlength">
+            Airline must not be 25 characters long.
+          </div>
+          <div *ngIf="airline.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Origin</mat-label>
+        <input matInput formControlName="origin" type="text" required />
+        <mat-error *ngIf="origin.invalid && origin.touched">
+          <div *ngIf="origin.errors?.required">Origin is required.</div>
+          <div *ngIf="origin.errors?.minlength">
+            Origin must be at least 4 characters long.
+          </div>
+          <div *ngIf="origin.errors?.maxlength">
+            Origin must not be 25 characters long.
+          </div>
+          <div *ngIf="origin.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Destination</mat-label>
+        <input matInput formControlName="destination" type="text" required />
+        <mat-error *ngIf="destination.invalid && destination.touched">
+          <div *ngIf="destination.errors?.required">
+            Destination is required.
+          </div>
+          <div *ngIf="destination.errors?.minlength">
+            Destination must be at least 4 characters long.
+          </div>
+          <div *ngIf="destination.errors?.maxlength">
+            Destination not be 25 characters long.
+          </div>
+          <div *ngIf="destination.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Departure Time</mat-label>
+        <input
+          matInput
+          formControlName="departure_time"
+          [ngxMatDatetimePicker]="departurePicker"
+          required
+        />
+        <ngx-mat-datepicker-toggle
+          matSuffix
+          [for]="departurePicker"
+        ></ngx-mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #departurePicker color="primary">
+          <ngx-mat-datepicker-actions>
+            <button mat-raised-button ngxMatDatepickerApply>
+              <span class="material-symbols-outlined"> done </span>
+            </button>
+          </ngx-mat-datepicker-actions>
+        </ngx-mat-datetime-picker>
+        <mat-error *ngIf="departure_time.invalid && departure_time.touched">
+          <div *ngIf="departure_time.errors?.required">
+            Departure Time is required.
+          </div>
+          <div *ngIf="departure_time.errors?.minlength">
+            Departure Time must be at least 4 characters long.
+          </div>
+          <div *ngIf="departure_time.errors?.maxlength">
+            Departure Time not be 25 characters long.
+          </div>
+          <div *ngIf="departure_time.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Arrival Time</mat-label>
+        <input
+          matInput
+          formControlName="arrival_time"
+          [ngxMatDatetimePicker]="arrivalPicker"
+          required
+        />
+        <ngx-mat-datepicker-toggle
+          matSuffix
+          [for]="arrivalPicker"
+        ></ngx-mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #arrivalPicker color="primary">
+          <ngx-mat-datepicker-actions>
+            <button mat-raised-button ngxMatDatepickerApply>
+              <span class="material-symbols-outlined"> done </span>
+            </button>
+          </ngx-mat-datepicker-actions>
+        </ngx-mat-datetime-picker>
+        <mat-error *ngIf="arrival_time.invalid && arrival_time.touched">
+          <div *ngIf="arrival_time.errors?.required">
+            Arrival Time is required.
+          </div>
+          <div *ngIf="arrival_time.errors?.minlength">
+            Arrival Time must be at least 4 characters long.
+          </div>
+          <div *ngIf="arrival_time.errors?.maxlength">
+            Arrival Time not be 25 characters long.
+          </div>
+          <div *ngIf="arrival_time.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="addFlight()"
+    *ngIf="!flight; else update"
+    [disabled]="flightForm.invalid"
+  >
+    Submit
+  </button>
+  <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+</mat-dialog-actions>
+
+<ng-template #update>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="updateFlight()"
+    [disabled]="flightForm.invalid"
+  >
+    Update
+  </button>
+</ng-template>

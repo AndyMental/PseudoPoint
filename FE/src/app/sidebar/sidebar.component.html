@@ -1,0 +1,108 @@
+<div>
+    <div
+      class="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[280px] overflow-y-auto text-center bg-gray-900"
+    >
+      <div class="text-gray-100 text-l">
+        <div class="p-2.5 mt-1 flex items-center">
+          <button>
+            <div class="w-14 h-14 bg-blue-600 rounded-full flex justify-center items-center ">
+              <span class="material-symbols-outlined text-4xl">
+                api
+                </span> 
+            </div>
+          </button>
+          <a routerLink="/"><h1 class="font-bold text-gray-200 ml-3 text-2xl">PseudoPoint</h1></a> 
+        </div>
+        <div class="my-2 bg-gray-600 h-[1px]"></div>
+      </div>
+  
+      <details class="p-3 mt-3">
+        <summary
+          class="flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white p-3"
+        >
+          <i class="bi bi-journal-text"></i>
+  
+          <div class="flex justify-between w-full items-center">
+            <span class="text-[15px] ml-4 text-gray-200 font-bold uppercase"
+              >Api content</span
+            >
+            <span class="material-symbols-outlined">
+              expand_more
+              </span>
+          </div>
+        </summary>
+  
+        <div class="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold">
+          <a routerLink="/articles">
+          <details class="px-0 py-2.5 mt-3">
+            <summary
+              class="flex items-center rounded-md px-4 py-3 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+            >
+              <div class="flex justify-between w-full items-center">
+                <span class="material-symbols-outlined">
+                  newsmode
+                  </span>
+                <span class="text-[15px] ml-4 text-gray-200 font-bold uppercase"
+                  >News Articles</span
+                >
+              </div>
+            </summary>
+          </details>
+        </a>
+  
+          <a routerLink="/flights"
+            ><details class="px-0 py-2.5 mt-3">
+              <summary
+                class="flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white py-3"
+              >
+                <div class="flex w-full items-center">
+                  <span class="material-symbols-outlined">
+                    flight_takeoff
+                    </span>
+                  <span class="text-[15px] ml-5 text-gray-200 font-bold uppercase"
+                    >Flights</span
+                  >
+                </div>
+              </summary>
+            </details>
+          </a>
+          <a routerLink="/reviews">
+          <details class="px-0 py-2.5 mt-3">
+            <summary
+              class="flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white py-3"
+            >
+              <div class="flex justify-between w-full items-center">
+                <span class="material-symbols-outlined">
+                  movie
+                  </span>
+                <span class="text-[15px] ml-4 text-gray-200 font-bold uppercase"
+                  >Movie Reviews</span
+                >
+              </div>
+            </summary>
+          
+          </details>
+          </a>
+  
+          <a routerLink="/weather">
+          <details class="px-0 py-2.5 mt-3">
+            <summary
+              class="flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white py-3"
+            >
+              <div class="flex w-full items-center">
+                <span class="material-symbols-outlined">
+                  partly_cloudy_day
+                  </span>
+                <span class="text-[15px] ml-5 text-gray-200 font-bold uppercase"
+                  >Weather</span
+                >
+                <span class="text-sm"><i class="bi bi-chevron-down"></i></span>
+              </div>
+            </summary>
+          </details>
+          </a>
+        </div>
+      </details>
+    </div>
+  </div>
+  

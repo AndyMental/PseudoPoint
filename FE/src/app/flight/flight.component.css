@@ -1,0 +1,30 @@
+[mat-raised-button]{
+    padding: 20px;
+    border-radius: 50px;
+    margin:5px;
+}
+
+.mat-mdc-table .mat-mdc-header-cell{
+    background-color: rgb(189, 189, 189);
+    font-size: medium;
+}
+
+.mat-mdc-table{
+    margin: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.add-button{
+    position: relative;
+    top: 0%;
+    left: 2%;
+    padding: 25px 20px; 
+    margin-bottom:15px;
+}
+
+.mat-mdc-table .mdc-data-table__row {
+ height: 62px;
+}
+
+
