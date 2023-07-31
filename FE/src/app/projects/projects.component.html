@@ -1,0 +1,52 @@
+<div class="flex flex-col mt-1 ml-56 ">
+    <div class="relative">
+      <button class="bg-blue-500  hover:bg-blue-700 text-white py-1 px-2 rounded absolute top-0 right-0 mt-2 mr-10" (click)="openAddRecordForm()">
+        Add Project
+      </button>
+    </div>
+    <h2 class="text-xl font-serif text-center mb-4">- Api Data for Projects -</h2>
+  
+    <div class="table-container border rounded overflow-x-auto ml-10 pl-10">
+      <table  class="w-full min-w-max text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th class="px-6 py-3 border-b">Id</th>
+            <th class="px-6 py-3 border-b">Project Name</th>
+            <th class="px-6 py-3 border-b">Company</th>
+
+            <th class="px-6 py-3 border-b">
+              <button>DELETE</button>
+            </th>
+            <th class="px-6 py-3 border-b">
+              <button>UPDATE</button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of proj" class="bg-white">
+            <td class="px-6 py-4 border-b">{{ i.id }}</td>
+            <td class="px-6 py-4 border-b">{{ i.project_name }}</td>
+            <td class="px-6 py-4 border-b">{{ i.company }}</td>
+
+            <td class="px-6 py-4 border-b">
+              <button class="flex items-center hover:text-red-500" (click)="deleteProject(i.id)">
+                Delete &nbsp;&nbsp;
+                <i class="bi bi-trash"></i> &nbsp;&nbsp;&nbsp;
+              </button>
+            </td>
+            <td class="px-6 py-4 border-b">
+              <button  class="flex items-center hover:text-blue-500" (click)="updateExistingProject(i.id)">
+                Update&nbsp;&nbsp;
+                <i class="bi bi-pencil"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+    </div>
+  </div>
+
+<app-message-dialog *ngIf="showSuccessMessage" [message]="successMessage"></app-message-dialog>
+<app-error-toast *ngIf="errorMessage" [errorMessage]="errorMessage"></app-error-toast>
+  
