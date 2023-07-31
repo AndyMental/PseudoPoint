@@ -5,14 +5,16 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
-  title = 'project1';
-   openSidebar() {
-    document.querySelector(".sidebar").classList.toggle("hidden");
-  }
-  collapseSideBar() {
-    document.querySelector(".sidebar").classList.remove("hidden");
-  }
+    public title = 'project1';
+  //   openSidebar() {
+  //   document.querySelector(".sidebar").classList.toggle("hidden");
+  // }
+  // collapseSideBar() {
+  //   document.querySelector(".sidebar").classList.remove("hidden");
+  // }
+  
   
 }
 

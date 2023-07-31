@@ -1,0 +1,54 @@
+<div class="add-button-container">
+  <button class="add-button" (click)="openAddEvent()">
+    <mat-icon></mat-icon>
+    Add Event
+  </button>
+</div>
+<div class="table-wrapper">
+<table #eventTable mat-table mat-table [dataSource]="event" class="mat-elevation-z6   mat-table--compact my-table">
+
+  <ng-container matColumnDef="event_id">
+    <th mat-header-cell *matHeaderCellDef style="width: 40px;"> EventID </th>
+    <td mat-cell *matCellDef="let events" style="width: 40px;"> {{events.event_id}} </td>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="names">
+    <th mat-header-cell *matHeaderCellDef style="width: 180px;"> Name </th>
+    <td mat-cell *matCellDef="let events" style="width: 180px;"> {{events.names}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef style="width: 120px;"> Date </th>
+    <td mat-cell *matCellDef="let events" style="width: 120px;"> {{events.date}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef style="width: 180px;"> Location </th>
+    <td mat-cell *matCellDef="let events" style="width: 180px;"> {{events.location}} </td>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef style="width: 220px;"> Description </th>
+    <td mat-cell *matCellDef="let events" style="width: 220px;"> {{events.description}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let events">
+      <button  class="edit-button" (click)="updateExistingEvent(events.event_id)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      
+      <button class="delete-button"(click)="deleteEvent(events.event_id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
