@@ -16,9 +16,7 @@
 }
 
 .add-button{
-    position: relative;
-    top: 0%;
-    left: 2%;
+    float: right;
     padding: 25px 20px; 
     margin-bottom:15px;
 }

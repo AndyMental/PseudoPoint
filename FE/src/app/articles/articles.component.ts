@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Article } from '../shared/model/article';
 import { ArticlesService } from '../shared/services/articles.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDailogComponent } from '../delete-confirmation-dailog/delete-confirmation-dailog.component';
 import { ArticleFormComponent } from './article-form/article-form.component';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-articles',
@@ -16,6 +17,8 @@ export class ArticlesComponent {
   public articles: Article[] = [];
   public articleTitle: string;
   public currentArticle: Article | null;
+  @ViewChild(MatTable) public articlesTable: MatTable<Article>;
+
 
   public displayedColumns: string[] = [
     'title',
@@ -83,12 +86,12 @@ export class ArticlesComponent {
     const existingIndex = this.articles.findIndex(
       (article) => article.title === articleData.title
     );
-
     if (existingIndex !== -1) {
       this.articles.splice(existingIndex, 1, articleData);
     } else {
       this.articles.push(articleData);
     }
-    this.articles = [...this.articles];
+    this.articlesTable.renderRows();
+
   }
 }

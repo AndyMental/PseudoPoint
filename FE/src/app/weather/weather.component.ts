@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Weather } from '../shared/model/weather';
 import { WeatherService } from '../shared/services/weather.service';
 import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
@@ -6,6 +6,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDailogComponent } from '../delete-confirmation-dailog/delete-confirmation-dailog.component';
 import { WeatherFormComponent } from './weather-form/weather-form.component';
+import { MatTable } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-weather',
@@ -17,6 +19,8 @@ export class WeatherComponent {
   public weather_id: string;
   public city: string;
   public currentWeatherDetails: Weather | null;
+  @ViewChild(MatTable) public weatherDataTable: MatTable<Weather>;
+
 
   public displayedColumns: string[] = [
     'city',
@@ -92,6 +96,7 @@ export class WeatherComponent {
     } else {
       this.weatherData.push(weatherDetail);
     }
-    this.weatherData = [...this.weatherData];
+    this.weatherDataTable.renderRows();
+
   }
 }

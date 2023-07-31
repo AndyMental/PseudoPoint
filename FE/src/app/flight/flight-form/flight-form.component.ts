@@ -14,6 +14,7 @@ import {
 } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-flight-form',
@@ -23,13 +24,19 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class FlightFormComponent implements OnInit {
   private regEx: RegExp = /^[^\s]+(\s+[^\s]+)*$/;
   public flightForm: FormGroup;
+  private currentDate: moment.Moment = moment(new Date());
+  public minDate: moment.Moment;
+  public maxDate: moment.Moment;
 
   constructor(
     private flightService: FlightsService,
     private toast: ToastService,
     public dialogRef: MatDialogRef<FlightFormComponent>,
     @Inject(MAT_DIALOG_DATA) public flight: Flight
-  ) {}
+  ) {
+    this.minDate = moment(this.currentDate, 'DD-MM-YYYY').subtract(2, 'month');
+    this.maxDate = moment(this.currentDate, 'DD-MM-YYYY').add(2, 'month');
+  }
 
   ngOnInit(): void {
     this.flightForm = new FormGroup({

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Review } from '../shared/model/review';
 import { ReviewsService } from '../shared/services/reviews.service';
 import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
@@ -6,6 +6,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDailogComponent } from '../delete-confirmation-dailog/delete-confirmation-dailog.component';
 import { ReviewFormComponent } from './review-form/review-form.component';
+import { MatTable } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-reviews',
@@ -17,6 +19,7 @@ export class ReviewsComponent {
   public reviewId: string;
   public title: string;
   public currentReview: Review | null;
+  @ViewChild(MatTable) public reviewsTable: MatTable<Review>;
 
   public displayedReviewColumns: string[] = [
     'title',
@@ -90,6 +93,6 @@ export class ReviewsComponent {
     } else {
       this.reviews.push(reviewDetail);
     }
-    this.reviews = [...this.reviews];
+    this.reviewsTable.renderRows();
   }
 }

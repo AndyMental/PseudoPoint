@@ -66,7 +66,7 @@ export class ArticleFormComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(4),
+          Validators.minLength(15),
           Validators.maxLength(150),
           spaceValidator(this.regEx),
         ],

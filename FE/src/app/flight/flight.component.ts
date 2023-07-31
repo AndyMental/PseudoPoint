@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlightsService } from '../shared/services/flights.service';
 import { Flight } from '../shared/model/flights';
 import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { FlightFormComponent } from './flight-form/flight-form.component';
 import { DeleteConfirmationDailogComponent } from '../delete-confirmation-dailog/delete-confirmation-dailog.component';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-flight',
@@ -17,6 +18,8 @@ export class FlightComponent implements OnInit {
   public flightId: string;
   public flightNumber: string;
   public currentFlight: Flight | null;
+  @ViewChild(MatTable) public flightsTable: MatTable<Flight>;
+
 
   public displayedColumns: string[] = [
     'flight_number',
@@ -92,6 +95,7 @@ export class FlightComponent implements OnInit {
     } else {
       this.flights.push(flightDetail);
     }
-    this.flights = [...this.flights];
+    this.flightsTable.renderRows();
+
   }
 }

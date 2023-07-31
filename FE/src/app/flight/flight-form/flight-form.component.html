@@ -1,4 +1,3 @@
-
 <mat-dialog-content>
   <form [formGroup]="flightForm">
     <div>
@@ -87,7 +86,10 @@
         <input
           matInput
           formControlName="departure_time"
+          [min]="minDate"
+          [max]="maxDate"
           [ngxMatDatetimePicker]="departurePicker"
+          placeholder="MM/DD/YYYY, 00:00:00 AM/PM"
           required
         />
         <ngx-mat-datepicker-toggle
@@ -125,6 +127,7 @@
           matInput
           formControlName="arrival_time"
           [ngxMatDatetimePicker]="arrivalPicker"
+          placeholder="MM/DD/YYYY, 00:00:00 AM/PM"
           required
         />
         <ngx-mat-datepicker-toggle

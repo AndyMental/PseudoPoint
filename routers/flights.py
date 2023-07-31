@@ -19,25 +19,25 @@ class Flight(BaseModel):
 
 flights = [
     Flight(flight_id=uuid.uuid1().hex, flight_number="AA123", airline="American Airlines", origin="New York", destination="Los Angeles",
-           departure_time="2022-01-01 08:00:00", arrival_time="2022-01-01 11:00:00"),
+           departure_time="2023-07-01 08:00:00", arrival_time="2023-07-15 11:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="DL456", airline="Delta Air Lines", origin="Los Angeles", destination="New York",
-           departure_time="2022-01-01 12:00:00", arrival_time="2022-01-01 15:00:00"),
+           departure_time="2023-07-01 12:00:00", arrival_time="2023-07-15 15:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="UA789", airline="United Airlines", origin="Chicago", destination="San Francisco",
-           departure_time="2022-01-01 10:00:00", arrival_time="2022-01-01 13:00:00"),
+           departure_time="2023-07-02 10:00:00", arrival_time="2023-07-16 13:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="WN012", airline="Southwest Airlines", origin="Dallas", destination="Denver",
-           departure_time="2022-01-01 09:00:00", arrival_time="2022-01-01 10:00:00"),
+           departure_time="2023-07-01 09:00:00", arrival_time="2023-07-15 10:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="B6123", airline="JetBlue Airways", origin="Boston", destination="Miami",
-           departure_time="2022-01-01 11:00:00", arrival_time="2022-01-01 14:00:00"),
+           departure_time="2023-07-05 11:00:00", arrival_time="2023-07-20 14:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="AS456", airline="Alaska Airlines", origin="Seattle", destination="Portland",
-           departure_time="2022-01-01 13:00:00", arrival_time="2022-01-01 14:00:00"),
+           departure_time="2023-07-01 13:00:00", arrival_time="2023-07-15 14:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="F9123", airline="Frontier Airlines", origin="Denver", destination="Las Vegas",
-           departure_time="2022-01-01 15:00:00", arrival_time="2022-01-01 16:00:00"),
+           departure_time="2023-07-01 15:00:00", arrival_time="2023-07-15 16:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="NK456", airline="Spirit Airlines", origin="Orlando", destination="Newark",
-           departure_time="2022-01-01 16:00:00", arrival_time="2022-01-01 19:00:00"),
+           departure_time="2023-07-01 16:00:00", arrival_time="2023-07-05 19:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="SY789", airline="Sun Country Airlines", origin="Minneapolis", destination="Phoenix",
-           departure_time="2022-01-01 14:00:00", arrival_time="2022-01-01 17:00:00"),
+           departure_time="2023-07-01 14:00:00", arrival_time="2023-07-06 17:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="G0123", airline="Allegiant Air", origin="Las Vegas", destination="Bellingham",
-           departure_time="2022-01-01 18:00:00", arrival_time="2022-01-01 20:00:00")
+           departure_time="2023-07-01 18:00:00", arrival_time="2023-07-23 20:00:00")
 ]
 
 router = APIRouter()
@@ -101,19 +101,8 @@ def add_flight(flight: Flight):
     flights.append(flight)
     return flight
 
-
-# @router.delete("/", response_model=Flight, description="Returns teh deleted flight data", tags=['Flights'])
-# def delete_flight():
-# #     print(flight_id)
-# #     for i in range(len(flights)):
-# #         if flights[i]['flight_id'] == flight_id:
-# #             del flights[i]
-# #             break
-#     return flights
-
-
 @router.delete("/{flight_id}", description="Deletes a specific flight.", tags=["Flights"])
-def delete_article(flight_id:str):
+def delete_article(flight_id: str):
     """Delete a specific flight.
 
     This endpoint deletes a specific flight.
@@ -126,6 +115,7 @@ def delete_article(flight_id:str):
             del flights[index]
             return {"detail": "Flight deleted"}
     raise HTTPException(status_code=404, detail="Flight not found")
+
 
 @router.put("/{flight_id}", response_model=Flight, description="Update a specific flight details", tags=["Flights"])
 def update_flights(flight_id: str, flight_dict: Flight):
@@ -143,7 +133,8 @@ def update_flights(flight_id: str, flight_dict: Flight):
     Raises:
         HTTPException: If the flight is not found, a 404 error is raised.
 #     """
-    index = next((index for index, existing_flight in enumerate(flights) if existing_flight.flight_id == flight_id), None)
+    index = next((index for index, existing_flight in enumerate(
+        flights) if existing_flight.flight_id == flight_id), None)
     if index is None:
         raise HTTPException(status_code=404, detail="Event not found")
     flights[index] = flight_dict
