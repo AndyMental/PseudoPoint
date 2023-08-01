@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Feature } from '../shared/model/geograpgy';
 import { GeographyService } from '../shared/services/geography.service';
-import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
+// import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
+import { ToastService,TOAST_STATE } from '../shared/services/Toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeoFormComponent } from './geo-form/geo-form.component';

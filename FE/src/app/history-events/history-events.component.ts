@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HistoryEvents } from '../shared/model/event';
 import { HistoryEventsService } from '../shared/services/history-events.service';
-import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
+// import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
+import { ToastService,TOAST_STATE } from '../shared/services/Toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HeventFormComponent } from './hevent-form/hevent-form.component';
