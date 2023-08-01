@@ -5,8 +5,8 @@ import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HeventFormComponent } from './hevent-form/hevent-form.component';
-import { MatTableDataSource } from '@angular/material/table';
-import {MatTable} from '@angular/material';
+import { MatTable } from '@angular/material/table';
+import * as list from 'postcss/lib/list';
 
 @Component({
   selector: 'app-history-events',
@@ -14,7 +14,7 @@ import {MatTable} from '@angular/material';
   styleUrls: ['./history-events.component.css']
 })
 export class HistoryEventsComponent  implements OnInit{
-  @ViewChild(MatTable) myTable!: MatTable<any>;
+@ViewChild(MatTable) histotyTable!: MatTable<any>;
  public historicalEvents: HistoryEvents[]=[];
  public editMode:boolean=false;
  public editedEvent: HistoryEvents= null;
@@ -25,11 +25,10 @@ export class HistoryEventsComponent  implements OnInit{
   private toastservice:ToastService,
    private dialog: MatDialog,
    private snackBar: MatSnackBar) {}
-   public dataSource: MatTableDataSource<HistoryEvents>;
+   
 
    ngOnInit():void{
       this.getAllHistoricalEvents();
-      this.dataSource = new MatTableDataSource<HistoryEvents>(this.historicalEvents);
    }
   private getAllHistoricalEvents():void{
         this.historicalEventService.getAllHistoricalEvents().subscribe((event)=>{
@@ -46,7 +45,7 @@ export class HistoryEventsComponent  implements OnInit{
         this.showDeleteConfirmationModal = false;
       }
       
-    public  deleteItemConfirmed():void {
+    private  deleteItemConfirmed():void {
         this.showDeleteConfirmationModal = false;
         this.historicalEventService.deleteHistoricalEvent(this.eventToDelete).subscribe(
           () => {
@@ -58,6 +57,7 @@ export class HistoryEventsComponent  implements OnInit{
           }
         );
       }
+
     public  openFormDialog(editMode: boolean, eventEntry?: HistoryEvents): void {
         const dialogRef = this.dialog.open(HeventFormComponent, {
           width: '300px',
@@ -79,12 +79,12 @@ export class HistoryEventsComponent  implements OnInit{
         });
       }
 
-public onAddNewHistoricalEvent(newEventEntry:HistoryEvents):void{
+private onAddNewHistoricalEvent(newEventEntry:HistoryEvents):void{
   this.historicalEventService.createHistoricalEvent(newEventEntry).subscribe((
     response:HistoryEvents)=>{
       {
         this.historicalEvents.push(response);
-        this.dataSource.data = this.historicalEvents;
+        this.histotyTable.renderRows();
       }
       this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
       },
@@ -94,12 +94,13 @@ public onAddNewHistoricalEvent(newEventEntry:HistoryEvents):void{
   );
 }
 
- public onUpdateHistoryEvent(updateEvent:HistoryEvents):void{
+ private onUpdateHistoryEvent(updateEvent:HistoryEvents):void{
   this.historicalEventService.updateHistoricalEvent(updateEvent).subscribe(()=>
   {
     const index=this.historicalEvents.findIndex((item)=>item.ID===updateEvent.ID);
     if(index!==-1){
       this.historicalEvents[index]=updateEvent;
+      this.histotyTable.renderRows();
       this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
     }
     this.editedEvent=null;

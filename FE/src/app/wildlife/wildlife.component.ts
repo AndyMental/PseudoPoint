@@ -1,11 +1,11 @@
-import { Component, OnInit,ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { WildlifeService } from '../shared/services/wildlife.service';
 import { WilldLife } from '../shared/model/wildlife';
 import { FormComponent } from './form/form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
-import { Router } from '@angular/router';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-wildlife',
@@ -18,13 +18,13 @@ export class WildlifeComponent implements OnInit {
  public existingWildlife: WilldLife = null;
  public showDeleteConfirmationModal:boolean=false;
  public speciesToDelete:number;
+@ViewChild(MatTable) wildlifeTable!:MatTable<any>;
 
  constructor(private wildlifeService: WildlifeService, 
     private toastservice:ToastService,
      private dialog: MatDialog,
      private snackBar: MatSnackBar,
-     private router: Router,
-     private cdr: ChangeDetectorRef) {}
+  ) {}
 
   ngOnInit(): void {
     this.fetchWildlifeData();
@@ -45,7 +45,7 @@ export class WildlifeComponent implements OnInit {
     this.showDeleteConfirmationModal = false;
   }
 
- public deleteItemConfirmed():void {
+ private deleteItemConfirmed():void {
     this.showDeleteConfirmationModal = false;
     this.wildlifeService.delete(this.speciesToDelete).subscribe(
       () => {
@@ -92,11 +92,12 @@ private  onUpdateWildlifeEntry(updatedWildlife: WilldLife): void {
         const index = this.wildlife.findIndex((item) => item.id === updatedWildlife.id);
         if (index !== -1) {
           this.wildlife[index] = updatedWildlife;
+          this.wildlifeTable.renderRows();
           this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
         }
         this.existingWildlife = null; 
-        this.router.navigate(['/wild']);
-        this.cdr.detectChanges(); 
+        
+         
       },
       (error) => {
         this.toastservice.showToast(TOAST_STATE.danger, 'Something went wrong');
@@ -113,8 +114,7 @@ private  onUpdateWildlifeEntry(updatedWildlife: WilldLife): void {
         } else {
           this.wildlife.push(response); 
         }
-        this.cdr.detectChanges(); 
-        this.router.navigate(['/wild']);
+        this.wildlifeTable.renderRows();
         this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
       },
       (error) => {

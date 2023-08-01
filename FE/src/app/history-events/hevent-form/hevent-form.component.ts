@@ -24,9 +24,7 @@ export class HeventFormComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.isEditMode = this.data.editMode;
-    if (!this.isEditMode && this.historicalEvents && this.historicalEvents.length > 0) {
-   //this.patchID();
-    } else if (this.isEditMode && this.data.eventEntry) {
+    if (this.isEditMode && this.data.eventEntry) {
       this.patchForm(this.data.eventEntry);
     }
   }
@@ -39,27 +37,22 @@ export class HeventFormComponent implements OnInit {
     });
   }
 
-  patchID(): void {
-    const maxID = Math.max(...this.historicalEvents.map((event) => event.ID), 0);
-    this.newEventForm.patchValue({ ID: maxID + 1 });
-  }
-
   private patchForm(eventEntry: HistoryEvents): void {
     this.newEventForm.patchValue(eventEntry);
   }
 
-  onSave(): void {
+ public onSave(): void {
     if (this.newEventForm.valid) {
       const formValue = this.newEventForm.value;
       this.dialogRef.close(formValue);
     }
   }
 
-  onCancel(): void {
+ public onCancel(): void {
     this.dialogRef.close();
   }
 
-  getYear() {
+ public getYear() :number{
     const today = new Date();
     return today.getFullYear();
   }

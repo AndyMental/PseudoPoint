@@ -1,10 +1,11 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input,ViewChild } from '@angular/core';
 import { Feature } from '../shared/model/geograpgy';
 import { GeographyService } from '../shared/services/geography.service';
 import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeoFormComponent } from './geo-form/geo-form.component';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-geography',
@@ -12,7 +13,8 @@ import { GeoFormComponent } from './geo-form/geo-form.component';
   styleUrls: ['./geography.component.css']
 })
 export class GeographyComponent implements OnInit {
- public features: Feature[] = [];
+ @ViewChild(MatTable) geograpghyTable!:MatTable<any>;
+  public features: Feature[] = [];
  public editMode:boolean=false;
  public selectedFeatureForUpdate: Feature = null;
  public showDeleteConfirmationModal:boolean=false;
@@ -84,6 +86,7 @@ public deleteItemConfirmed() :void {
       this.geographyFeaturesService.createGeographicalFeature(newFeature).subscribe(
         (response) => {
           this.features.push(response);
+          this.geograpghyTable.renderRows()
           this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
         },
         (error) => {
@@ -99,6 +102,7 @@ private  onUpdateGeoFeature(updateFeature:Feature):void{
     const index=this.features.findIndex((item)=>item.id === updateFeature.id);
     if(index!==-1){
       this.features[index]=updateFeature;
+      this.geograpghyTable.renderRows()
       this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
     }
     this.selectedFeatureForUpdate=null;

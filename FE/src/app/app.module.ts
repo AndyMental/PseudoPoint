@@ -46,7 +46,7 @@ import { MatIconModule } from '@angular/material/icon';
     PopupformComponent,
     SidebarComponent,
     ConfirmationComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
   ],
   imports: [
     BrowserModule,

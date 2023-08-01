@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WeightService } from '../shared/services/weight.service';
 import { WeightConversionResponse, WeightConversionRequest } from 'src/app/shared/model/weight';
-import { MatTableDataSource } from '@angular/material/table';
 import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -70,6 +69,7 @@ this.weightConversionService.deleteCelestialFactor(this.celestialToDelete).subsc
   );
 }
 
+
 openFormDialog(editMode:boolean,celestialEntry?:WeightConversionResponse):void{
   const dialogRef = this.dialog.open(FormWeightComponent, {
     width: '250px',
@@ -108,7 +108,7 @@ convertWeight() :void{
           );
 }
 
-addNewCelestialFactor(newCelestial:WeightConversionResponse):void {
+public addNewCelestialFactor(newCelestial:WeightConversionResponse):void {
   this.weightConversionService.addCelestialFactor(newCelestial.celestial_object,newCelestial.weight).subscribe(
           (response) => {
             this.celestialData[response.celestial_object] = response.weight;
@@ -120,7 +120,7 @@ addNewCelestialFactor(newCelestial:WeightConversionResponse):void {
           )}
         
 
-  getWeightForCelestialObject(getCelestial:WeightConversionResponse):void{
+ public getWeightForCelestialObject(getCelestial:WeightConversionResponse):void{
     this.results = [];
     this.weightConversionService.getWeightForCelestialObject(getCelestial.celestial_object,getCelestial.weight).subscribe(
         (data: WeightConversionResponse) => {

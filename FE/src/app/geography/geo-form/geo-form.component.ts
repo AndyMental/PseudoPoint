@@ -22,9 +22,7 @@ export class GeoFormComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.isEditMode = this.data.editMode;
-    if (!this.isEditMode && this.features && this.features.length > 0) {
-      //this.patchId();
-    } else if (this.isEditMode && this.data.geographyEntry) {
+   if (this.isEditMode && this.data.geographyEntry) {
       this.patchForm(this.data.geographyEntry);
     }
   }
@@ -47,7 +45,7 @@ export class GeoFormComponent implements OnInit {
     });
   }
 
-  onSave(): void {
+ public onSave(): void {
     if (this.newFeatureForm.valid) {
       const formValue = this.newFeatureForm.value;
       const newFeature: Feature = {
@@ -62,7 +60,7 @@ export class GeoFormComponent implements OnInit {
     }
   }
 
-  onCancel(): void {
+ public onCancel(): void {
     this.dialogRef.close();
   }
 }

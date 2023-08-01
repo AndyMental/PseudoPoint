@@ -46,17 +46,17 @@ export class FormComponent implements OnInit {
     this.newWildLifeForm.patchValue(wildlifeEntry);
   }
 
-  onSave(): void {
+ public onSave(): void {
     if (this.newWildLifeForm.valid) {
       const formValue = this.newWildLifeForm.value;
       this.dialogRef.close(formValue);
     }
   }
 
-  onCancel(): void {
+ public onCancel(): void {
     this.dialogRef.close();
   }
-  getTodayDate(): string {
+ public getTodayDate(): string {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth() + 1; // Months are zero-based
