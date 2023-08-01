@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RealEstateListing } from '../shared/model/real-estate';
 import { RealEstateService } from '../shared/services/real-estate.service';
 import { RealEstateFormComponent } from '../real-estate-form/real-estate-form.component';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { ToastService,TOAST_STATE} from '../shared/services/toast.service';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-real-estate',
@@ -16,6 +17,7 @@ export class RealEstateComponent implements OnInit {
   public errorMessage: string = '';
   public showConfirmationModal: boolean = false;
   public confirmationListingId: number = 0;
+  @ViewChild(MatTable) realEstate: MatTable<RealEstateListing>;
 
   constructor(
     private realEstateService: RealEstateService,
@@ -32,8 +34,6 @@ export class RealEstateComponent implements OnInit {
       (listings: RealEstateListing[]) => {
         this.realEstateListings = listings;
       },
-      (error) => {
-      }
     );
   }
 
@@ -58,13 +58,8 @@ export class RealEstateComponent implements OnInit {
     this.realEstateService.createListing(newProperty).subscribe(
       (response: RealEstateListing) => {
         this.realEstateListings.push(response);
-        this.fetchRealEstateListings();
+        this.realEstate.renderRows();
         this.toastservice.showToast(TOAST_STATE.success, 'Data added Successfully');
-        // this.showSuccessMessage = true;
-        // this.successMessage = 'New Property added successfully!';
-        // setTimeout(() => {
-        //   this.showSuccessMessage = false;
-        // }, 3000);
       },
       (error) => {
         if (error?.error?.detail?.length > 0) {
@@ -90,7 +85,7 @@ export class RealEstateComponent implements OnInit {
         );
         if (index !== -1) {
           this.realEstateListings[index] = response;
-          this.fetchRealEstateListings();
+          this.realEstate.renderRows();
           this.toastservice.showToast(TOAST_STATE.success, 'Data updated Successfully');
         }
       },
@@ -129,6 +124,7 @@ export class RealEstateComponent implements OnInit {
     this.realEstateService.deleteListing(listingId).subscribe(
       (deletedListing: RealEstateListing) => {
         this.realEstateListings = this.realEstateListings.filter(listing => listing.id !== deletedListing.id);
+        this.realEstate.renderRows();
         this.toastservice.showToast(TOAST_STATE.success, 'Data deleted Successfully');
       },
       (error) => {

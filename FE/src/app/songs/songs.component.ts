@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Song } from '../shared/model/song';
 import { SongService } from '../shared/services/song.service';
 import { SongFormComponent } from '../song-form/song-form.component';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { ToastService,TOAST_STATE} from '../shared/services/toast.service';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-songs',
@@ -15,6 +16,7 @@ export class SongsComponent implements OnInit {
   public songs: Song[] = [];
   public songToUpdate: Song | null = null;
   public errorMessage:string = '';
+  @ViewChild(MatTable) songsTable: MatTable<Song>;
 
   constructor(private songService: SongService, private dialog: MatDialog , private toastservice:ToastService ) {}
 
@@ -41,14 +43,14 @@ export class SongsComponent implements OnInit {
             const index = this.songs.findIndex((s) => s.id === song.id);
             if (index !== -1) {
               this.songs[index] = updatedSong;
-              this.loadSongs();
+              this.songsTable.renderRows();
               this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
             }
           });
         } else {
           this.songService.createSong(result).subscribe((createdSong) => {
             this.songs.push(createdSong);
-            this.loadSongs();
+            this.songsTable.renderRows();
             this.toastservice.showToast(TOAST_STATE.success, 'Data added Successfully');
           });
         }

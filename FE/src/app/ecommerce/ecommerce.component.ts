@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EcommerceService } from '../shared/services/ecommerce.service';
 import { Product } from '../shared/model/ecommerce';
 import { EcommerceFormComponent } from '../ecommerce-form/ecommerce-form.component';
 import { ConfirmationModalComponent} from '../confirmation-modal/confirmation-modal.component';
 import { ToastService,TOAST_STATE} from '../shared/services/toast.service';
+import { MatTable } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-ecommerce',
@@ -13,7 +15,8 @@ import { ToastService,TOAST_STATE} from '../shared/services/toast.service';
 })
 export class EcommerceComponent implements OnInit {
   public products: Product[] = [];
-  public errorMessage:string = ''
+  public errorMessage:string = '';
+  @ViewChild(MatTable) ecommerceTable: MatTable<Product>;
 
   constructor(
     private ecommerceService: EcommerceService,
@@ -29,9 +32,6 @@ export class EcommerceComponent implements OnInit {
     this.ecommerceService.getProducts().subscribe(
       (data) => {
         this.products = data;
-      },
-      (error) => {
-        console.error(error);
       }
     );
   }
@@ -50,6 +50,7 @@ export class EcommerceComponent implements OnInit {
               const index = this.products.findIndex((p) => p.id === product.id);
               if (index !== -1) {
                 this.products[index] = updatedProduct;
+                this.ecommerceTable.renderRows();
               }
               this.toastservice.showToast(TOAST_STATE.success, 'Data updated Successfully');
             },
@@ -71,6 +72,7 @@ export class EcommerceComponent implements OnInit {
           this.ecommerceService.createProduct(result).subscribe(
             (createdProduct) => {
               this.products.push(createdProduct);
+              this.ecommerceTable.renderRows();
               this.toastservice.showToast(TOAST_STATE.success, 'Data added Successfully');
             },
             (error) => {
@@ -106,6 +108,7 @@ export class EcommerceComponent implements OnInit {
         this.ecommerceService.deleteProduct(id).subscribe(
           () => {
             this.products = this.products.filter((product) => product.id !== id);
+            this.ecommerceTable.renderRows();
             this.toastservice.showToast(TOAST_STATE.success, 'Data deleted Successfully');
           },
           (error) => {

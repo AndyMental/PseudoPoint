@@ -5,7 +5,7 @@
   </button>
 </div>
 <div class="mat-elevation-z8 ml-80 mr-10">
-  <table mat-table [dataSource]="products" class="w-3/4">
+  <table mat-table #ecommerceTable [dataSource]="products" class="w-3/4">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>ID</th>

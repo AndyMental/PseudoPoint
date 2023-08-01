@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { StockService } from '../shared/services/stocks.service';
 import { Stocks } from '../shared/model/stocks';
 import { StockFormComponent } from '../stock-form/stock-form.component';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { ToastService,TOAST_STATE} from '../shared/services/toast.service';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-stocks',
@@ -14,6 +15,7 @@ import { ToastService,TOAST_STATE} from '../shared/services/toast.service';
 export class StocksComponent implements OnInit {
   public stocks: Stocks[];
   public errorMessage:string = '';
+  @ViewChild(MatTable) stocksTable: MatTable<Stocks>;
 
   constructor(
     private stockService: StockService,
@@ -91,11 +93,12 @@ export class StocksComponent implements OnInit {
           const updatedStockIndex = this.stocks.findIndex(s => s.id === stock.id);
           if (updatedStockIndex !== -1) {
             this.stocks[updatedStockIndex] = result;
-            this.loadStocks();
+            this.stocksTable.renderRows();
             this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
           }
         } else {
           this.stocks.push(result);
+          this.stocksTable.renderRows();
           this.toastservice.showToast(TOAST_STATE.success, 'Data added Successfully');
         }
       }
