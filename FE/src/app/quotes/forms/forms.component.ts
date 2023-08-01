@@ -67,7 +67,7 @@ export class FormsComponent implements OnInit {
     });
   }
   public showEditForm(quote: Quotes) {
-    console.log();
+    
     this.isEdit = true;
     this.quotesForm.patchValue({
       id: quote.id,
@@ -90,7 +90,7 @@ export class FormsComponent implements OnInit {
     }
   }
 
-  update_existing_quote() {
+  public update_existing_quote() {
     if (this.quotesForm.valid) {
       const updateQuote: Quotes = {
         id: this.quotesForm.value.id,

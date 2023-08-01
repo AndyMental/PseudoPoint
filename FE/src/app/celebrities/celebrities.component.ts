@@ -3,13 +3,9 @@ import { Celebrities } from '../shared/model/celebrities';
 import { CelebritiesService } from '../shared/services/celebrities.service';
 import { CelebritesformComponent } from '../celebrities/celebritesform/celebritesform.component';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
-
+import { MatTable } from '@angular/material/table';
 @Component({
   selector: 'app-celebrities',
   templateUrl: './celebrities.component.html',
@@ -32,7 +28,7 @@ export class CelebritiesComponent implements OnInit {
   public isEdit = false;
   @ViewChild(CelebritesformComponent, { static: false })
   public formComponent!: CelebritesformComponent;
-  public showForm = false;
+  @ViewChild(MatTable) CelebritiesTable!:MatTable<Celebrities>;
   public newcelebs: Celebrities = {
     id: null,
     name: '',
@@ -59,15 +55,15 @@ export class CelebritiesComponent implements OnInit {
     });
   }
 
-  delete_Celebrity_Details(id: number) {
+  public delete_Celebrity_Details(id: number) {
     this.eventToDelete = id;
     this.showDeleteConfirmationModal = true;
   }
 
-  closeDeleteConfirmationModal() {
+  public closeDeleteConfirmationModal() {
     this.showDeleteConfirmationModal = false;
   }
-  delete_Celebrity_Confirmation() {
+  public delete_Celebrity_Confirmation() {
     this.showDeleteConfirmationModal = false;
     this.celeb.delete(this.eventToDelete).subscribe(() => {
       this.Celeb = this.Celeb.filter((item) => item.id !== this.eventToDelete);
@@ -83,14 +79,14 @@ export class CelebritiesComponent implements OnInit {
       (response: Celebrities[]) => {
         this.Celeb.push(newCeleb);
 
-        this.showForm = false;
+        this.CelebritiesTable.renderRows(); 
         this.toastservice.showToast(
           TOAST_STATE.success,
           'Data Added Successfully'
         );
       },
       (error) => {
-        console.error('Error occurred while adding new celebrity:', error);
+       
       }
     );
   }
@@ -101,15 +97,16 @@ export class CelebritiesComponent implements OnInit {
         this.Celeb = this.Celeb.map(
           (celeb) => (celeb.id === updatedCeleb.id ? response : celeb) // If it finds a match, it replaces that celebrity with the response
         );
+        this.CelebritiesTable.renderRows();
 
-        this.showForm = false;
+        
         this.toastservice.showToast(
           TOAST_STATE.success,
           'Data Edited Successfully'
         );
       },
       (error) => {
-        console.error('Error occurred while updating wine rating:', error);
+       
       }
     );
   }

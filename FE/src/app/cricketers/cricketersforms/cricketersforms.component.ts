@@ -59,7 +59,7 @@ export class CricketersformsComponent implements OnInit {
     });
   }
 
-  showEditForm(cricks: Cricketers) {
+  public showEditForm(cricks: Cricketers) {
     this.isEdit = true;
     this.cricketersForm.patchValue({
       id: cricks.id,
@@ -96,7 +96,7 @@ export class CricketersformsComponent implements OnInit {
       this.isEdit = false;
     }
   }
-  resetForm() {
+  public resetForm() {
     throw new Error('Not Implementing');
   }
 

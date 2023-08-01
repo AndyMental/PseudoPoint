@@ -10,15 +10,12 @@
     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
       <div class="overflow-hidden">
         <app-wineratingsform
-          *ngIf="showForm"
-          [showFormInput]="showForm"
-          [formData]="selectedWines"
-          (showFormOutput)="onShowFormChange($event)"
+          *ngIf="true"
           (addNewWines)="On_Adding_New_Wine($event)"
           (updateWines)="On_Updating_Wine_Details($event)"
         ></app-wineratingsform>
 
-        <mat-table class="mat-elevation-z8" [dataSource]="wines">
+        <mat-table class="mat-elevation-z8" #WineRatingsTable [dataSource]="wines">
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
             <mat-cell *matCellDef="let winee">{{ winee.id }}</mat-cell>

@@ -3,12 +3,10 @@ import { Cricketers } from '../shared/model/cricketers';
 import { CricketersformsComponent } from './cricketersforms/cricketersforms.component';
 import { CricketersService } from '../shared/services/cricketers.service';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef,MAT_DIALOG_DATA,} from '@angular/material/dialog';
 import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
+import { MatTable } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-cricketers',
@@ -23,7 +21,8 @@ export class CricketersComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'name', 'age', 'nation', 'actions'];
   @ViewChild(CricketersformsComponent, { static: false })
   public formComponent: CricketersformsComponent;
-  public showForm = false;
+  public isEditMode = false;
+  @ViewChild(MatTable) CricketersTable:MatTable<Cricketers>;
   public errorMessage = '';
   public newcricks: Cricketers = {
     id: null,
@@ -53,14 +52,14 @@ export class CricketersComponent implements OnInit {
     this.showDeleteConfirmationModal = true;
   }
 
-  closeDeleteConfirmationModal() {
+  public closeDeleteConfirmationModal() {
     this.showDeleteConfirmationModal = false;
   }
-  delete_Cricketer_Confirmation() {
+  public delete_Cricketer_Confirmation() {
     this.showDeleteConfirmationModal = false;
     this.crick.delete(this.eventToDelete).subscribe(() => {
       this.Crick = this.Crick.filter((item) => item.id !== this.eventToDelete);
-      this.showForm = false;
+      
 
       this.toastservice.showToast(
         TOAST_STATE.danger,
@@ -73,8 +72,9 @@ export class CricketersComponent implements OnInit {
     this.crick.post_data(newCricks).subscribe(
       (response: Cricketers[]) => {
         this.Crick.push(newCricks);
+        this.CricketersTable.renderRows();
 
-        this.showForm = false;
+        
 
         this.toastservice.showToast(
           TOAST_STATE.success,
@@ -82,7 +82,7 @@ export class CricketersComponent implements OnInit {
         );
       },
       (error) => {
-        console.error('Error saving real estate property:', error);
+        
         if (error?.error?.detail?.length > 0) {
           const errorMessageObj = error.error.detail[0];
           const fieldName = errorMessageObj.loc[errorMessageObj.loc.length - 1]; // Get the last field name causing the error
@@ -99,20 +99,21 @@ export class CricketersComponent implements OnInit {
   }
 
   public On_Update_Cricketers_Details(updatedCrick: Cricketers) {
-    console.log('hello');
+    
     this.crick.updateCrick(updatedCrick).subscribe(
       (response: Cricketers) => {
-        // Replace the updated
+        
         this.Crick = this.Crick.map((crick) =>
           crick.id === updatedCrick.id ? response : crick
         );
+        this.CricketersTable.renderRows();
         this.toastservice.showToast(
           TOAST_STATE.danger,
           'Data Updated Successfully'
         );
       },
       (error) => {
-        console.error('Error saving real estate property:', error);
+        
         if (error?.error?.detail?.length > 0) {
           const errorMessageObj = error.error.detail[0];
           const fieldName = errorMessageObj.loc[errorMessageObj.loc.length - 1]; // Get the last field name causing the error

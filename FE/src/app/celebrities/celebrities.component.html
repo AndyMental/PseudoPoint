@@ -6,14 +6,12 @@
     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
       <div class="overflow-hidden">
         <app-celebrities-form
-          *ngIf="showForm"
-          [showFormInput]="showForm"
-          (showFormOutput)="onShowFormChange($event)"
+          *ngIf="true"
           (addNewCelebs)="on_Add_New_Celeb_Details($event)"
           (updateCelebs)="on_Update_New_Celeb_Details($event)"
         ></app-celebrities-form>
 
-        <mat-table [dataSource]="Celeb" class="mat-elevation-z8">
+        <mat-table #CelebritiesTable [dataSource]="Celeb" class="mat-elevation-z8">
           
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>

@@ -85,7 +85,7 @@ export class CelebritesformComponent implements OnInit {
     });
   }
   public showEditForm(celebs: Celebrities) {
-    console.log('celebs', celebs);
+    
     this.isEdit = true;
 
     this.celebritiesForm.patchValue({

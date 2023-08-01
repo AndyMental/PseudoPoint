@@ -5,6 +5,7 @@ import { FormsComponent } from './forms/forms.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TOAST_STATE,ToastService } from '../shared/services/toast.service';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-quotes',
@@ -17,6 +18,7 @@ export class QuotesComponent implements OnInit {
   @Input() public showCoursesTable: boolean = false;
   @ViewChild(FormsComponent, { static: false }) public formComponent: FormsComponent;
   public showForm = false;
+  @ViewChild(MatTable) QuotesTable:MatTable<Quotes>;
 
   public showDeleteConfirmationModal:boolean=false;
   public eventToDelete:number;
@@ -57,11 +59,11 @@ export class QuotesComponent implements OnInit {
     this.showDeleteConfirmationModal = true
 }
     
-    closeDeleteConfirmationModal() {
+   public closeDeleteConfirmationModal() {
       this.showDeleteConfirmationModal = false;
       
     }
-    delete_Quote_Confirmation(){
+   public delete_Quote_Confirmation(){
       this.showDeleteConfirmationModal=false;
       this.quotesdetails.delete(this.eventToDelete).subscribe(() => {
             this.quotes = this.quotes.filter((item) => item.id !== this.eventToDelete);
@@ -76,14 +78,13 @@ export class QuotesComponent implements OnInit {
   public on_updating_quote(updatedQuote: Quotes) {
     this.quotesdetails.updateQuote(updatedQuote).subscribe(
       (response: Quotes) => {
+        this.filteredQuotes = this.filteredQuotes.map((text)=>
+        text.id === updatedQuote.id ? response : text
+        );
+        this.QuotesTable.renderRows();
        
-        const index = this.quotes.findIndex((q) => q.id === updatedQuote.id);
-        if (index !== -1) {
-          this.quotes[index] = { ...response };
-        }
-        this.formComponent.resetForm();
-        this.selectedQuote = { id: null, text: '', author: '' }; 
-        this.ngOnInit();
+
+        
   
         this.toastservice.showToast(TOAST_STATE.success, 'Data Updated Successfully');
       },
@@ -93,12 +94,13 @@ export class QuotesComponent implements OnInit {
     );
   }
 
-  on_adding_new_quote(newQuoteEntry: Quotes) {
+  public on_adding_new_quote(newQuoteEntry: Quotes) {
     this.quotesdetails.post_data(newQuoteEntry).subscribe(
       (response: Quotes[]) => {
         
 
         this.quotes.push(newQuoteEntry);
+        this.QuotesTable.renderRows();
         this.ngOnInit();
         this.showForm = false;
       
@@ -110,7 +112,7 @@ export class QuotesComponent implements OnInit {
     );
   }
 
-  on_Search_author(searchValue: string) {
+  public on_Search_author(searchValue: string) {
     
     if (searchValue.trim() === '') {
       this.filteredQuotes = this.quotes;
@@ -131,7 +133,7 @@ export class QuotesComponent implements OnInit {
   }
 
   
-  openDialog(): void {
+ public openDialog(): void {
     const dialogRef = this.dialog.open(FormsComponent, {
       width: '500px',
       data: { quote: this.newQuote, isEdit: false },

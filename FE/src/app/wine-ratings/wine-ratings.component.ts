@@ -2,13 +2,10 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { WineRatings } from '../shared/model/wineratings';
 import { WineratingsService } from '../shared/services/wineratings.service';
 import { WineratingsformComponent } from '../wine-ratings/wineratingsform/wineratingsform.component';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef,MAT_DIALOG_DATA,} from '@angular/material/dialog';
 import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-wine-ratings',
@@ -30,7 +27,8 @@ export class WineRatingsComponent implements OnInit {
   @Input() public showCoursesTable: boolean = false;
   @ViewChild(WineratingsformComponent, { static: false })
   formComponent: WineratingsformComponent;
-  public showForm = false;
+  
+  @ViewChild(MatTable) WineRatingsTable:MatTable<WineRatings>;
   public newwines: WineRatings = {
     id: null,
     wine: '',
@@ -60,10 +58,10 @@ export class WineRatingsComponent implements OnInit {
     this.eventToDelete = id;
     this.showDeleteConfirmationModal = true;
   }
-  closeDeleteConfirmationModal() {
+  public closeDeleteConfirmationModal() {
     this.showDeleteConfirmationModal = false;
   }
-  delete_Wine_Confirmation() {
+  public delete_Wine_Confirmation() {
     this.showDeleteConfirmationModal = false;
     this.winerating.delete(this.eventToDelete).subscribe(() => {
       this.wines = this.wines.filter((item) => item.id !== this.eventToDelete);
@@ -77,9 +75,10 @@ export class WineRatingsComponent implements OnInit {
   public On_Adding_New_Wine(newWines: WineRatings) {
     this.winerating.post_data(newWines).subscribe(
       (response: WineRatings[]) => {
-        console.log('New Quotes added:', response); //push the new wine rating to wines array
+       
 
         this.wines.push(newWines);
+        this.WineRatingsTable.renderRows();
       },
       (error) => {
         console.error('Error occurred while adding new wine ratings:', error);
@@ -90,11 +89,12 @@ export class WineRatingsComponent implements OnInit {
   public On_Updating_Wine_Details(updatedWine: WineRatings) {
     this.winerating.updateWine(updatedWine).subscribe(
       (response: WineRatings) => {
-        console.log('Wine rating updated:', response);
+       
       
         this.wines = this.wines.map((wine) =>
           wine.id === updatedWine.id ? response : wine
         );
+        this.WineRatingsTable.renderRows();
       },
       (error) => {
         console.error('Error occurred while updating wine rating:', error);

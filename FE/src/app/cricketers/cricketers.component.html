@@ -10,15 +10,12 @@
     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
       <div class="overflow-hidden">
         <app-cricketersforms
-          *ngIf="showForm"
-          [showFormInput]="showForm"
-          [formData]="selectedCricks"
-          (showFormOutput)="onShowFormChange($event)"
+          *ngIf="true"
           (addNewCricks)="On_Add_Cricketers_Details($event)"
           (updateCricks)="On_Update_Cricketers_Details($event)"
         ></app-cricketersforms>
 
-        <mat-table class="mat-elevation-z8" [dataSource]="Crick">
+        <mat-table class="mat-elevation-z8" #CricketersTable [dataSource]="Crick">
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
             <mat-cell *matCellDef="let crick">{{ crick.id }}</mat-cell>
