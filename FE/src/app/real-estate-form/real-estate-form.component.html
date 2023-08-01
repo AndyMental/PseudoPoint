@@ -1,0 +1,75 @@
+<div class="bg-white w-full p-2 rounded shadow-md">
+  <h3 class="text-xl font-bold mb-4">{{ data ? 'Edit Property' : 'Add New Property' }}</h3>
+
+  <form [formGroup]="propertyForm" (ngSubmit)="save()">
+    <div class="mb-4">
+      <label class="block text-sm font-medium">Address</label>
+      <input formControlName="address" class="w-full border rounded py-2 px-3">
+      <div *ngIf="isControlInvalid('address')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="propertyForm.get('address')?.errors?.required">Address is required</div>
+        <div *ngIf="propertyForm.get('address')?.errors?.minlength">Minimum 10 characters required</div>
+        <div *ngIf="propertyForm.get('address')?.errors?.maxlength">Maximum 50 characters allowed</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium">Price</label>
+      <input formControlName="price" class="w-full border rounded py-2 px-3">
+      <div *ngIf="isControlInvalid('price')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="propertyForm.get('price')?.errors?.required">Price is required</div>
+        <div *ngIf="propertyForm.get('price')?.errors?.pattern">Price must contain numbers only</div>
+        <div *ngIf="propertyForm.get('price')?.errors?.min">Minimum value must be 0</div>
+        <div *ngIf="propertyForm.get('price')?.errors?.max">Maximum value must be 1000000</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium">Bedrooms</label>
+      <input formControlName="bedrooms" type="number" class="w-full border rounded py-2 px-3">
+      <div *ngIf="isControlInvalid('bedrooms')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="propertyForm.get('bedrooms')?.errors?.required">Number of bedrooms is required</div>
+        <div *ngIf="propertyForm.get('bedrooms')?.errors?.pattern">Bedrooms must contain numbers only</div>
+        <div *ngIf="propertyForm.get('bedrooms')?.errors?.min">Minimum value must be 1</div>
+        <div *ngIf="propertyForm.get('bedrooms')?.errors?.max">Maximum value must be 10</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium">Bathrooms</label>
+      <input formControlName="bathrooms" type="number" class="w-full border rounded py-2 px-3">
+      <div *ngIf="isControlInvalid('bathrooms')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="propertyForm.get('bathrooms')?.errors?.required">Number of bathrooms is required</div>
+        <div *ngIf="propertyForm.get('bathrooms')?.errors?.pattern">Bathrooms must contain numbers only</div>
+        <div *ngIf="propertyForm.get('bathrooms')?.errors?.min">Minimum value must be 1</div>
+        <div *ngIf="propertyForm.get('bathrooms')?.errors?.max">Maximum value must be 5</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium">Square Feet</label>
+      <input formControlName="square_feet" type="number" class="w-full border rounded py-2 px-3">
+      <div *ngIf="isControlInvalid('square_feet')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="propertyForm.get('square_feet')?.errors?.required">Square footage is required</div>
+        <div *ngIf="propertyForm.get('square_feet')?.errors?.min">Minimum value must be 500</div>
+        <div *ngIf="propertyForm.get('square_feet')?.errors?.max">Maximum value must be 10000</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium">Description</label>
+      <textarea formControlName="description" class="w-full border rounded py-2 px-3"></textarea>
+      <div *ngIf="isControlInvalid('description')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="propertyForm.get('description')?.errors?.required">Description is required</div>
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2">
+        {{ data ? 'Update' : 'Save' }}
+      </button>
+      <button type="button" class="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>
+
+

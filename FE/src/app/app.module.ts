@@ -29,6 +29,18 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DeleteConfirmationDailogComponent } from './delete-confirmation-dailog/delete-confirmation-dailog.component';
+import { StocksComponent } from './stocks/stocks.component';
+import { StockFormComponent } from './stock-form/stock-form.component';
+import { SongsComponent } from './songs/songs.component';
+import { SongFormComponent } from './song-form/song-form.component';
+import { EcommerceComponent } from './ecommerce/ecommerce.component';
+import { EcommerceFormComponent } from './ecommerce-form/ecommerce-form.component';
+import { RealEstateComponent } from './real-estate/real-estate.component';
+import { RealEstateFormComponent } from './real-estate-form/real-estate-form.component';
+import { SuccessMessageComponent } from './success-message/success-message.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { UsersComponent } from './users/users.component';
 import { UsersformComponent } from './users/usersform/usersform.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -37,9 +49,9 @@ import { NotificationformComponent } from './notifications/notificationform/noti
 import { ProductsformComponent } from './products/productsform/productsform.component';
 import { Oauth1Component } from './oauth1/oauth1.component';
 import { Oauth1formComponent } from './oauth1/oauth1form/oauth1form.component';
+import { FormsModule } from '@angular/forms';
 import { HealthComponent } from './health/health.component';
 import { FormsComponent } from './health/forms/forms.component';
-import { FormsModule } from '@angular/forms';
 import { GeolocationComponent } from './geolocation/geolocation.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { BillingComponent } from './billing/billing.component';
@@ -72,6 +84,17 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
     SpaceValidatorDirective,
     SidebarComponent,
     DeleteConfirmationDailogComponent,
+    StocksComponent,
+    StockFormComponent,
+    SongsComponent,
+    SongFormComponent,
+    EcommerceComponent,
+    EcommerceFormComponent,
+    RealEstateComponent,
+    RealEstateFormComponent,
+    SuccessMessageComponent,
+    ConfirmationModalComponent,
+    SidebarComponent,
     UsersComponent,
     UsersformComponent,
     NotificationsComponent,
@@ -100,9 +123,26 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
     HeventFormComponent,
     DeleteDialogComponent,
   ],
-
   imports: [
     CommonModule,
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouteModule,
+    RouteRoutingModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatCardModule,
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     BrowserModule,
     HttpClientModule,
     RouteModule,
@@ -119,7 +159,7 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
     NgxMatNativeDateModule,
     NgxMatMomentModule,
     MatSnackBarModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

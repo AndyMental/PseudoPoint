@@ -60,8 +60,5 @@ def get_all_routers():
         {"router": quotes.router, "prefix": "/quotes", "tags": ["Quotes"]},
         {"router": celebrities.router, "prefix": "/celebrities", "tags": ["Celebrities"]},
         {"router": cricket.router, "prefix": "/cricket", "tags": ["Cricket"]},
-         {"router" : health.router,"prefix":"/health","tags":["Health Data"]},
-
-
-
+        {"router" : health.router,"prefix":"/health","tags":["Health Data"]},
     ]
