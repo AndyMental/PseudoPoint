@@ -1,0 +1,34 @@
+<!-- <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">Weight Conversion</h5> -->
+<form [formGroup]="celestialObjectForm" class="bg-opacity-90 p-6" (ngSubmit)="onSave()">
+  <div *ngIf="data.editMode; else addi">
+    <label for="celestialObjectInput" class="block mb-2">Enter Celestial Object:</label>
+    <input type="text" id="celestialObjectInput" formControlName="celestialObject"
+      class="w-full border rounded px-3 py-2 mb-4" pattern="[a-zA-Z][a-zA-Z ]+" required minlength="3">
+
+    <div *ngIf="celestialObjectForm.get('celestialObject').invalid && (celestialObjectForm.get('celestialObject').dirty || celestialObjectForm.get('celestialObject').touched)" class="alert">
+      <div *ngIf="celestialObjectForm.get('celestialObject').errors?.['required']" [ngStyle]="{'color':'red'}">Name is Required</div>
+      <div *ngIf="celestialObjectForm.get('celestialObject').errors?.['minlength']" [ngStyle]="{'color':'red'}">Name Must be at least 3 characters long</div>
+      <div [hidden]="!celestialObjectForm.get('celestialObject').hasError('pattern')" [ngStyle]="{'color':'red'}">Only alphabets allowed</div>
+    </div>
+  </div>
+
+  <ng-template #addi>
+    <label for="celestialObject" class="block mb-2">Select Celestial Object:</label>
+    <select id="celestialObject" formControlName="celestialObject"
+      class="w-full border rounded px-3 py-2 mb-4">
+      <option value="" disabled>Select Celestial Object</option>
+      <option *ngFor="let celestialObj of celestialData | keyvalue" [value]="celestialObj.key">{{ celestialObj.key }}</option>
+    </select>
+  </ng-template>
+
+  <label for="weightInput" class="block mb-2">Enter Weight (in kilograms):</label>
+  <input type="number" id="weightInput" step="0.01" formControlName="weightInput"
+    class="w-full border rounded px-3 py-2 mb-4">
+
+  <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-black font-semibold px-4 py-2 rounded">
+    {{ data.editMode ? "ADD" : "Get_Weight" }}
+  </button>
+
+  <button type="button" class="px-4 py-2 mr-2 bg-gray-400 text-white rounded ml-4 mt-2" (click)="onCancel()">Cancel</button>
+
+</form>

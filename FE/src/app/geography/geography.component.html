@@ -1,0 +1,55 @@
+ <div class="flex flex-col mt-1 ml-56">
+  <div class="relative">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded absolute top-0 right-0 mt-2 mr-10" (click)="openFormDialog(false)">
+      Add Features
+    </button>
+  </div>
+  <h2 class="text-xl font-serif text-center mb-4"> Geographical Features</h2>
+  <div class="table-container border rounded ml-10 pl-10">
+    <table mat-table [dataSource]="features" class="w-full min-w-max text-sm text-left text-gray-500 dark:text-gray-400 ">
+  
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef class="head">ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="head">NAME</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="latitude">
+        <th mat-header-cell *matHeaderCellDef class="head">LATITUDE</th>
+        <td mat-cell *matCellDef="let element">{{ element.location.latitude }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="longitude">
+        <th mat-header-cell *matHeaderCellDef class="head">LONGITUDE</th>
+        <td mat-cell *matCellDef="let element">{{ element.location.longitude }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="head " >ACTIONS</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="warn" (click)="deleteFeature( element.id )" class="btn">
+          Delete 
+          </button>
+          
+          <button mat-button color="primary" (click)="openFormDialog(true, element)"class="btn2">
+             Edit
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['id', 'name', 'latitude', 'longitude', 'actions']"></tr>
+      <tr mat-row *matRowDef="let feature; columns: ['id', 'name', 'latitude', 'longitude', 'actions'];"></tr>
+    </table>
+    <br>
+  </div>
+</div>
+
+<app-delete-dialog
+    *ngIf="showDeleteConfirmationModal"
+    (confirmDelete)="deleteItemConfirmed()"
+    (cancelDelete)="closeDeleteConfirmationModal()"
+  ></app-delete-dialog>

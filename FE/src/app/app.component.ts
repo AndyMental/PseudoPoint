@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
   selector: 'app-root',
@@ -6,18 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  showCoursesTable: boolean = false;
-  title = 'project1';
-   openSidebar() {
-    document.querySelector(".sidebar").classList.toggle("hidden");
-  }
-  collapseSideBar() {
-    document.querySelector(".sidebar").classList.remove("hidden");
-  }
-  // toggleCoursesTable(): void {
-  //   this.showCoursesTable = !this.showCoursesTable;
-  // }
-  
+ public title:string = 'project1';
 }
 
 
