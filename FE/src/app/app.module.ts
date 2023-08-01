@@ -16,7 +16,6 @@ import { RouteRoutingModule } from './route/route-routing.module';
 import { RouteModule } from './route/route.module';
 import { SuccessMessageComponent } from './success-message/success-message.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
-import { ErrorToastComponent } from './error-toast/error-toast.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
@@ -46,7 +45,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     RealEstateFormComponent,
     SuccessMessageComponent,
     ConfirmationModalComponent,
-    ErrorToastComponent,
     SidebarComponent
   ],
   imports: [

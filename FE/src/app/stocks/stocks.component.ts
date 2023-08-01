@@ -14,7 +14,6 @@ import { MatTable } from '@angular/material/table';
 })
 export class StocksComponent implements OnInit {
   public stocks: Stocks[];
-  public errorMessage:string = '';
   @ViewChild(MatTable) stocksTable: MatTable<Stocks>;
 
   constructor(
@@ -33,7 +32,9 @@ export class StocksComponent implements OnInit {
         this.stocks = data;
       },
       (error) => {
-        console.error('Error fetching stocks:', error);
+        if (error?.error?.detail?.length > 0) {
+          this.toastservice.showToast(TOAST_STATE.danger, 'An unexpected error occurred.');
+        }
       }
     );
   }
@@ -65,16 +66,8 @@ export class StocksComponent implements OnInit {
           },
           (error) => {
             if (error?.error?.detail?.length > 0) {
-              const errorMessageObj = error.error.detail[0];
-              const fieldName = errorMessageObj.loc[errorMessageObj.loc.length - 1];
-              const errorMessage = `${fieldName} is not a valid field..!`;
-              this.errorMessage = errorMessage;
-            } else {
-              this.errorMessage = 'An unexpected error occurred.';
+              this.toastservice.showToast(TOAST_STATE.danger, 'An unexpected error occurred.');
             }
-            setTimeout(() => {
-              this.errorMessage = '';
-            }, 5000);
           }
         );
       }

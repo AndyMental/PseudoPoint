@@ -15,7 +15,6 @@ import { MatTable } from '@angular/material/table';
 export class SongsComponent implements OnInit {
   public songs: Song[] = [];
   public songToUpdate: Song | null = null;
-  public errorMessage:string = '';
   @ViewChild(MatTable) songsTable: MatTable<Song>;
 
   constructor(private songService: SongService, private dialog: MatDialog , private toastservice:ToastService ) {}

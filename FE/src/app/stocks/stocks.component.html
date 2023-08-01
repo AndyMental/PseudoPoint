@@ -46,4 +46,3 @@
     <tr mat-row *matRowDef="let row; columns: ['id', 'symbol', 'name', 'price', 'change', 'actions']" class="odd:bg-white even:bg-slate-50"></tr>
   </table>
 </div>
-<app-error-toast *ngIf="errorMessage" [errorMessage]="errorMessage"></app-error-toast>

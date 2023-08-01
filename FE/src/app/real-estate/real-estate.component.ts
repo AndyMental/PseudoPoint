@@ -14,7 +14,6 @@ import { MatTable } from '@angular/material/table';
 })
 export class RealEstateComponent implements OnInit {
   public realEstateListings: RealEstateListing[] = [];
-  public errorMessage: string = '';
   public showConfirmationModal: boolean = false;
   public confirmationListingId: number = 0;
   @ViewChild(MatTable) realEstate: MatTable<RealEstateListing>;
@@ -63,16 +62,8 @@ export class RealEstateComponent implements OnInit {
       },
       (error) => {
         if (error?.error?.detail?.length > 0) {
-          const errorMessageObj = error.error.detail[0];
-          const fieldName = errorMessageObj.loc[errorMessageObj.loc.length - 1];
-          const errorMessage = `${fieldName} is not a valid field..!`;
-          this.errorMessage = errorMessage;
-        } else {
-          this.errorMessage = 'An unexpected error occurred.';
+          this.toastservice.showToast(TOAST_STATE.danger, 'An unexpected error occurred.');
         }
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 5000);
       }
     );
   }
@@ -91,16 +82,8 @@ export class RealEstateComponent implements OnInit {
       },
       (error) => {
         if (error?.error?.detail?.length > 0) {
-          const errorMessageObj = error.error.detail[0];
-          const fieldName = errorMessageObj.loc[errorMessageObj.loc.length - 1];
-          const errorMessage = `${fieldName} is not a valid field..!`;
-          this.errorMessage = errorMessage;
-        } else {
-          this.errorMessage = 'An unexpected error occurred.';
+          this.toastservice.showToast(TOAST_STATE.danger, 'An unexpected error occurred.');
         }
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 5000);
       }
     );
   }
@@ -129,16 +112,8 @@ export class RealEstateComponent implements OnInit {
       },
       (error) => {
         if (error?.error?.detail?.length > 0) {
-          const errorMessageObj = error.error.detail[0];
-          const fieldName = errorMessageObj.loc[errorMessageObj.loc.length - 1];
-          const errorMessage = `${fieldName} is not a valid field..!`;
-          this.errorMessage = errorMessage;
-        } else {
-          this.errorMessage = 'An unexpected error occurred.';
+          this.toastservice.showToast(TOAST_STATE.danger, 'An unexpected error occurred.');
         }
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 5000);
       }
     );
   }
