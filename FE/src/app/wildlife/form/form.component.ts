@@ -1,24 +1,30 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { WilldLife } from 'src/app/shared/model/wildlife';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit {
   newWildLifeForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<FormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { editMode: boolean; wildlifeEntry: WilldLife },
+    @Inject(MAT_DIALOG_DATA)
+    public data: { editMode: boolean; wildlifeEntry: WilldLife },
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    console.log('Received Data:', this.data); 
+    console.log('Received Data:', this.data);
     this.initForm();
     if (this.data.editMode && this.data.wildlifeEntry) {
       this.patchForm(this.data.wildlifeEntry);
@@ -31,14 +37,14 @@ export class FormComponent implements OnInit {
       species: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.pattern('[a-zA-Z][a-zA-Z ]+')
+        Validators.pattern('[a-zA-Z][a-zA-Z ]+'),
       ]),
       location: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.pattern('[a-zA-Z][a-zA-Z ]+')
+        Validators.pattern('[a-zA-Z][a-zA-Z ]+'),
       ]),
-      date: new FormControl('', Validators.required)
+      date: new FormControl('', Validators.required),
     });
   }
 
@@ -46,22 +52,24 @@ export class FormComponent implements OnInit {
     this.newWildLifeForm.patchValue(wildlifeEntry);
   }
 
- public onSave(): void {
+  public onSave(): void {
     if (this.newWildLifeForm.valid) {
       const formValue = this.newWildLifeForm.value;
       this.dialogRef.close(formValue);
     }
   }
 
- public onCancel(): void {
+  public onCancel(): void {
     this.dialogRef.close();
   }
- public getTodayDate(): string {
+  public getTodayDate(): string {
     const today = new Date();
     const year = today.getFullYear();
-    const month = today.getMonth() + 1; // Months are zero-based
+    const month = today.getMonth() + 1;
     const day = today.getDate();
-    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day
+      .toString()
+      .padStart(2, '0')}`;
     return formattedDate;
   }
 }

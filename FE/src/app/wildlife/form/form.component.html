@@ -3,33 +3,6 @@
   class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
   (ngSubmit)="onSave()"
 >
-  <!-- <div class="mb-4">
-
-    <label for="id">ID</label>
-      <input
-        type="number"
-        id="id"
-        formControlName="id"
-        class="block w-full mt-2 form-control"
-        style="
-          border: 1px solid rgb(18, 1, 1);
-          border-radius: 4px;
-          padding: 5px;
-        "
-      />
-      <div
-        *ngIf="newWildLifeForm.get('id').errors?.['required']"
-        [ngStyle]="{ color: 'red' }"
-      >
-        ID is Required
-      </div>
-      <div
-        *ngIf="newWildLifeForm.get('id').errors?.['min']"
-        [ngStyle]="{ color: 'red' }"
-      >
-        ID must be a positive number
-      </div>
-      </div> -->
     <label class="block text-gray-700 text-sm font-bold mb-2" for="species">
       Species
     </label>
@@ -68,7 +41,6 @@
         Only alphabets allowed
       </div>
     </div>
-  <!-- </div> -->
 
   <div class="mb-4">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="location">

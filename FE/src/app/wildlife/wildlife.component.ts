@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WildlifeService } from '../shared/services/wildlife.service';
 import { WilldLife } from '../shared/model/wildlife';
 import { FormComponent } from './form/form.component';
@@ -10,42 +10,43 @@ import { MatTable } from '@angular/material/table';
 @Component({
   selector: 'app-wildlife',
   templateUrl: './wildlife.component.html',
-  styleUrls: ['./wildlife.component.css']
+  styleUrls: ['./wildlife.component.css'],
 })
 export class WildlifeComponent implements OnInit {
- public  wildlife: WilldLife[] = [];
- public editMode: boolean = false;
- public existingWildlife: WilldLife = null;
- public showDeleteConfirmationModal:boolean=false;
- public speciesToDelete:number;
-@ViewChild(MatTable) wildlifeTable!:MatTable<any>;
+  public wildlife: WilldLife[] = [];
+  public editMode: boolean = false;
+  public existingWildlife: WilldLife = null;
+  public showDeleteConfirmationModal: boolean = false;
+  public speciesToDelete: number;
+  @ViewChild(MatTable) wildlifeTable!: MatTable<any>;
 
- constructor(private wildlifeService: WildlifeService, 
-    private toastservice:ToastService,
-     private dialog: MatDialog,
-     private snackBar: MatSnackBar,
+  constructor(
+    private wildlifeService: WildlifeService,
+    private toastservice: ToastService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.fetchWildlifeData();
-     }
-  
- private fetchWildlifeData():void {
+  }
+
+  private fetchWildlifeData(): void {
     this.wildlifeService.getWildlife().subscribe((data) => {
       this.wildlife = data;
     });
   }
 
- public deleteSpecies(id:number):void {
+  public deleteSpecies(id: number): void {
     this.speciesToDelete = id;
     this.showDeleteConfirmationModal = true;
   }
 
- public closeDeleteConfirmationModal():void {
+  public closeDeleteConfirmationModal(): void {
     this.showDeleteConfirmationModal = false;
   }
 
- private deleteItemConfirmed():void {
+  public deleteItemConfirmed(): void {
     this.showDeleteConfirmationModal = false;
     this.wildlifeService.delete(this.speciesToDelete).subscribe(
       () => {
@@ -65,14 +66,14 @@ export class WildlifeComponent implements OnInit {
       }
     );
   }
- 
- public openFormDialog(editMode: boolean, wildlifeEntry?: WilldLife): void {
+
+  public openFormDialog(editMode: boolean, wildlifeEntry?: WilldLife): void {
     const dialogRef = this.dialog.open(FormComponent, {
       width: '300px',
       data: {
         editMode: editMode,
-        wildlifeEntry: wildlifeEntry ? wildlifeEntry : null
-      }
+        wildlifeEntry: wildlifeEntry ? wildlifeEntry : null,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result: WilldLife) => {
@@ -86,18 +87,21 @@ export class WildlifeComponent implements OnInit {
     });
   }
 
-private  onUpdateWildlifeEntry(updatedWildlife: WilldLife): void {
+  private onUpdateWildlifeEntry(updatedWildlife: WilldLife): void {
     this.wildlifeService.putWildlife(updatedWildlife).subscribe(
       () => {
-        const index = this.wildlife.findIndex((item) => item.id === updatedWildlife.id);
+        const index = this.wildlife.findIndex(
+          (item) => item.id === updatedWildlife.id
+        );
         if (index !== -1) {
           this.wildlife[index] = updatedWildlife;
           this.wildlifeTable.renderRows();
-          this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
+          this.toastservice.showToast(
+            TOAST_STATE.success,
+            'Data Edited Successfully'
+          );
         }
-        this.existingWildlife = null; 
-        
-         
+        this.existingWildlife = null;
       },
       (error) => {
         this.toastservice.showToast(TOAST_STATE.danger, 'Something went wrong');
@@ -105,17 +109,19 @@ private  onUpdateWildlifeEntry(updatedWildlife: WilldLife): void {
     );
   }
 
- private onAddNewWildlifeEntry(newWildlifeEntry: WilldLife): void {
+  private onAddNewWildlifeEntry(newWildlifeEntry: WilldLife): void {
     this.wildlifeService.post_data(newWildlifeEntry).subscribe(
       (response: WilldLife | WilldLife[]) => {
         if (Array.isArray(response)) {
-          this.wildlife.push(...response); 
-          
+          this.wildlife.push(...response);
         } else {
-          this.wildlife.push(response); 
+          this.wildlife.push(response);
         }
         this.wildlifeTable.renderRows();
-        this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
+        this.toastservice.showToast(
+          TOAST_STATE.success,
+          'Data Added Successfully'
+        );
       },
       (error) => {
         this.toastservice.showToast(TOAST_STATE.danger, error.detail['msg']);

@@ -10,21 +10,20 @@ export class HistoryEventsService {
   private apiUrl = 'http://localhost:8000/historical_events'; 
   constructor(private http: HttpClient) { }
 
-  getAllHistoricalEvents(): Observable<HistoryEvents[]> {
-    // const url = `${this.apiUrl}/historical-events`;
+  public getAllHistoricalEvents(): Observable<HistoryEvents[]> {
     return this.http.get<HistoryEvents[]>(this.apiUrl);
   }
 
-  deleteHistoricalEvent(eventID: number): Observable<any> {
+ public deleteHistoricalEvent(eventID: number): Observable<any> {
     const url = `${this.apiUrl}/${eventID}`;
     return this.http.delete(url);
   }
 
-  createHistoricalEvent(event: HistoryEvents): Observable<HistoryEvents> {
+ public createHistoricalEvent(event: HistoryEvents): Observable<HistoryEvents> {
     return this.http.post<HistoryEvents>(this.apiUrl, event);
   }
 
-  updateHistoricalEvent(event: HistoryEvents): Observable<HistoryEvents> {
+ public updateHistoricalEvent(event: HistoryEvents): Observable<HistoryEvents> {
     const url = `${this.apiUrl}/fetchby/${event.ID}`;
     return this.http.put<HistoryEvents>(url, event);
   }

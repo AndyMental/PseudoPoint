@@ -1,5 +1,3 @@
-// geography.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,22 +11,22 @@ export class GeographyService {
 
   constructor(private http: HttpClient) {}
 
-  getGeographicalFeatures(): Observable<Feature[]> {
+ public getGeographicalFeatures(): Observable<Feature[]> {
     const url = `${this.apiUrl}/geographical_features`;
     return this.http.get<Feature[]>(url);
   }
 
-  deleteGeographicalFeature(id: number): Observable<any> {
+ public deleteGeographicalFeature(id: number): Observable<any> {
     const url = `${this.apiUrl}/features/${id}`;
     return this.http.delete<any>(url);
   }
 
-  createGeographicalFeature(feature: Feature): Observable<Feature> {
+ public createGeographicalFeature(feature: Feature): Observable<Feature> {
     const url = `${this.apiUrl}/features`;
     return this.http.post<Feature>(url, feature);
   }
 
-  updateGeographicalFeature(feature: Feature): Observable<Feature> {
+ public updateGeographicalFeature(feature: Feature): Observable<Feature> {
     const url = `${this.apiUrl}/features/${feature.id}`;
     return this.http.put<Feature>(url, feature);
   }

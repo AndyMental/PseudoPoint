@@ -1,23 +1,22 @@
-import { Component, OnInit, Inject ,Input} from '@angular/core';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Inject, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HistoryEvents } from 'src/app/shared/model/event';
-
 
 @Component({
   selector: 'app-hevent-form',
   templateUrl: './hevent-form.component.html',
   styleUrls: ['./hevent-form.component.css'],
 })
-
 export class HeventFormComponent implements OnInit {
- public newEventForm: FormGroup;
- public isEditMode: boolean = false;
+  public newEventForm: FormGroup;
+  public isEditMode: boolean = false;
   @Input() historicalEvents: HistoryEvents[];
 
   constructor(
     public dialogRef: MatDialogRef<HeventFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { editMode: boolean; eventEntry: HistoryEvents },
+    @Inject(MAT_DIALOG_DATA)
+    public data: { editMode: boolean; eventEntry: HistoryEvents },
     private fb: FormBuilder
   ) {}
 
@@ -33,7 +32,7 @@ export class HeventFormComponent implements OnInit {
     this.newEventForm = this.fb.group({
       ID: 0,
       year: [null, [Validators.required, Validators.max(this.getYear())]],
-      event: ['', [Validators.required, Validators.minLength(4)]]
+      event: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
 
@@ -41,18 +40,18 @@ export class HeventFormComponent implements OnInit {
     this.newEventForm.patchValue(eventEntry);
   }
 
- public onSave(): void {
+  public onSave(): void {
     if (this.newEventForm.valid) {
       const formValue = this.newEventForm.value;
       this.dialogRef.close(formValue);
     }
   }
 
- public onCancel(): void {
+  public onCancel(): void {
     this.dialogRef.close();
   }
 
- public getYear() :number{
+  public getYear(): number {
     const today = new Date();
     return today.getFullYear();
   }

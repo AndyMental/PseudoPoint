@@ -29,10 +29,10 @@
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="head" >ACTIONS</th>
+        <th mat-header-cell *matHeaderCellDef class="head " >ACTIONS</th>
         <td mat-cell *matCellDef="let element">
           <button mat-button color="warn" (click)="deleteFeature( element.id )" class="btn">
-            <!-- <mat-icon>Delete</mat-icon>-->Delete 
+          Delete 
           </button>
           
           <button mat-button color="primary" (click)="openFormDialog(true, element)"class="btn2">

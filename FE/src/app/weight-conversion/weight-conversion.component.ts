@@ -17,7 +17,7 @@ export class WeightConversionComponent implements OnInit {
   public editMode: boolean = false;
   public showDeleteConfirmationModal:boolean=false;
  public celestialToDelete:string="";
-public post:boolean= false;
+  public post:boolean= false;
 public celestialData= {};
  public display: boolean = false;
 public  celestialObject: string;
@@ -33,24 +33,23 @@ public  weightInput: number;
       this.getCelestialObjects();
     }
 
-getCelestialObjects() {
+private getCelestialObjects():void {
     this.weightConversionService.getCelestial().subscribe(
       data => {
         this.celestialData = data;
-        console.log('Data fetched successfully:', this.celestialData);
       },
  )};
 
- deleteCelestial(celestial: string):void{
+public deleteCelestial(celestial: string):void{
   this.celestialToDelete=celestial;
   this.showDeleteConfirmationModal = true;
  }
 
- closeDeleteConfirmationModal() {
+ public closeDeleteConfirmationModal():void {
   this.showDeleteConfirmationModal = false;
 }
 
-deleteItemConfirmed():void {
+public deleteItemConfirmed():void {
   this.showDeleteConfirmationModal = false;
 this.weightConversionService.deleteCelestialFactor(this.celestialToDelete).subscribe(
         () => {
@@ -70,7 +69,7 @@ this.weightConversionService.deleteCelestialFactor(this.celestialToDelete).subsc
 }
 
 
-openFormDialog(editMode:boolean,celestialEntry?:WeightConversionResponse):void{
+public openFormDialog(editMode:boolean,celestialEntry?:WeightConversionResponse):void{
   const dialogRef = this.dialog.open(FormWeightComponent, {
     width: '250px',
     data: {
@@ -90,7 +89,7 @@ openFormDialog(editMode:boolean,celestialEntry?:WeightConversionResponse):void{
   });
 }
 
-convertWeight() :void{
+public convertWeight() :void{
   this.results = [];
   const weightRequest: WeightConversionRequest = {
         weight: this.weightInput,

@@ -15,14 +15,15 @@ export class GeoFormComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<GeoFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { editMode: boolean; geographyEntry: Feature },
+    @Inject(MAT_DIALOG_DATA)
+    public data: { editMode: boolean; geographyEntry: Feature },
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.isEditMode = this.data.editMode;
-   if (this.isEditMode && this.data.geographyEntry) {
+    if (this.isEditMode && this.data.geographyEntry) {
       this.patchForm(this.data.geographyEntry);
     }
   }
@@ -30,7 +31,14 @@ export class GeoFormComponent implements OnInit {
   private initForm(): void {
     this.newFeatureForm = this.fb.group({
       id: 0,
-      name: ['', [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z][a-zA-Z ]+')]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.pattern('[a-zA-Z][a-zA-Z ]+'),
+        ],
+      ],
       latitude: [null, Validators.required],
       longitude: [null, Validators.required],
     });
@@ -45,7 +53,7 @@ export class GeoFormComponent implements OnInit {
     });
   }
 
- public onSave(): void {
+  public onSave(): void {
     if (this.newFeatureForm.valid) {
       const formValue = this.newFeatureForm.value;
       const newFeature: Feature = {
@@ -60,7 +68,7 @@ export class GeoFormComponent implements OnInit {
     }
   }
 
- public onCancel(): void {
+  public onCancel(): void {
     this.dialogRef.close();
   }
 }

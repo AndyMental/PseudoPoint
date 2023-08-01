@@ -11,20 +11,18 @@ import { throwError } from 'rxjs';
 export class WildlifeService {
  
   constructor(private http: HttpClient) { }
-
-
-
-  getWildlife(): Observable<WilldLife[]> {
+  
+ public getWildlife(): Observable<WilldLife[]> {
     return this.http.get<WilldLife[]>('http://127.0.0.1:8000/wildlife/sightings');
   }
 
-  delete(id:number): Observable<{}> {
+ public delete(id:number): Observable<{}> {
     const url = `http://127.0.0.1:8000/wildlife/${id}`;
     console.log('i am here')
     return this.http.delete<{}>(url);
   }
 
-  post_data(newWildlifeEntry: WilldLife): Observable<WilldLife[]> {
+ public post_data(newWildlifeEntry: WilldLife): Observable<WilldLife[]> {
     return this.http.post<WilldLife[]>('http://127.0.0.1:8000/wildlife/post', newWildlifeEntry)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -34,7 +32,7 @@ export class WildlifeService {
       );
   }
 
-  putWildlife(wildlife: WilldLife): Observable<WilldLife> {
+public  putWildlife(wildlife: WilldLife): Observable<WilldLife> {
     const url = `http://127.0.0.1:8000/wildlife/${wildlife.id}`;
     return this.http.put<WilldLife>(url, wildlife);
   }

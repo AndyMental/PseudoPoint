@@ -15,7 +15,6 @@ class WeightConversionResponse(BaseModel):
     weight: float
 
 
-
 conversion_factors = {
     "Mercury": 0.378,
     "Venus": 0.907,
@@ -73,6 +72,7 @@ def add_celestial_factor(data: WeightConversionResponse):
             status_code=400, detail="Celestial object already exists.")
     return data
 
+
 @router.put("/edit_celestial/{celestial}", response_model=WeightConversionResponse, description="Edit a celestial object and its conversion factor.")
 def edit_celestial(celestial: str, data: WeightConversionResponse):
     if celestial not in conversion_factors:
@@ -80,6 +80,7 @@ def edit_celestial(celestial: str, data: WeightConversionResponse):
             status_code=404, detail="Celestial object not found.")
     conversion_factors[celestial] = data.weight
     return WeightConversionResponse(celestial_object=celestial, weight=data.weight)
+
 
 @router.get("/", description="Add a new celestial object and its conversion factor.")
 def get_celestial():
@@ -94,6 +95,3 @@ def delete_celestial_factor(celestial: str):
     del conversion_factors[celestial]
 
     return {"message": f"Celestial object '{celestial}' and its conversion factor deleted successfully."}
-
-
-

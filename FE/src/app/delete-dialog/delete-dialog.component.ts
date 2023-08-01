@@ -9,11 +9,11 @@ export class DeleteDialogComponent {
   @Output() confirmDelete = new EventEmitter<void>();
   @Output() cancelDelete = new EventEmitter<void>();
 
-  confirm() {
+  public confirm():void {
     this.confirmDelete.emit();
   }
 
-  cancel() {
+  public cancel():void {
     this.cancelDelete.emit();
   }
 }
