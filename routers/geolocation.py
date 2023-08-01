@@ -1,18 +1,41 @@
 from fastapi import APIRouter, HTTPException
-from faker import Faker
+# from faker import Faker
 from typing import Dict, Optional
-
-fake = Faker()
+from pydantic import BaseModel
+import logging
+logger = logging.getLogger(__name__)
+# fake = Faker()
 
 router = APIRouter()
 
 # I'm using a dictionary to simulate a database for the example
-database: Dict[int, Dict[str, float]] = {}
+# database: Dict[int, Dict[str, float]] = {}
 
 # Let's create 10 geolocation records to start
-for i in range(1, 11):
-    geolocation = {"id": i, "latitude": fake.latitude(), "longitude": fake.longitude()}
-    database[i] = geolocation
+# for i in range(1, 11):
+#     geolocation = {"id": i, "latitude": fake.latitude(), "longitude": fake.longitude()}
+#     database[i] = geolocation
+
+
+class Data(BaseModel):
+    id: int
+    latitude: float
+    longitude: float
+
+
+geoData = [
+    Data(id=1, latitude=50.6709, longitude=10000.654),
+    Data(id=2, latitude=205.667, longitude=8000.456),
+    Data(id=3, latitude=2000.0987, longitude=12000.65),
+    Data(id=4, latitude=3000.456, longitude=9000.3456),
+    Data(id=5, latitude=4000.3456, longitude=11000.65),
+    Data(id=6, latitude=5000.456, longitude=7000.0987),
+    Data(id=7, latitude=6000.6543, longitude=13000.654),
+    Data(id=8, latitude=7000.3456, longitude=10000.345),
+    Data(id=9, latitude=8000.345, longitude=8000.345),
+    Data(id=10, latitude=9000.345, longitude=12000.345)
+]
+
 
 @router.get("/", description="Returns a list of all fake geolocation records.", tags=["Geolocation"])
 def read_geolocation():
@@ -23,11 +46,13 @@ def read_geolocation():
     Returns:
         dict: A dictionary containing the list of geolocation records.
     """
-    geolocations = [value for key, value in database.items()]
-    return {"geolocations": geolocations}
+    if geoData:
+        return geoData
+    else:
+        raise HTTPException(404,"No data found!")
 
-@router.get("/{geolocation_id}", description="Returns a specific geolocation record.", tags=["Geolocation"])
-def get_geolocation(geolocation_id: int):
+@router.get("/{id}", description="Returns a specific geolocation record.", tags=["Geolocation"])
+def get_geolocation(id: int):
     """Get a specific geolocation record.
 
     This endpoint retrieves a specific geolocation record.
@@ -35,13 +60,15 @@ def get_geolocation(geolocation_id: int):
     Returns:
         dict: A dictionary containing the geolocation record.
     """
-    geolocation = database.get(geolocation_id)
-    if not geolocation:
-        raise HTTPException(status_code=404, detail="Geolocation not found")
-    return {"geolocation": geolocation}
+    for index, existingData in enumerate(geoData):
+        if existingData.id == id:
+            return geoData[index]
+    raise HTTPException(status_code=404, detail="Geolocation not found")
+
+
 
 @router.post("/", description="Creates a new geolocation record and returns it.", tags=["Geolocation"])
-def create_geolocation():
+def create_geolocation(newRecord: Data):
     """Create a new geolocation record.
 
     This endpoint creates a new geolocation record and returns it.
@@ -49,13 +76,18 @@ def create_geolocation():
     Returns:
         dict: A dictionary containing the geolocation record.
     """
-    id = len(database) + 1
-    geolocation = {"id": id, "latitude": fake.latitude(), "longitude": fake.longitude()}
-    database[id] = geolocation
-    return {"geolocation": geolocation}
+    for i in geoData:
+        if i.id == newRecord.id:
+            logger.info("Duplicate Record!")
+        else:
+            geoData.append(newRecord)
+            logger.info(200, "Record pushed successfully!")
+            return newRecord
 
-@router.put("/{geolocation_id}", description="Updates a specific geolocation record and returns it.", tags=["Geolocation"])
-def update_geolocation(geolocation_id: int, latitude: Optional[float] = None, longitude: Optional[float] = None):
+
+
+@router.put("/{id}", description="Updates a specific geolocation record and returns it.", tags=["Geolocation"])
+def update_geolocation(id: int, record:Data):
     """Update a specific geolocation record.
 
     This endpoint updates a specific geolocation record and returns it.
@@ -63,18 +95,20 @@ def update_geolocation(geolocation_id: int, latitude: Optional[float] = None, lo
     Returns:
         dict: A dictionary containing the updated geolocation record.
     """
-    geolocation = database.get(geolocation_id)
-    if not geolocation:
-        raise HTTPException(status_code=404, detail="Geolocation not found")
-    if latitude is not None:
-        geolocation["latitude"] = latitude
-    if longitude is not None:
-        geolocation["longitude"] = longitude
-    database[geolocation_id] = geolocation
-    return {"geolocation": geolocation}
+    logger.info(f"Updating record with Id {id}")
+    for index, existingRec in enumerate(geoData):
+        if existingRec.id == id:
+            geoData[index] = record
+            return record
+        else:
+            logger.error(f"Record not found with the id {id}")
+    raise HTTPException(status_code=404, detail="Geolocation not found.")
 
-@router.delete("/{geolocation_id}", description="Deletes a specific geolocation record.", tags=["Geolocation"])
-def delete_geolocation(geolocation_id: int):
+            
+
+
+@router.delete("/{id}", description="Deletes a specific geolocation record.", tags=["Geolocation"])
+def delete_geolocation(id: int):
     """Delete a specific geolocation record.
 
     This endpoint deletes a specific geolocation record.
@@ -82,7 +116,9 @@ def delete_geolocation(geolocation_id: int):
     Returns:
         dict: A dictionary containing a confirmation message.
     """
-    if geolocation_id not in database:
-        raise HTTPException(status_code=404, detail="Geolocation not found")
-    del database[geolocation_id]
-    return {"detail": "Geolocation deleted"}
+    for i, existingData in enumerate(geoData):
+            if existingData.id == id:
+                del geoData[i]
+                return {"detail": "Geolocation deleted"}
+    raise HTTPException(status_code=404, detail="Geolocation not found")
+    

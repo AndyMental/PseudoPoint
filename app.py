@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from routers import get_all_routers
 from fastapi.middleware.cors import CORSMiddleware
 
-# Mention the url you want accept cross origin request from i.e your frontend application url is runing on.
+# Mention the url you want accept  cross origin request from.  
 origins = [
     "http://localhost:4200",
 ]

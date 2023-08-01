@@ -1,0 +1,123 @@
+<div class="p-4">
+  <h2 class="text-xl font-serif">{{ editMode ? "Update" : "Add" }} Bill Record</h2>
+  <form [formGroup]="billingForm" (ngSubmit)="submitForm(billingForm)">
+    <div class="mb-4">
+      <label for="id" class="block font-sans">ID</label>
+      <input 
+      id="id"
+      type="number"
+      name="id"
+      class="border rounded p-2 w-full"
+      formControlName="id"
+      placeholder="Id"/>
+    </div>
+    <div
+    *ngIf="
+      billingForm.get('id').errors?.required &&
+      billingForm.get('id').touched
+    " 
+    class="text-red-600"
+  >
+    ID is required.
+  </div>
+  <div
+    *ngIf="
+      billingForm.get('id').errors?.min && billingForm.get('id').touched
+    "
+    class="text-red-600"
+  >
+    ID must be greater than or equal to 1.
+  </div>
+    <div class="mb-4">
+      <label for="name" class="block font-sans">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="border rounded p-2 w-full"
+        formControlName="name"
+        placeholder="Name"
+      />
+      <div
+      *ngIf="
+        billingForm.get('name').errors?.required &&
+        billingForm.get('name').touched
+      "
+      class="text-red-600"
+    >
+      Billing Name is required.
+    </div>
+    <div *ngIf="billingForm.get('name').errors?.pattern" class="text-red-600">
+      Characters only are allowed!
+    </div>
+    </div>
+
+
+    <div class="mb-4">
+      <label for="address" class="block font-sans">Address</label>
+      <input
+        type="text"
+        id="address"
+        name="address"
+        class="border rounded p-2 w-full"
+        formControlName="address"
+        placeholder="Address"
+      />
+      <div
+      *ngIf="
+        billingForm.get('address').errors?.required &&
+        billingForm.get('address').touched
+      "
+      class="text-red-600"
+    >
+      Address is required.
+    </div>
+    <div *ngIf="billingForm.get('address').errors?.pattern" class="text-red-600">
+      Characters only are allowed!
+    </div>
+    </div>
+
+
+    <div class="mb-4">
+      <label for="creditcard" class="block font-sans">Credit Card</label>
+      <input
+        type="text"
+        id="creditcard"
+        name="creditcard"
+        class="border rounded p-2 w-full"
+        formControlName="credit_card"
+        placeholder="Credit Card"
+      />
+      <div
+      *ngIf="
+        billingForm.get('credit_card').errors?.required &&
+        billingForm.get('credit_card').touched
+      "
+      class="text-red-600"
+    >
+      Field is required.
+    </div>
+    <div *ngIf="billingForm.get('credit_card').errors?.pattern" class="text-red-600">
+      Characters only are allowed!
+    </div>
+    </div>
+
+    <div class="flex justify-center">
+      <button
+        type="button"
+        class="mr-2 bg-gray-200 px-4 py-2 rounded"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+      [disabled]="!billingForm.valid"
+      type="submit"
+      [ngClass]="{ 'disabled-button': !billingForm.valid }"
+      class="bg-blue-500 text-white px-4 py-2 rounded"
+    >
+      {{ editMode ? "Update" : "Submit" }}
+    </button>
+    </div>
+  </form>
+</div>

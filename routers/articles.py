@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class NewsArticle(BaseModel):
-    article_id : str
+    article_id: str
     title: str
     author: str
     content: str
