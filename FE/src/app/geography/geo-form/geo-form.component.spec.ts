@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MethodsComponent } from './methods.component';
+import { GeoFormComponent } from './geo-form.component';
 
-describe('MethodsComponent', () => {
-  let component: MethodsComponent;
-  let fixture: ComponentFixture<MethodsComponent>;
+describe('GeoFormComponent', () => {
+  let component: GeoFormComponent;
+  let fixture: ComponentFixture<GeoFormComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MethodsComponent]
+      declarations: [GeoFormComponent]
     });
-    fixture = TestBed.createComponent(MethodsComponent);
+    fixture = TestBed.createComponent(GeoFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -32,7 +32,7 @@ news_articles = [
     NewsArticle(title="Local High School Wins State Championship", author="Emily Chen", content="A local high school has won the state championship in baseball, capping off an undefeated season.", tags=["sports", "high school"]),
     NewsArticle(title="New Study Shows Benefits of Eating Vegetables", author="Michael Brown", content="A new study has found that eating a diet rich in vegetables can improve overall health and reduce the risk of chronic diseases.", tags=["vegetables", "health"]),
     NewsArticle(title="City Council Approves New Recycling Program", author="Sarah Kim", content="The city council has approved a plan to build a new recycling program in the city, according to a press release.", tags=["recycling", "sustainability"]),
-    NewsArticle(title="New Technology Helps Deaf People Hear", author="Kevin Lee", content="A new technology has been developed that can help deaf people hear by converting sound into visual information.", tags=["technology", "health"])
+    
 ]
 
 router = APIRouter()
@@ -134,5 +134,4 @@ def delete_article(title: str):
         if existing_article.title == title:
             del news_articles[index]
             return {"detail": "Article deleted"}
-    logger.error(f"Article with title {title} not found")
-    raise HTTPException(status_code=404, detail=f"Article with title '{title}' not found")
+    raise HTTPException(status_code=404, detail="Article not found")
