@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Weather } from '../shared/model/weather';
 import { WeatherService } from '../shared/services/weather.service';
-import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDailogComponent } from '../delete-confirmation-dailog/delete-confirmation-dailog.component';

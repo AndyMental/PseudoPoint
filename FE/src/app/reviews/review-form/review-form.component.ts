@@ -8,7 +8,7 @@ import { ReviewsService } from 'src/app/shared/services/reviews.service';
 import {
   TOAST_STATE,
   ToastService,
-} from 'src/app/shared/services/Toast.service';
+} from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-review-form',

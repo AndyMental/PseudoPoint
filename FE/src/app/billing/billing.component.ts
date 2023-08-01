@@ -3,7 +3,7 @@ import { BillingInterface } from '../shared/model/billing.model';
 import { BillingService } from '../shared/services/billing.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BillingformComponent } from './billingform/billingform.component';
-import { ToastService,TOAST_STATE } from '../shared/services/Toast.service';
+import { ToastService,TOAST_STATE } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-billing',

@@ -4,7 +4,7 @@ import { ProductData } from '../shared/model/products';
 import { ProductsService } from '../shared/services/products.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductsformComponent } from './productsform/productsform.component';
-import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-products',

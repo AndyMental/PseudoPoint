@@ -3,7 +3,7 @@ import { ProjectService } from '../shared/services/project.services';
 import { ProjectInterface } from '../shared/model/project.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectformComponent } from './projectform/projectform.component';
-import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
 import { MatTable } from '@angular/material/table';
 
 @Component({

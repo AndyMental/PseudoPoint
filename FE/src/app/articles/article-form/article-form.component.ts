@@ -14,7 +14,7 @@ import { ArticlesService } from 'src/app/shared/services/articles.service';
 import {
   TOAST_STATE,
   ToastService,
-} from 'src/app/shared/services/Toast.service';
+} from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-article-form',

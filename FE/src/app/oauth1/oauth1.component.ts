@@ -3,7 +3,7 @@ import { Oauth1Data } from '../shared/model/oauth1';
 import { Oauth1Service } from '../shared/services/oauth1.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Oauth1formComponent } from './oauth1form/oauth1form.component';
-import { ToastService, TOAST_STATE  } from '../shared/services/Toast.service';
+import { ToastService, TOAST_STATE  } from '../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTable } from '@angular/material/table';
 

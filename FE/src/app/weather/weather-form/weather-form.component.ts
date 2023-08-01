@@ -12,7 +12,7 @@ import { Weather } from 'src/app/shared/model/weather';
 import {
   TOAST_STATE,
   ToastService,
-} from 'src/app/shared/services/Toast.service';
+} from 'src/app/shared/services/toast.service';
 import { WeatherService } from 'src/app/shared/services/weather.service';
 
 @Component({

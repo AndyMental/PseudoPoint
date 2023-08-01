@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Article } from '../shared/model/article';
 import { ArticlesService } from '../shared/services/articles.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TOAST_STATE, ToastService } from '../shared/services/Toast.service';
+import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDailogComponent } from '../delete-confirmation-dailog/delete-confirmation-dailog.component';
 import { ArticleFormComponent } from './article-form/article-form.component';

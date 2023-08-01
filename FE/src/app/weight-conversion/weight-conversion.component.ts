@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WeightService } from '../shared/services/weight.service';
 import { WeightConversionResponse, WeightConversionRequest } from 'src/app/shared/model/weight';
-import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormWeightComponent } from './form-weight/form-weight.component';
