@@ -12,7 +12,8 @@ def get_all_routers():
         {"router": billing.router, "prefix": "/billing", "tags": ["Billing"]},
         {"router": projects.router, "prefix": "/projects", "tags": ["Projects"]},
         {"router": geolocation.router, "prefix": "/geolocation", "tags": ["Geolocation"]},
-       
+    ] 
+    '''
         # {"router": weather.router, "prefix": "/weather", "tags": ["Weather"]},
         # {"router": users.router, "prefix": "/users", "tags": ["Users"]},
         # {"router": products.router, "prefix": "/products", "tags": ["Products"]},
@@ -38,4 +39,4 @@ def get_all_routers():
         # {"router": quotes.router, "prefix": "/quotes", "tags": ["Quotes"]},
         # {"router": celebrities.router, "prefix": "/celebrities", "tags": ["Celebrities"]},
         # {"router": cricket.router, "prefix": "/cricket", "tags": ["Cricket"]},
-    ]
+    '''

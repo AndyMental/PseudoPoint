@@ -2,6 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { Geolocation } from 'src/app/shared/model/geolocation.moel';
+import {
+  ToastService,
+  TOAST_STATE,
+} from 'src/app/shared/services/Toast.service';
 
 import {
   FormBuilder,
@@ -18,18 +22,17 @@ import {
   styleUrls: ['./geoform.component.css'],
 })
 export class GeoformComponent {
-  showSuccessMessage: boolean = false;
-  successMessage: string = '';
-  isEdit: boolean = false;
-  editMode: boolean = false;
-  formData: Geolocation = {
+  public isEdit: boolean = false;
+  public editMode: boolean = false;
+  private formData: Geolocation = {
     id: null,
     latitude: null,
     longitude: null,
   };
-  geoForm: FormGroup;
+  public geoForm: FormGroup;
 
   constructor(
+    private toastservice: ToastService,
     public dialogRef: MatDialogRef<GeoformComponent>,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
@@ -57,47 +60,54 @@ export class GeoformComponent {
       ],
     });
   }
-  resetForm() {
+  public resetForm(): void {
     this.geoForm.reset();
   }
 
-  submitForm(form): void {
+  public submitForm(form): void {
     this.formData = this.geoForm.getRawValue();
     if (this.editMode) {
       this.geolocationService
         .updateLocation(this.formData.id, this.formData)
         .subscribe(
           (updatedRecord: Geolocation) => {
-            this.isEdit = false; // Disable the ID field after updating
+            this.isEdit = false;
             this.dialogRef.close(updatedRecord);
+            this.toastservice.showToast(
+              TOAST_STATE.success,
+              'Record updated successfully'
+            );
           },
           (error) => {
-            console.error('Error updating geolocation record:', error);
+            this.toastservice.showToast(
+              TOAST_STATE.danger,
+              'Error encountered'
+            );
           }
         );
     } else {
       this.geolocationService.addLocation(this.formData).subscribe(
         (newRecord: Geolocation) => {
           this.geoForm.reset();
-          this.isEdit = false; // Disable the ID field after adding
+          this.isEdit = false;
+          this.toastservice.showToast(
+            TOAST_STATE.success,
+            'Record added successfully'
+          );
           this.editMode = false;
           this.dialogRef.close();
         },
         (error) => {
-          this.showSuccessMessage = true;
-          this.successMessage = 'Error encountered!';
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-          }, 3000);
+          this.toastservice.showToast(TOAST_STATE.danger, 'Error encountered');
         }
       );
     }
   }
 
-  cancel() {
+  public cancel(): void {
     this.dialogRef.close();
   }
-  noSpacesOrSpecialChars(): ValidatorFn {
+  private noSpacesOrSpecialChars(): ValidatorFn {
     const companyRegex = /^[A-Za-z]+( +[A-Za-z]+)*$/; // Only letters (uppercase or lowercase) with up to two spaces allowed
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value?.trim(); // Trim the input value to remove leading/trailing spaces

@@ -3,7 +3,7 @@ import { Health } from '../shared/model/health';
 import { HealthserviceService } from '../shared/services/healthservice.service';
 import { FormsComponent } from './forms/forms.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ToastService,TOAST_STATE } from '../shared/services/Toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
 
 @Component({
   selector: 'app-health',
@@ -11,11 +11,9 @@ import { ToastService,TOAST_STATE } from '../shared/services/Toast.service';
   styleUrls: ['./health.component.css'],
 })
 export class HealthComponent implements OnInit {
-  errorMessage: string = '';
-  showSuccessMessage: boolean = false;
-  successMessage: string = '';
-  healths: Health[] = [];
-  newHealthRecord: Health = {
+  public errorMessage: string = '';
+  public healths: Health[] = [];
+  public newHealthRecord: Health = {
     id: 0,
     date: '',
     steps: 0,
@@ -26,54 +24,42 @@ export class HealthComponent implements OnInit {
 
   constructor(
     private healthservice: HealthserviceService,
-    private toastservice:ToastService,
+    private toastservice: ToastService,
     public dialog: MatDialog
   ) {}
 
-  displayedColumns: string[] = ['id', 'date', 'steps', 'calories', 'distance', 'heart_rate', 'actions'];
-  ngOnInit() {
+  public displayedColumns: string[] = [
+    'id',
+    'date',
+    'steps',
+    'calories',
+    'distance',
+    'heart_rate',
+    'actions',
+  ];
+  ngOnInit():void {
     this.fetchHealthData();
   }
 
-  deleteItem(id: number) {
-    const userConfirmed = confirm('Are you sure you want to delete this item?');
-    if (userConfirmed) {
+  public deleteItem(id: number):void {
       const index = this.healths.findIndex((item) => item.id === id);
       if (index !== -1) {
         this.healthservice.delete(id).subscribe(() => {
+          this.fetchHealthData();
           this.healths.splice(index, 1);
-          this.showSuccessMessage = true;
-          this.successMessage = 'Record deleted successfully!';
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-          }, 3000);
+          this.toastservice.showToast(
+            TOAST_STATE.success,
+            'Record deleted successfully'
+          );
         });
       }
     }
-  }
   
 
-  updateItem(id: number) {
-    const existingRecord = this.healths.find((item) => item.id === id);
-    this.openDialog('Update', existingRecord);
-  }
-
-  fetchHealthData() {
+  private fetchHealthData():void {
     this.healthservice.getAllHealth().subscribe((data) => {
       this.healths = data;
     });
-  }
-
-  addRecordPost() {
-    this.healthservice.addHealthRecord(this.newHealthRecord).subscribe(
-      (response: Health) => {
-        this.healths.push(response)
-        this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully')
-      },
-      (error) => {
-        this.toastservice.showToast(TOAST_STATE.danger, 'Error Generated')
-      }
-    );
   }
 
   openDialog(action: string, healthData?: Health): void {
@@ -82,37 +68,35 @@ export class HealthComponent implements OnInit {
       data: { action, healthData },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        if (result.action === 'Submit') {
-          this.fetchHealthData();
-          this.showSuccessMessage = true;
-          this.successMessage = 'Record added successfully!';
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-          }, 3000);
-        } else if (result.action === 'Update') {
-          this.fetchHealthData();
-          this.showSuccessMessage = true;
-          this.successMessage = 'Record updated successfully!';
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-          }, 3000);
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          if (result.action === 'Submit') {
+            this.healths.push(result)
+            this.fetchHealthData();
+            this.toastservice.showToast(
+              TOAST_STATE.success,
+              'Record added Successfully'
+            );
+          } else if (result.action === 'Update') {
+            this.fetchHealthData();
+            this.toastservice.showToast(
+              TOAST_STATE.success,
+              'Record updated Successfully'
+            );
+          }
+        }
+      },
+      (error) => {
+        if (error?.error?.detail?.length > 0) {
+          const errorMessageObj = error.error.detail[0];
+          const fieldName = errorMessageObj.loc[errorMessageObj.loc.length - 1];
+          const errorMessage = `${fieldName} is not a valid field..!`;
+          this.errorMessage = errorMessage;
+        } else {
+          this.errorMessage = 'An unexpected error occurred.';
         }
       }
-    },
-    (error) => {
-      if (error?.error?.detail?.length > 0) {
-        const errorMessageObj = error.error.detail[0];
-        const fieldName = errorMessageObj.loc[errorMessageObj.loc.length - 1]; // Get the last field name causing the error
-        const errorMessage = `${fieldName} is not a valid field..!`;
-        this.errorMessage = errorMessage;
-      } else {
-        this.errorMessage = 'An unexpected error occurred.';
-      }
-      setTimeout(() => {
-        this.errorMessage = '';
-      }, 5000);
-    });
+    );
   }
 }

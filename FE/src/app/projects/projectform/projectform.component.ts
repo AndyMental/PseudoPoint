@@ -3,6 +3,7 @@ import { ProjectService } from 'src/app/shared/services/project.services';
 import { ProjectInterface } from 'src/app/shared/model/project.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastService,TOAST_STATE } from 'src/app/shared/services/Toast.service';
 
 @Component({
   selector: 'app-projectform',
@@ -10,18 +11,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./projectform.component.css'],
 })
 export class ProjectformComponent {
-  showSuccessMessage: boolean = false;
-  successMessage: string = '';
-  isEdit: boolean = false;
-  editMode: boolean = false;
-  formData: ProjectInterface = {
+  public isEdit: boolean = false;
+  public editMode: boolean = false;
+  private formData: ProjectInterface = {
     id: null,
     project_name: '',
     company: '',
   };
-  projectForm: FormGroup;
+  public projectForm: FormGroup;
 
   constructor(
+    private toastservice:ToastService,
     private projectservice: ProjectService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<ProjectformComponent>,
@@ -50,40 +50,49 @@ export class ProjectformComponent {
     });
   }
 
-  submitForm(form: any): void {
-    //Required for updation saif
+  public submitForm(form: any): void {
     this.formData = this.projectForm.getRawValue();
-
     if (this.editMode) {
       this.projectservice
         .updateProject(this.formData.id, this.formData)
         .subscribe(
           (updatedRecord: ProjectInterface) => {
+
             this.dialogRef.close(updatedRecord);
             this.editMode = false;
             this.isEdit = false;
             form.reset();
           },
           (error) => {
-            console.error('Error updating record:', error);
+            this.toastservice.showToast(
+              TOAST_STATE.danger,
+              'Error occured'
+            );
           }
         );
     } else {
       this.projectservice.addProject(this.formData).subscribe(
         (newRecord: ProjectInterface) => {
+          this.toastservice.showToast(
+            TOAST_STATE.success,
+            'Record added successfully'
+          );
           this.dialogRef.close(newRecord);
           this.isEdit = false;
           form.reset();
           this.editMode = false;
         },
         (error) => {
-          console.error('Error adding record:', error);
+          this.toastservice.showToast(
+            TOAST_STATE.danger,
+            'Error occured'
+          );
         }
       );
     }
   }
 
-  cancel() {
+  public cancel():void  {
     this.dialogRef.close();
   }
 }

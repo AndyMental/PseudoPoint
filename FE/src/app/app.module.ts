@@ -17,12 +17,11 @@ import { GeoformComponent } from './geolocation/geoform/geoform.component';
 import { ProjectformComponent } from './projects/projectform/projectform.component';
 import { BillingformComponent } from './billing/billingform/billingform.component';
 import { MainComponent } from './main/main.component';
-import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { ErrorToastComponent } from './error-toast/error-toast.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatTableModule } from '@angular/material/table';
-import { ToastService } from './shared/services/Toast.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +34,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ProjectformComponent,
     BillingformComponent,
     MainComponent,
-    MessageDialogComponent,
     ErrorToastComponent,
     SidebarComponent,
   ],
@@ -49,7 +47,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     RouteRoutingModule,
     RouteModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -11,7 +11,7 @@
   <h2 class="text-xl font-serif text-center mb-4">- Api Data for Health -</h2>
 
   <div class="table-container border rounded overflow-x-auto ml-10 pl-10">
-    <table [dataSource]="healths" mat-table class="w-full min-w-max text-sm text-left text-gray-500 dark:text-gray-400">
+    <table  [dataSource]="healths" mat-table  class="w-full min-w-max text-sm text-left text-gray-500 dark:text-gray-400">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef class="px-6 py-3 border-b" class="head">Id</th>
         <td mat-cell *matCellDef="let i" class="px-6 py-4 border-b">{{ i.id }}</td>
@@ -46,10 +46,10 @@
         <th mat-header-cell *matHeaderCellDef id="action" class="head" id="action">ACTIONS</th>
         <td mat-cell *matCellDef="let element">
           <button mat-icon-button id="action-button" color="warn" (click)="deleteItem(element.id)" class="btn">
-            <mat-icon>Delete</mat-icon> &nbsp;&nbsp;
+            <mat-icon>Delete</mat-icon>
             <i class="bi bi-trash"></i>
           </button>
-          <button mat-icon-button variant="contained" color="success" (click)="openDialog('update',element.id)" class="btn2">
+          <button mat-icon-button variant="contained" color="success" (click)="openDialog('Update',element)" class="btn2">
             <mat-icon>Edit</mat-icon>&nbsp;
             <i class="bi bi-pencil"></i>
           </button>            
@@ -62,5 +62,4 @@
     <br />
   </div>
 </div>
-<app-message-dialog *ngIf="showSuccessMessage" [message]="successMessage"></app-message-dialog>
 <app-error-toast *ngIf="errorMessage" [errorMessage]="errorMessage"></app-error-toast>

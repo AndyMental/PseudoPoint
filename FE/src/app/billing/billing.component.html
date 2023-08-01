@@ -4,7 +4,7 @@
         Add Bill
       </button>
     </div>
-      <h2 class="text-xl font-serif text-center mb-4">- Api Data for Billing -</h2>
+    <h2 class="text-xl font-serif text-center mb-4">- Api Data for Billing -</h2>
     <div class="table-container border rounded overflow-x-auto ml-10 pl-10">
       <table mat-table [dataSource]="bill" class="w-full min-w-max text-sm text-left text-gray-500 dark:text-gray-400 ">
         <ng-container matColumnDef="id">
@@ -48,5 +48,4 @@
     </div>
   </div>
 
-<app-message-dialog *ngIf="showSuccessMessage" [message]="successMessage"></app-message-dialog>
 <app-error-toast *ngIf="errorMessage" [errorMessage]="errorMessage"></app-error-toast>

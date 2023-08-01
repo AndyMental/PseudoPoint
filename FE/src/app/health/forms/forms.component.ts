@@ -16,10 +16,10 @@ import {
   styleUrls: ['./forms.component.css'],
 })
 export class FormsComponent {
-  errorMessage: string = '';
-  isEdit: boolean = false;
-  editMode: boolean = false;
-  formData: Health = {
+  public errorMessage: string = '';
+  public isEdit: boolean = false;
+  public editMode: boolean = false;
+  private formData: Health = {
     id: null,
     date: '',
     calories: null,
@@ -27,7 +27,7 @@ export class FormsComponent {
     heart_rate: null,
     distance: null,
   };
-  healthForm: FormGroup;
+  public healthForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<FormsComponent>,
@@ -52,11 +52,10 @@ export class FormsComponent {
       this.formData = { ...data.healthData };
       this.healthForm.patchValue(this.formData);
       this.isEdit = true;
-      //  this.healthForm.get('id')?.disable();
     }
   }
 
-  submitForm(form) {
+  public submitForm(form):void {
     if (this.editMode) {
       this.healthservice
         .update(this.formData.id, this.healthForm.value)
@@ -69,7 +68,7 @@ export class FormsComponent {
             if (error?.error?.detail?.length > 0) {
               const errorMessageObj = error.error.detail[0];
               const fieldName =
-                errorMessageObj.loc[errorMessageObj.loc.length - 1]; // Get the last field name causing the error
+                errorMessageObj.loc[errorMessageObj.loc.length - 1];
               const errorMessage = `${fieldName} is not a valid field..!`;
               this.errorMessage = errorMessage;
             } else {
@@ -90,10 +89,10 @@ export class FormsComponent {
     }
   }
 
-  cancel() {
+  public cancel():void {
     this.dialogRef.close();
   }
-  dateValidator(control: AbstractControl): ValidationErrors | null {
+  private dateValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const currentDate = new Date();
     if (selectedDate > currentDate) {

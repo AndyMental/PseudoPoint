@@ -9,22 +9,22 @@ import { ProjectInterface } from '../model/project.model';
 })
 export class ProjectService {
   constructor(private http: HttpClient) {}
-  getProjects(): Observable<ProjectInterface[]> {
+ public getProjects(): Observable<ProjectInterface[]> {
     return this.http.get<ProjectInterface[]>('http://127.0.0.1:8000/projects');
   }
 
-  deleteProject(id: number): Observable<ProjectInterface[]> {
+  public deleteProject(id: number): Observable<ProjectInterface[]> {
     const url = `http://127.0.0.1:8000/projects/${id}`;
     return this.http.delete<ProjectInterface[]>(url);
   }
 
-  addProject(newProj: ProjectInterface): Observable<ProjectInterface> {
+ public addProject(newProj: ProjectInterface): Observable<ProjectInterface> {
     console.log(newProj);
     const url = `http://127.0.0.1:8000/projects`;
     return this.http.post<ProjectInterface>(url, newProj);
   }
 
-  updateProject(id: number, record: ProjectInterface): Observable<ProjectInterface> {
+ public updateProject(id: number, record: ProjectInterface): Observable<ProjectInterface> {
     const url = `http://127.0.0.1:8000/projects/${id}`;
     return this.http.put<ProjectInterface>(url, record);
   }

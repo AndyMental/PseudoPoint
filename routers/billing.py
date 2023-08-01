@@ -72,6 +72,9 @@ def create_billing_record(billing_record: Billing):
     # logger.info("Creating new billing record")
     try:
         if (billing_record):
+            newID = max(billing_record.id for billing_record in billingData)+1
+            billing_record.id = newID
+            
             billingData.append(billing_record)
     except:
         raise HTTPException(status_code=404,detail="Invalid Record!")

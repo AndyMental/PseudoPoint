@@ -3,7 +3,7 @@ import { BillingInterface } from '../shared/model/billing.model';
 import { BillingService } from '../shared/services/billing.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BillingformComponent } from './billingform/billingform.component';
-import { MatTableDataSource } from '@angular/material/table';
+import { ToastService,TOAST_STATE } from '../shared/services/Toast.service';
 
 @Component({
   selector: 'app-billing',
@@ -12,14 +12,13 @@ import { MatTableDataSource } from '@angular/material/table';
   
 })
 export class BillingComponent implements OnInit {
-  showSuccessMessage: boolean = false;
-  errorMessage: string = '';
-  successMessage: string = '';
-  bill: MatTableDataSource<BillingInterface>;
+  public errorMessage: string = '';
+  public bill:BillingInterface[] = []
 
   displayedColumns: string[] = ['id', 'name', 'address', 'credit_card', 'actions'];
 
   constructor(
+    private toastservice:ToastService,
     private billingservice: BillingService,
     private dialog: MatDialog
   ) {}
@@ -28,13 +27,13 @@ export class BillingComponent implements OnInit {
     this.fetchData();
   }
 
-  fetchData() {
+  private fetchData():void {
     this.billingservice.getBills().subscribe((data) => {
-      this.bill = new MatTableDataSource(data);
+      this.bill = data;
     });
   }
 
-  openAddRecordForm() {
+  public openAddRecordForm():void {
     const dialogRef = this.dialog.open(BillingformComponent, {
       width: '360px',
     });
@@ -43,47 +42,39 @@ export class BillingComponent implements OnInit {
       if (result) {
         this.billingservice.addBill(result).subscribe(
           (response: BillingInterface) => {
-            this.showSuccessMessage = true;
-            this.successMessage = 'Record added successfully!';
-            setTimeout(() => {
-              this.showSuccessMessage = false;
-            }, 3000);
-            this.fetchData();
+            this.bill.push(result)
           },
           (error) => {
-            this.showSuccessMessage = true;
-            this.successMessage = error.error.detail[0].msg;
-            setTimeout(() => {
-              this.showSuccessMessage = false;
-            }, 3000);
+            this.toastservice.showToast(
+              TOAST_STATE.success,
+              'Error occured!'
+            );
           }
         );
       }
     });
   }
 
-  deleteBillrec(id: number) {
+  public deleteBillrec(id: number):void {
     const userConfirmed = confirm('Are you sure you want to delete this item?');
     if (userConfirmed) {
       this.billingservice.deleteBill(id).subscribe(() => {
-        this.showSuccessMessage = true;
-        this.successMessage = 'Deleted successfully';
-        setTimeout(() => {
-          this.showSuccessMessage = false;
-        }, 3000);
+        this.toastservice.showToast(
+          TOAST_STATE.success,
+          'Record deleted successfully'
+        );
         this.fetchData();
       });
     } else {
-      this.showSuccessMessage = true;
-      this.successMessage = 'Delete cancelled!';
-      setTimeout(() => {
-        this.showSuccessMessage = false;
-      }, 3000);
+      this.toastservice.showToast(
+        TOAST_STATE.success,
+        'Record deleted cancelled'
+      );
     }
   }
 
-  updateBillrec(id: number) {
-    const existingRecord = this.bill.filteredData.find((item) => item.id === id);
+  public updateBillrec(id: number):void {
+    const existingRecord = this.bill.find((item) => item.id === id);
     if (existingRecord) {
       const dialogRef = this.dialog.open(BillingformComponent, {
         width: '360px',
@@ -95,19 +86,12 @@ export class BillingComponent implements OnInit {
           if (result) {
             this.billingservice.updateBill(result.id, result).subscribe(
               (response: BillingInterface) => {
-                this.showSuccessMessage = true;
-                this.successMessage = 'Update successfull!';
-                setTimeout(() => {
-                  this.showSuccessMessage = false;
-                }, 3000);
-                this.fetchData();
               },
               (error) => {
-                this.showSuccessMessage = true;
-                this.successMessage = 'An unexpected error occurred.';
-                setTimeout(() => {
-                  this.showSuccessMessage = false;
-                }, 3000);
+                this.toastservice.showToast(
+                  TOAST_STATE.success,
+                  'error occured'
+                );
               }
             );
           }
@@ -118,7 +102,7 @@ export class BillingComponent implements OnInit {
             const fieldName =
               errorMessageObj.loc[
                 errorMessageObj.loc.length - 1
-              ]; // Get the last field name causing the error
+              ]; 
             const errorMessage = `${fieldName} is not a valid field..!`;
             this.errorMessage = errorMessage;
           } else {
@@ -131,5 +115,4 @@ export class BillingComponent implements OnInit {
       );
     }
   }
-  
 }
