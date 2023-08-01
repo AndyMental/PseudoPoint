@@ -35,11 +35,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ProductsComponent } from './products/products.component';
 import { NotificationformComponent } from './notifications/notificationform/notificationform.component';
 import { ProductsformComponent } from './products/productsform/productsform.component';
-import { MatDialog } from '@angular/material/dialog';
-
 import { Oauth1Component } from './oauth1/oauth1.component';
 import { Oauth1formComponent } from './oauth1/oauth1form/oauth1form.component';
-
 import { HealthComponent } from './health/health.component';
 import { FormsComponent } from './health/forms/forms.component';
 import { FormsModule } from '@angular/forms';
@@ -60,7 +57,6 @@ import { GeoFormComponent } from './geography/geo-form/geo-form.component';
 import { HistoryEventsComponent } from './history-events/history-events.component';
 import { HeventFormComponent } from './history-events/hevent-form/hevent-form.component';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -123,6 +119,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgxMatNativeDateModule,
     NgxMatMomentModule,
     MatSnackBarModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
