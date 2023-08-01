@@ -1,0 +1,176 @@
+<div class="p-4">
+  <h2 class="text-xl font-serif">Add Health Record</h2>
+  <form [formGroup]="healthForm" (ngSubmit)="submitForm(healthForm)">
+    <!-- <div class="mb-4">
+      <label for="id" class="block font-sans">ID</label>
+      <input
+        type="number"
+        id="id"
+        name="id"
+        class="border rounded p-2 w-full"
+        required
+        formControlName="id"
+        placeholder="Id"
+      />
+      <div
+      *ngIf="
+        healthForm.get('id').errors?.required &&
+        healthForm.get('id').touched
+      "
+      class="text-red-600"
+    >
+      ID is required.
+    </div>
+    <div
+      *ngIf="
+        healthForm.get('id').errors?.min && healthForm.get('id').touched
+      "
+      class="text-red-600"
+    >
+      ID must be greater than or equal to 1.
+    </div>
+    </div> -->
+    <div class="mb-4">
+      <label for="date" class="block font-sans">Date</label>
+      <input
+        type="date"
+        id="date"
+        name="date"
+        class="border rounded p-2 w-full"
+        formControlName="date"
+        placeholder="Date"
+      />
+      <div *ngIf="healthForm.get('date').hasError('futureDate')" class="text-red-600">
+        Selected date cannot be greater than the current date.
+      </div>
+    </div>
+    <div class="mb-4">
+      <label for="steps" class="block font-sans">Steps</label>
+      <input
+        type="number"
+        id="steps"
+        name="steps"
+        class="border rounded p-2 w-full"
+        formControlName="steps"
+        placeholder="Steps"
+      />
+      <div
+      *ngIf="
+        healthForm.get('steps').errors?.required &&
+        healthForm.get('steps').touched
+      "
+      class="text-red-600"
+    >
+      steps is required.
+    </div>
+    <div
+      *ngIf="
+        healthForm.get('steps').errors?.min && healthForm.get('steps').touched
+      "
+      class="text-red-600"
+    >
+      steps must be greater than to 1.
+    </div>
+    </div>
+    <div class="mb-4">
+      <label for="calories" class="block font-sans">Calories</label>
+      <input
+        type="number"
+        id="calories"
+        name="calories"
+        class="border rounded p-2 w-full"
+        formControlName="calories"
+        placeholder="Calories"
+      />
+      <div
+      *ngIf="
+        healthForm.get('calories').errors?.required &&
+        healthForm.get('calories').touched
+      "
+      class="text-red-600"
+    >
+      Calories is required.
+    </div>
+    <div
+      *ngIf="
+        healthForm.get('calories').errors?.min && healthForm.get('calories').touched
+      "
+      class="text-red-600"
+    >
+      Calories must be greater than 1.
+    </div>
+    </div>
+
+
+    <div class="mb-4">
+      <label for="distance" class="block font-sans">Distance</label>
+      <input
+        type="number"
+        id="distance"
+        name="distance"
+        class="border rounded p-2 w-full"
+        formControlName="distance"
+        placeholder="Distance"
+      />
+      <div
+      *ngIf="
+        healthForm.get('distance').errors?.required &&
+        healthForm.get('distance').touched
+      "
+      class="text-red-600"
+    >
+      distance is required.
+    </div>
+    <div
+      *ngIf="
+        healthForm.get('distance').errors?.min && healthForm.get('distance').touched
+      "
+      class="text-red-600"
+    >
+      distance must be greater than 1.
+    </div>
+    </div>
+    <div class="mb-4">
+      <label for="heartrate" class="block font-sans">Heart Rate</label>
+      <input
+        type="number"
+        id="heartrate"
+        name="heartrate"
+        class="border rounded p-2 w-full"
+        formControlName="heart_rate" 
+        placeholder="Heart Rate"
+      />
+      <div
+      *ngIf="
+        healthForm.get('heart_rate').errors?.required &&
+        healthForm.get('heart_rate').touched
+      "
+      class="text-red-600"
+    >
+      Heart Rate is required.
+    </div>
+    <div
+      *ngIf="
+        healthForm.get('heart_rate').errors?.min && healthForm.get('heart_rate').touched
+      "
+      class="text-red-600"
+    >
+    heart_rate must be greater than 1.
+    </div>
+    </div>
+
+    <div class="flex justify-center">
+      <button
+        type="button"
+        class="mr-2 bg-gray-200 px-4 py-2 rounded"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button type="submit" 
+      class="bg-blue-500 text-white px-4 py-2 rounded">
+        {{ editMode ? "Update" : "Submit" }}
+      </button>
+    </div>
+  </form>
+</div>

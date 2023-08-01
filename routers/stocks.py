@@ -28,7 +28,6 @@ stocks = [
     Stock(id=15,symbol="GOOGL", name="Alphabet Inc.", price=2950.50, change=-1.00),
     Stock(id=16,symbol="NFLX", name="Netflix Inc.", price=560.75, change=3.75),
     Stock(id=17,symbol="WMT",name="Walmart Inc.", price =150.50,change = -0.50)
-    # Existing stock data (you can add more stocks if needed)
 ]
 
 @router.get("/stocks", response_model=List[Stock])

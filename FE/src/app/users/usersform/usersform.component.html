@@ -1,0 +1,28 @@
+<div class="example-container">
+  <h2>{{ data.editMode ? 'Edit User Data' : 'Add User Data' }}</h2>
+  <form [formGroup]="formData" (ngSubmit)="userFormSubmit()">
+    <mat-form-field class="mb-4">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" type="text" placeholder="Enter Name" required>
+      <mat-error *ngIf="formData.get('name').invalid && formData.get('name').touched">
+        <span *ngIf="formData.get('name').errors?.required">Name is required.</span>
+        <span *ngIf="formData.get('name').errors?.minlength">Name must be at least 3 characters long.</span>
+        <span *ngIf="formData.get('name').errors?.maxlength">Name cannot exceed 50 characters.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="mb-4">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" placeholder="Enter Email" required>
+      <mat-error *ngIf="formData.get('email').invalid && formData.get('email').touched">
+        <span *ngIf="formData.get('email').errors?.required">Email is required.</span>
+        <span *ngIf="formData.get('email').errors?.email">Please enter a valid email address.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <div class="example-button-row">
+      <button mat-stroked-button color="primary" type="submit">{{ data.editMode ? 'Update' : 'Add' }}</button>
+      <button mat-stroked-button color="warn" (click)="userFormCancel()">Cancel</button>
+    </div>
+  </form>
+</div>

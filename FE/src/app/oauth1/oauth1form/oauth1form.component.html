@@ -1,0 +1,25 @@
+<div class="example-container">
+  <h2>{{ data.editMode ? 'Edit OAuth Data' : 'Add OAuth Data' }}</h2>
+  <form [formGroup]="formData" (ngSubmit)="oauthSubmitForm()">
+    <mat-form-field class="mb-4">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="names" required>
+      <mat-error *ngIf="formData.get('names').invalid && formData.get('names').touched">Name is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="mb-4">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required>
+      <mat-error *ngIf="formData.get('email').invalid && formData.get('email').touched">Email is required.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="mb-4">
+      <mat-label>Access Token</mat-label>
+      <input matInput formControlName="access_token" required>
+      <mat-error *ngIf="formData.get('access_token').invalid && formData.get('access_token').touched">Access Token is required.</mat-error>
+    </mat-form-field>
+
+    <div class="example-button-row">
+      <button mat-stroked-button color="primary" type="submit">{{ data.editMode ? 'Update' : 'Add' }}</button>
+      <button mat-stroked-button color="warn" (click)="formCancel()">Cancel</button>
+    </div>
+  </form>
+</div>
