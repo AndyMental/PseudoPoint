@@ -72,7 +72,6 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
     SpaceValidatorDirective,
     SidebarComponent,
     DeleteConfirmationDailogComponent,
-    AppComponent,
     UsersComponent,
     UsersformComponent,
     NotificationsComponent,
@@ -103,6 +102,7 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
   ],
 
   imports: [
+    CommonModule,
     BrowserModule,
     HttpClientModule,
     RouteModule,
