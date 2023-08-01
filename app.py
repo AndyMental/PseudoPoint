@@ -28,6 +28,3 @@ for router_info in get_all_routers():
     # Each router handles a different part of the API, specified by the prefix
     # The tags argument is used for organizing the routes in the API documentation
     app.include_router(router_info["router"], prefix=router_info["prefix"], tags=router_info["tags"])
-
-
-

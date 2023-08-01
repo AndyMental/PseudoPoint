@@ -9,15 +9,14 @@ export enum TOAST_STATE {
   providedIn: 'root'
 })
 export class ToastService {
+  constructor(private snackBar: MatSnackBar) {}
 
-  constructor(private snackBar: MatSnackBar) { }
-
-  showToast(state: TOAST_STATE, message: string): void {
+ public showToast(state: TOAST_STATE, message: string): void {
     const config: MatSnackBarConfig = {
       duration: 3000, 
       panelClass: ['toast', state],
-      verticalPosition: 'top',
-      horizontalPosition: 'end'
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
     };
 
     this.snackBar.open(message, 'Close', config);

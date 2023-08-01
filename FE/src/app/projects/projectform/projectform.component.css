@@ -1,0 +1,5 @@
+/* Add this CSS class for the disabled button */
+.disabled-button {
+    opacity: 0.7; 
+    pointer-events: none; 
+}
