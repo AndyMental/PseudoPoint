@@ -1,0 +1,114 @@
+<form
+  [formGroup]="newFeatureForm"
+  (ngSubmit)="onSave()"
+  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+>
+  <div class="mb-2">
+    <h4 class="text-xl font-semibold mb-4">Create New Geographical Feature</h4>
+    </div>
+    <label for="name" class="block font-semibold text-sm">Name:</label>
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+      class="border px-2 py-1 w-full text-sm"
+      required
+    />
+    <div
+      *ngIf="
+        newFeatureForm.get('name')?.invalid &&
+        (newFeatureForm.get('name')?.dirty ||
+          newFeatureForm.get('name')?.touched)
+      "
+      class="alert"
+    >
+      <div
+        *ngIf="newFeatureForm.get('name')?.errors?.['required']"
+        [ngStyle]="{ color: 'red' }"
+      >
+        Species Name is Required
+      </div>
+      <div
+        *ngIf="newFeatureForm.get('name')?.errors?.['minlength']"
+        [ngStyle]="{ color: 'red' }"
+      >
+        Name Must be at least 4 characters long
+      </div>
+      <div
+        [hidden]="!newFeatureForm.get('name')?.hasError('pattern')"
+        [ngStyle]="{ color: 'red' }"
+      >
+        Only alphabets allowed
+      </div>
+    </div>
+  <!-- </div> -->
+  <div class="mb-2">
+    <label for="latitude" class="block font-semibold text-sm">Latitude:</label>
+    <input
+      type="number"
+      id="latitude"
+      formControlName="latitude"
+      class="border px-2 py-1 w-full text-sm"
+      required
+    />
+    <div
+      *ngIf="
+        newFeatureForm.get('latitude')?.invalid &&
+        (newFeatureForm.get('latitude')?.dirty ||
+          newFeatureForm.get('latitude')?.touched)
+      "
+      class="alert"
+    >
+      <div
+        *ngIf="newFeatureForm.get('latitude')?.errors?.['required']"
+        [ngStyle]="{ color: 'red' }"
+      >
+        **** Required ****
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-2">
+    <label for="longitude" class="block font-semibold text-sm">Longitude:</label>
+    <input
+      type="number"
+      id="longitude"
+      formControlName="longitude"
+      class="border px-2 py-1 w-full text-sm"
+      required
+    />
+
+    <div
+      *ngIf="
+        newFeatureForm.get('longitude')?.invalid &&
+        (newFeatureForm.get('longitude')?.dirty ||
+          newFeatureForm.get('longitude')?.touched)
+      "
+      class="alert"
+    >
+      <div
+        *ngIf="newFeatureForm.get('longitude')?.errors?.['required']"
+        [ngStyle]="{ color: 'red' }"
+      >
+        **** Required ****
+      </div>
+    </div>
+  </div>
+
+  <div >
+    <button
+    type="submit"
+    class="bg-blue-500 hover:bg-blue-600 text-black font-semibold px-4 py-2 rounded"
+  >
+    {{ isEditMode ? "Update" : "Add" }}
+  </button>
+
+    <button
+      type="button"
+      class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded ml-4"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
