@@ -5,11 +5,13 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class NewsArticle(BaseModel):
     title: str
     author: str
     content: str
     tags: List[str]
+
 
 news_articles = [
     NewsArticle(title="New Study Shows Benefits of Exercise", author="John Smith", content="A new study has found that regular exercise can improve overall health and reduce the risk of chronic diseases.", tags=["exercise", "health"]),
@@ -37,81 +39,6 @@ news_articles = [
 
 router = APIRouter()
 
-@router.get("/{title}", response_model=NewsArticle, description="Returns a news article with the given title.", tags=["News Articles"])
-def read_article_by_title(title: str):
-    """Get a news article by title.
-
-    This endpoint retrieves the details of a news article based on the provided title.
-
-    Args:
-        title (str): The title of the news article.
-
-    Returns:
-        NewsArticle: The news article object containing the details.
-
-    Raises:
-        HTTPException: If the news article is not found, a 404 error is raised.
-
-    """
-    logger.info(f"Fetching article with title {title}")
-    article = next((article for article in news_articles if article.title == title), None)
-    if article is None:
-        logger.error(f"Article with title {title} not found")
-        raise HTTPException(status_code=404, detail=f"Article with title '{title}' not found")
-    return article
-
-@router.get("/", response_model=List[NewsArticle], description="Returns a list of all news articles.", tags=["News Articles"], response_model_exclude_unset=True, response_model_exclude_defaults=True, response_model_exclude_none=True)
-def read_all_articles():
-    """Get all news articles.
-
-    This endpoint retrieves a list of all available news articles.
-
-    Returns:
-        List[NewsArticle]: A list of news articles.
-
-    """
-    return news_articles
-
-# Example responses
-read_article_by_title.example = {"title": "New Study Shows Benefits of Exercise", "author": "John Smith", "content": "A new study has found that regular exercise can improve overall health and reduce the risk of chronic diseases.", "tags": ["exercise", "health"]}
-read_all_articles.example = news_articles
-
-@router.post("/", response_model=NewsArticle, description="Creates a new news article.", tags=["News Articles"])
-def create_article(article: NewsArticle):
-    """Create a new news article.
-
-    This endpoint creates a new news article and returns it.
-
-    Returns:
-        NewsArticle: The created news article.
-    """
-    news_articles.append(article)
-    return article
-
-@router.put("/{title}", response_model=NewsArticle, description="Updates a specific news article.", tags=["News Articles"])
-def update_article(title: str, article: NewsArticle):
-    """Update a specific news article.
-
-    This endpoint updates a specific news article and returns it.
-
-    Args:
-        title (str): The title of the news article.
-        article (NewsArticle): The new article data.
-
-    Returns:
-        NewsArticle: The updated news article.
-
-    Raises:
-        HTTPException: If the news article is not found, a 404 error is raised.
-
-    """
-    logger.info(f"Updating article with title {title}")
-    for index, existing_article in enumerate(news_articles):
-        if existing_article.title == title:
-            news_articles[index] = article
-            return article
-    logger.error(f"Article with title {title} not found")
-    raise HTTPException(status_code=404, detail=f"Article with title '{title}' not found")
 
 @router.delete("/{title}", description="Deletes a specific news article.", tags=["News Articles"])
 def delete_article(title: str):

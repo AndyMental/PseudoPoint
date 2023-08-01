@@ -4,7 +4,7 @@ import { WilldLife } from '../shared/model/wildlife';
 import { FormComponent } from './form/form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
 import { MatTable } from '@angular/material/table';
 
 @Component({
