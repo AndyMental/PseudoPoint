@@ -1,4 +1,21 @@
 import { NgModule } from '@angular/core';
+
+// import { OauthComponent } from './oauth/oauth.component';
+// import { PopupformComponent } from './oauth/popupform/popupform.component';
+import { UsersComponent } from './users/users.component';
+import { UsersformComponent } from './users/usersform/usersform.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ProductsComponent } from './products/products.component';
+import { NotificationformComponent } from './notifications/notificationform/notificationform.component';
+// import { ProductsformComponent } from './productsform/productsform.component';
+import { ProductsformComponent } from './products/productsform/productsform.component';
+import { MatDialog } from '@angular/material/dialog';
+
+import { Oauth1Component } from './oauth1/oauth1.component';
+import { Oauth1formComponent } from './oauth1/oauth1form/oauth1form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 import { AppComponent } from './app.component';
 import { HealthComponent } from './health/health.component';
 import { FormsComponent } from './health/forms/forms.component';
@@ -15,7 +32,6 @@ import { GeoformComponent } from './geolocation/geoform/geoform.component';
 import { ProjectformComponent } from './projects/projectform/projectform.component';
 import { BillingformComponent } from './billing/billingform/billingform.component';
 import { MainComponent } from './main/main.component';
-import { ErrorToastComponent } from './error-toast/error-toast.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -36,8 +52,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
-    GeoFormComponent,
     AppComponent,
+    UsersComponent,
+    UsersformComponent,
+    NotificationsComponent,
+    ProductsComponent,
+    NotificationformComponent,
+    ProductsformComponent,
+    Oauth1Component,
+    Oauth1formComponent,
     HealthComponent,
     FormsComponent,
     GeolocationComponent,
@@ -47,7 +70,7 @@ import { HttpClientModule } from '@angular/common/http';
     ProjectformComponent,
     BillingformComponent,
     MainComponent,
-    ErrorToastComponent,
+    GeoFormComponent,
     SidebarComponent,
     WildlifeComponent,
     FormComponent,
@@ -60,13 +83,19 @@ import { HttpClientModule } from '@angular/common/http';
   ],
 
   imports: [
+    
+    
+   
+    ReactiveFormsModule,
+   
+    MatFormFieldModule,
+    MatInputModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     MatDialogModule,
     ReactiveFormsModule,
-    RouteRoutingModule,
     RouteModule,
     MatTableModule,
     MatSnackBarModule,

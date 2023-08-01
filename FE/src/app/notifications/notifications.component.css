@@ -1,0 +1,10 @@
+.add-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px; /* Add some spacing between the button and the table */
+  }
+  
+  .table-container {
+    display: flex;
+    flex-direction: column;
+  }

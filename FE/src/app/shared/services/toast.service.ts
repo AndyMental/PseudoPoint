@@ -12,7 +12,7 @@ export enum TOAST_STATE {
 export class ToastService {
   constructor(private snackBar: MatSnackBar) {}
 
-public showToast(state: TOAST_STATE, message: string): void {
+ public showToast(state: TOAST_STATE, message: string): void {
     const config: MatSnackBarConfig = {
       duration: 3000, 
       panelClass: ['toast', state],

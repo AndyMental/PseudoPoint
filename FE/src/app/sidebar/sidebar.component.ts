@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  public logout():void {
-    alert("Logged Out successfully!")   
-  }
+ 
 }

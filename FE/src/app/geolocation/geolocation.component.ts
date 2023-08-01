@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GeolocationService } from '../shared/services/geolocation.service';
 import { Geolocation } from '../shared/model/geolocation.moel';
 import { GeoformComponent } from './geoform/geoform.component';
-import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
 import { MatTable } from '@angular/material/table';
 @Component({
   selector: 'app-geolocation',
