@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Oauth1Data } from '../shared/model/oauth1';
 import { Oauth1Service } from '../shared/services/oauth1.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Oauth1formComponent } from './oauth1form/oauth1form.component';
 import { ToastService, TOAST_STATE  } from '../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-oauth1',
@@ -15,6 +16,11 @@ export class Oauth1Component implements OnInit {
   public dataSource: Oauth1Data[] = [];
   public displayedColumns: string[] = ['id', 'names', 'email', 'access_token', 'action'];
   public oauthDataSource:MatTableDataSource<Oauth1Data>
+  public editMode: boolean = false;
+  @ViewChild(MatTable) OAuthTable!:MatTable<any>;
+
+
+
   constructor(private dialog: MatDialog, private oauth1Service: Oauth1Service,  private toastservice: ToastService) {}
 
   ngOnInit() {
@@ -27,7 +33,8 @@ export class Oauth1Component implements OnInit {
       (data) => (this.dataSource = data),
       (error) => console.error('Error fetching OAuth data:', error)
     );
-    this.refreshData();
+    // this.refreshData();
+    this.OAuthTable.renderRows()
    
   }
 
@@ -37,7 +44,7 @@ export class Oauth1Component implements OnInit {
       this.oauth1Service.deleteOAuth(names).subscribe(
         () => {
           this.dataSource = this.dataSource.filter((item) => item.names !== names);
-          this.refreshData();
+          this.OAuthTable.renderRows()
           this.toastservice.showToast(
             TOAST_STATE.success,
             'Deleted Successfully'
@@ -75,6 +82,7 @@ export class Oauth1Component implements OnInit {
             if (index !== -1) {
               this.dataSource[index] = result;
               this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully')
+              this.OAuthTable.renderRows()
             }
           }
         }, (error) => { // Move this error handling block inside the inner subscribe
@@ -101,7 +109,7 @@ export class Oauth1Component implements OnInit {
             (updatedRecord: Oauth1Data) => {
              
               // Handle the update logic and data refresh here
-              this.refreshData();
+              this.OAuthTable.renderRows()
             },
             (error) => {
               this.toastservice.showToast(TOAST_STATE.danger, error.detail['msg']);
@@ -114,7 +122,7 @@ export class Oauth1Component implements OnInit {
             
               this.oauthDataSource.data.push(newRecord);
               // Handle the add logic and data refresh here
-              this.refreshData();
+              this.OAuthTable.renderRows()
               this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
             },
             (error) => {
@@ -128,10 +136,5 @@ export class Oauth1Component implements OnInit {
     });
   }
 
-  private refreshData(): void {
-    this.oauth1Service.getOAuthData().subscribe(
-      (data) => (this.dataSource = data),
-      (error) => console.error('Error fetching OAuth data:', error)
-    );
-  }
+
 }

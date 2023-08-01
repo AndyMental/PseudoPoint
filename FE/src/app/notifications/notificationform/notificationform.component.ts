@@ -1,4 +1,4 @@
-import { Component, Inject} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationData } from '../../shared/model/notifications';
 import { NotificationsService } from '../../shared/services/notifications.service';
@@ -8,60 +8,47 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-notificationform',
   templateUrl: './notificationform.component.html',
   styleUrls: ['./notificationform.component.css']
-  
 })
 export class NotificationformComponent {
-
-  editMode: boolean = false;
   formData: FormGroup;
 
   constructor(
     public formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<NotificationformComponent>,
     public notificationsService: NotificationsService,
-    @Inject(MAT_DIALOG_DATA) public data: { editMode: boolean; record?: NotificationData }// Inject the service
+    @Inject(MAT_DIALOG_DATA) public data: { record?: NotificationData }
   ) {
     this.formData = this.formBuilder.group({
       id: [0],
       title: ['', Validators.required],
-      message: ['',Validators.required]
+      message: ['', Validators.required]
     });
-    if (data && data.editMode && data.record){
-      this.editMode = true;
+    if (data && data.record) {
       this.formData.patchValue(data.record);
     }
   }
 
-
-
   public notificationFormSubmit() {
     if (this.formData.valid) {
       const formData = this.formData.value;
-      if (this.editMode) {
-        // Edit mode, hit PUT method
-        // formData.id = this.formData.id;
-        this.notificationsService.updateNotification(this.formData.value).subscribe(
+      if (this.data.record) {
+        // Editing existing notification
+        this.notificationsService.updateNotification(formData).subscribe(
           (updatedNotification: NotificationData) => {
-            
             this.dialogRef.close(updatedNotification);
-            // this.onSubmitForm.emit(updatedNotification);
-            // this.form.reset();
           },
           (error) => {
-          
+            // Handle error if necessary
           }
         );
       } else {
-        // Add mode, hit POST method
-        this.notificationsService.createNotification(this.formData.value).subscribe(
+        // Adding new notification
+        this.notificationsService.createNotification(formData).subscribe(
           (newRecord: NotificationData) => {
-         
             this.dialogRef.close(newRecord);
-            // this.onSubmitForm.emit(newNotification);
-            // this.form.reset();
           },
           (error) => {
-           
+            // Handle error if necessary
           }
         );
       }
@@ -72,7 +59,5 @@ export class NotificationformComponent {
 
   public notificationFormCancel(): void {
     this.dialogRef.close();
-
- 
   }
 }

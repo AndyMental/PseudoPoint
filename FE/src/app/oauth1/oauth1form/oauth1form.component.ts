@@ -23,9 +23,9 @@ export class Oauth1formComponent {
   ) {
     this.formData = this.formBuilder.group({
       id: [0],
-      names: ['', Validators.required],
-      email: ['', Validators.required],
-      access_token: ['', Validators.required]
+      names: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z0-9]{2,}$')]],
+      email: ['', [Validators.required, Validators.email]],
+      access_token: ['', [Validators.required, Validators.pattern('^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{3,}$')]]
     });
 
     if (data && data.editMode && data.record) {

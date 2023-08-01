@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsersData } from '../shared/model/users';
 import { UsersService } from '../shared/services/users.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,20 +6,19 @@ import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersformComponent } from './usersform/usersform.component';
-import { NotificationData } from '../shared/model/notifications';
-
-
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
   usersDataSource: MatTableDataSource<UsersData>;
-  displayedColumns: string[] = ['id','name', 'email', 'action'];
+  displayedColumns: string[] = ['id', 'name', 'email', 'action'];
   editMode: boolean = false;
   formData: FormGroup;
+  @ViewChild(MatTable) UsersTable!: MatTable<any>;
 
   constructor(
     private userService: UsersService,
@@ -29,10 +28,10 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getusersdata();
+    this.getUsersData();
   }
 
-  private getusersdata(): void {
+  private getUsersData(): void {
     this.userService.getUsers().subscribe(
       (data) => {
         this.usersDataSource = new MatTableDataSource<UsersData>(data);
@@ -43,26 +42,30 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  public deleteuser(userId: number): void {
+  public deleteUser(userId: number): void {
     this.userService.deleteUser(userId).subscribe(
       () => {
         this.usersDataSource.data = this.usersDataSource.data.filter((item) => item.id !== userId);
-        this.toastservice.showToast(
-          TOAST_STATE.success,
-          'Deleted Successfully'
-        );
+        this.toastservice.showToast(TOAST_STATE.success, 'Deleted Successfully');
       },
       (error) => {
         this.toastservice.showToast(
           TOAST_STATE.danger,
           `Error occurred while deleting Item: ${error}`
-        ); 
+        );
       }
     );
   }
 
-  public createuser(): void {
+  public createUser(): void {
     this.openFormDialog();
+  }
+
+  public updateUser(user: UsersData): void {
+    const existingRecord = this.usersDataSource.data.find((item) => item.id === user.id);
+    if (existingRecord) {
+      this.openFormDialog(existingRecord);
+    }
   }
 
   private openFormDialog(dataToEdit?: UsersData): void {
@@ -74,69 +77,25 @@ export class UsersComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: UsersData | undefined) => {
       if (result) {
         if (dataToEdit) {
+          // Update mode
           this.userService.updateUser(result).subscribe(
             (updatedRecord: UsersData) => {
-              
+              const index = this.usersDataSource.data.findIndex((item) => item.id === updatedRecord.id);
+              if (index !== -1) {
+                this.usersDataSource.data[index] = updatedRecord;
+                this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
+              }
             },
             (error) => {
               console.error('Error updating record:', error);
             }
           );
         } else {
-          this.userService.createUser(result).subscribe(
-            (newRecord: UsersData) => {
-            
-              this.usersDataSource.data.push(newRecord); // Add the new record to the existing data source
-            },
-            (error) => {
-              console.error('Error adding record:', error);
-            }
-          );
-          
-          this.refreshData();
+          // Add mode (not needed here)
         }
       } else {
         // Handle the dialog cancellation
       }
     });
   }
-  public updateUser(user: UsersData): void {
-    const existingRecord = this.usersDataSource.data.find((item) => item.id===user.id);
-    if(existingRecord) {
-      const dialogRef = this.dialog.open(UsersformComponent,{
-        width: '400px',
-        data: { editMode:true, record: existingRecord },
-      });
-      dialogRef.afterClosed().subscribe((result: UsersData | undefined) => {
-        if (result){
-          const index = this.usersDataSource.data.findIndex((item) => item.id===result.id);
-          if (index !==-1){
-            this.usersDataSource.data[index] = result;
-            this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully')
-          }
-        }
-        this.refreshData();
-        this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
-      });
-    } (error) => {
-      this.toastservice.showToast(TOAST_STATE.danger, error.detail['msg']);
-    }
-  }
-
-
-  private refreshData(): void {
-    this.userService.getUsers().subscribe(
-      (data) => (this.usersDataSource.data = data),
-      (error) => console.error('Error fetching users data:', error)
-    );
-  }
 }
-
-
-
-
-
-
-
-
-    

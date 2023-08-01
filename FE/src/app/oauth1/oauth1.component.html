@@ -1,8 +1,8 @@
-<h1 style="text-align: center; font-weight: bold;">OAuth Component</h1>
+<h1 style="text-align: center; font-weight: bold;">OAuthTable</h1>
 
-<div class="add-button-container ">
+<div class="add-button-container">
   <!-- Add Data Button -->
-  <button mat-stroked-button  (click)="createOAuth()">Add Data</button>
+  <button mat-stroked-button (click)="createOAuth()">Add Data</button>
 </div>
 <div class="table-container ml-80">
   <div *ngIf="dataSource.length > 0">
@@ -10,35 +10,35 @@
 
       <!-- Position Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="names">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.names}} </td>
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.names }}</td>
       </ng-container>
 
       <!-- Weight Column -->
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
       </ng-container>
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="access_token">
-        <th mat-header-cell *matHeaderCellDef> AccessToken </th>
-        <td mat-cell *matCellDef="let element"> {{element.access_token}} </td>
+        <th mat-header-cell *matHeaderCellDef>Access Token</th>
+        <td mat-cell *matCellDef="let element">{{ element.access_token }}</td>
       </ng-container>
 
       <!-- Action Column -->
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
           <div class="example-button-row">
-            <button mat-stroked-button  (click)="updateOAuth(element)">Edit</button>
-            <button mat-stroked-button  (click)="deleteOAuth(element.names)">Delete</button>
+            <button mat-stroked-button (click)="updateOAuth(element)">Edit</button>
+            <button mat-stroked-button (click)="deleteOAuth(element.names)">Delete</button>
           </div>
         </td>
       </ng-container>
@@ -52,3 +52,39 @@
     <p>No OAuth data available.</p>
   </div>
 </div>
+
+<!-- OAuth Form -->
+<ng-container *ngIf="editMode">
+  <div class="example-container">
+    <h2>{{ formData.controls.id.value ? 'Edit OAuth Data' : 'Add OAuth Data' }}</h2>
+    <form [formGroup]="formData" (ngSubmit)="notificationFormSubmit()">
+      <mat-form-field class="mb-4">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="names" required pattern="^[A-Za-z][A-Za-z0-9]{2,}$">
+        <mat-error *ngIf="formData.get('names').hasError('required')">Name is required.</mat-error>
+        <mat-error *ngIf="formData.get('names').hasError('pattern')">
+          Name should start with a letter and can contain letters and numbers (min 3 characters).
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="mb-4">
+        <mat-label>Access Token</mat-label>
+        <input matInput formControlName="access_token" required pattern="^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{3,}$">
+        <mat-error *ngIf="formData.get('access_token').hasError('required')">Access Token is required.</mat-error>
+        <mat-error *ngIf="formData.get('access_token').hasError('pattern')">
+          Access Token should contain at least one special character and min 3 characters.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="mb-4">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required type="email">
+        <mat-error *ngIf="formData.get('email').hasError('required')">Email is required.</mat-error>
+        <mat-error *ngIf="formData.get('email').hasError('email')">Invalid email format.</mat-error>
+      </mat-form-field>
+
+      <div class="example-button-row">
+        <button mat-stroked-button color="primary" type="submit">{{ formData.controls.id.value ? 'Update' : 'Add' }}</button>
+        <button mat-stroked-button color="warn" (click)="notificationFormCancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ng-container>
