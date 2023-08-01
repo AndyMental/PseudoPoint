@@ -70,7 +70,7 @@ export class SongsComponent implements OnInit {
       if (result === true) {
         this.songService.deleteSong(song.id!).subscribe(() => {
           this.songs = this.songs.filter((s) => s.id !== song.id);
-          this.loadSongs();
+          this.songsTable.renderRows();
           this.toastservice.showToast(TOAST_STATE.success, 'Data deleted Successfully');
         });
       }

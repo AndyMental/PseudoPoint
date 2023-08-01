@@ -61,7 +61,7 @@ export class StocksComponent implements OnInit {
         this.stockService.deleteStock(stock.id).subscribe(
           () => {
             this.stocks = this.stocks.filter((item) => item.id !== stock.id);
-            this.loadStocks();
+            // this.loadStocks();
             this.toastservice.showToast(TOAST_STATE.success, 'Data deleted Successfully');
           },
           (error) => {
