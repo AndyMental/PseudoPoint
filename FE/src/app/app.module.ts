@@ -32,7 +32,6 @@ import { GeoformComponent } from './geolocation/geoform/geoform.component';
 import { ProjectformComponent } from './projects/projectform/projectform.component';
 import { BillingformComponent } from './billing/billingform/billingform.component';
 import { MainComponent } from './main/main.component';
-import { ErrorToastComponent } from './error-toast/error-toast.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -71,7 +70,7 @@ import { HttpClientModule } from '@angular/common/http';
     ProjectformComponent,
     BillingformComponent,
     MainComponent,
-    ErrorToastComponent,
+    GeoFormComponent,
     SidebarComponent,
     WildlifeComponent,
     FormComponent,

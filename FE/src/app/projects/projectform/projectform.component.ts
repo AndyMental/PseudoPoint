@@ -3,7 +3,7 @@ import { ProjectService } from 'src/app/shared/services/project.services';
 import { ProjectInterface } from 'src/app/shared/model/project.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastService,TOAST_STATE } from 'src/app/shared/services/Toast.service';
+import { ToastService,TOAST_STATE } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-projectform',

@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   ToastService,
   TOAST_STATE,
-} from 'src/app/shared/services/Toast.service';
+} from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-billingform',

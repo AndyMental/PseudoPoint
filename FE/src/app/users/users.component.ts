@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsersData } from '../shared/model/users';
 import { UsersService } from '../shared/services/users.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersformComponent } from './usersform/usersform.component';
 import { MatTable } from '@angular/material/table';
+import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-users',
