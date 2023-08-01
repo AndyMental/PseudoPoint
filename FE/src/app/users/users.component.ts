@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersformComponent } from './usersform/usersform.component';
 import { MatTable } from '@angular/material/table';
-import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
+import { TOAST_STATE, ToastService } from '../shared/services/Toast.service';
 
 @Component({
   selector: 'app-users',

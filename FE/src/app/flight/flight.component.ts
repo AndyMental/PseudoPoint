@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FlightsService } from '../shared/services/flights.service';
 import { Flight } from '../shared/model/flights';
-import { TOAST_STATE, ToastService } from '../shared/services/toast.service';
+import { TOAST_STATE, ToastService } from '../shared/services/Toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { FlightFormComponent } from './flight-form/flight-form.component';

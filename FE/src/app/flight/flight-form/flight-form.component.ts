@@ -11,7 +11,7 @@ import { spaceValidator } from 'src/app/shared/directives/space-validator.direct
 import {
   TOAST_STATE,
   ToastService,
-} from 'src/app/shared/services/toast.service';
+} from 'src/app/shared/services/Toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';

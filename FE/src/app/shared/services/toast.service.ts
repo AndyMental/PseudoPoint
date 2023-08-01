@@ -13,7 +13,7 @@ export class ToastService {
   constructor(private snackBar: MatSnackBar) {}
 
  public showToast(state: TOAST_STATE, message: string): void {
-    const config: MatSnackBarConfig<any> = {
+    const config: MatSnackBarConfig = {
       duration: 3000, 
       panelClass: ['toast', state],
       horizontalPosition: 'center',
