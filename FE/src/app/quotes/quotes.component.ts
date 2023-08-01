@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { QuotesDetails } from '../shared/services/quotes.service';
 import { Quotes } from '../shared/model/quotes';
-import { FormsComponent } from './forms/forms.component';
+import { QuotesFormComponent } from './forms/forms.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TOAST_STATE,ToastService } from '../shared/services/toast.service';
@@ -16,7 +16,7 @@ export class QuotesComponent implements OnInit {
   public dataSource = new MatTableDataSource<Quotes>([]);
   public displayedColumns: string[] = ['id', 'text', 'author', 'actions'];
   @Input() public showCoursesTable: boolean = false;
-  @ViewChild(FormsComponent, { static: false }) public formComponent: FormsComponent;
+  @ViewChild(QuotesFormComponent, { static: false }) public formComponent: QuotesFormComponent;
   public showForm = false;
   @ViewChild(MatTable) QuotesTable:MatTable<Quotes>;
 
@@ -134,7 +134,7 @@ export class QuotesComponent implements OnInit {
 
   
  public openDialog(): void {
-    const dialogRef = this.dialog.open(FormsComponent, {
+    const dialogRef = this.dialog.open(QuotesFormComponent, {
       width: '500px',
       data: { quote: this.newQuote, isEdit: false },
     });
@@ -147,7 +147,7 @@ export class QuotesComponent implements OnInit {
   }
 
   public editQuote(quote: Quotes) {
-    const dialogRef = this.dialog.open(FormsComponent, {
+    const dialogRef = this.dialog.open(QuotesFormComponent, {
       width: '500px',
       data: { quote, isEdit: true },
     });

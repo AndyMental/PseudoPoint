@@ -15,7 +15,7 @@ import { Quotes } from 'src/app/shared/model/quotes';
   templateUrl: './forms.component.html',
   styleUrls: ['./forms.component.css'],
 })
-export class FormsComponent implements OnInit {
+export class QuotesFormComponent implements OnInit {
   @Input() public showFormInput: boolean;
   @Output() public showFormOutput = new EventEmitter<boolean>();
   @Output() public addNewQuery = new EventEmitter<Quotes>();
@@ -32,7 +32,7 @@ export class FormsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: { quote: Quotes; isEdit: boolean },
-    public dialogRef: MatDialogRef<FormsComponent>
+    public dialogRef: MatDialogRef<QuotesFormComponent>
   ) {}
 
   public ngOnInit(): void {
