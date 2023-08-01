@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouteRoutingModule } from './route-routing.module';
 import { RouterModule, Routes } from '@angular/router';
+import { FlightComponent } from '../flight/flight.component';
+import { ArticlesComponent } from '../articles/articles.component';
+import { WeatherComponent } from '../weather/weather.component';
+import { ReviewsComponent } from '../reviews/reviews.component';
 import { SongsComponent } from '../songs/songs.component';
 import { RealEstateComponent } from '../real-estate/real-estate.component';
 import { StocksComponent } from '../stocks/stocks.component';
@@ -21,6 +25,10 @@ import { GeographyComponent } from '../geography/geography.component';
 import { HistoryEventsComponent } from '../history-events/history-events.component';
 
 const routes: Routes = [
+  { path: 'flights', component: FlightComponent },
+  { path: 'articles', component: ArticlesComponent },
+  { path: 'weather', component: WeatherComponent },
+  { path: 'reviews', component: ReviewsComponent },
   { path: 'songs', component: SongsComponent },
   { path: 'real-estate', component: RealEstateComponent },
   { path: 'stocks', component: StocksComponent },

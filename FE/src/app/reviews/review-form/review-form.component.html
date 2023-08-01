@@ -1,0 +1,106 @@
+<mat-dialog-content>
+  <form [formGroup]="reviewForm">
+    <div>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" required />
+        <mat-error *ngIf="title.invalid && title.touched">
+          <div *ngIf="title.errors?.required">Title is required.</div>
+          <div *ngIf="title.errors?.minlength">
+            Title must be at least 4 characters long.
+          </div>
+          <div *ngIf="title.errors?.maxlength">
+            Title must not be 15 characters long.
+          </div>
+          <div *ngIf="title.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Reviewer Name</mat-label>
+        <input matInput formControlName="reviewer" required />
+        <mat-error *ngIf="reviewer.invalid && reviewer.touched">
+          <div *ngIf="reviewer.errors?.required">
+            Reviewer name is required.
+          </div>
+          <div *ngIf="reviewer.errors?.minlength">
+            Reviewer name must be at least 4 characters long.
+          </div>
+          <div *ngIf="reviewer.errors?.maxlength">
+            Reviewer must not be 25 characters long.
+          </div>
+          <div *ngIf="reviewer.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Rating</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="rating"
+          min="0"
+          max="5"
+          required
+        />
+        <mat-error *ngIf="rating.invalid && rating.touched">
+          <div *ngIf="rating.errors?.required">Rating is required.</div>
+          <div *ngIf="rating.errors?.min || rating.errors?.max">
+            Rating must be between 0 and 5.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Review Text</mat-label>
+        <textarea matInput formControlName="review_text" required></textarea>
+        <mat-error *ngIf="review_text.invalid && review_text.touched">
+          <div *ngIf="review_text.errors?.required">Review text is required.</div>
+          <div *ngIf="review_text.errors?.minlength">
+            Review text must be at least 10 characters long.
+          </div>
+          <div *ngIf="review_text.errors?.maxlength">
+            Review text must not be more than 150 characters long.
+          </div>
+          <div *ngIf="review_text.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+      
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="true"
+    (click)="addReview()"
+    *ngIf="!review; else update"
+    [disabled]="reviewForm.invalid"
+  >
+    Submit
+  </button>
+  <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+</mat-dialog-actions>
+
+<ng-template #update>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="updateReview()"
+    [disabled]="reviewForm.invalid"
+  >
+    Update
+  </button>
+</ng-template>

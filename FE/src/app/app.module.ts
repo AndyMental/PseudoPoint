@@ -1,10 +1,35 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-// import { MethodsComponent } from './methods/methods.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlightComponent } from './flight/flight.component';
+import { RouteModule } from './route/route.module';
+import { RouteRoutingModule } from './route/route-routing.module';
+import { FlightFormComponent } from './flight/flight-form/flight-form.component';
+import { ArticlesComponent } from './articles/articles.component';
+import { ArticleFormComponent } from './articles/article-form/article-form.component';
+import { WeatherComponent } from './weather/weather.component';
+import { WeatherFormComponent } from './weather/weather-form/weather-form.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { ReviewFormComponent } from './reviews/review-form/review-form.component';
+import { SpaceValidatorDirective } from './shared/directives/space-validator.directive';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+} from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DeleteConfirmationDailogComponent } from './delete-confirmation-dailog/delete-confirmation-dailog.component';
 import { StocksComponent } from './stocks/stocks.component';
-import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StockFormComponent } from './stock-form/stock-form.component';
 import { SongsComponent } from './songs/songs.component';
 import { SongFormComponent } from './song-form/song-form.component';
@@ -12,35 +37,19 @@ import { EcommerceComponent } from './ecommerce/ecommerce.component';
 import { EcommerceFormComponent } from './ecommerce-form/ecommerce-form.component';
 import { RealEstateComponent } from './real-estate/real-estate.component';
 import { RealEstateFormComponent } from './real-estate-form/real-estate-form.component';
-import { RouteRoutingModule } from './route/route-routing.module';
-import { RouteModule } from './route/route.module';
 import { SuccessMessageComponent } from './success-message/success-message.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-// import { OauthComponent } from './oauth/oauth.component';
-// import { PopupformComponent } from './oauth/popupform/popupform.component';
 import { UsersComponent } from './users/users.component';
 import { UsersformComponent } from './users/usersform/usersform.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ProductsComponent } from './products/products.component';
 import { NotificationformComponent } from './notifications/notificationform/notificationform.component';
-// import { ProductsformComponent } from './productsform/productsform.component';
 import { ProductsformComponent } from './products/productsform/productsform.component';
-import { MatDialog } from '@angular/material/dialog';
-
 import { Oauth1Component } from './oauth1/oauth1.component';
 import { Oauth1formComponent } from './oauth1/oauth1form/oauth1form.component';
-import { MatInputModule } from '@angular/material/input';
-
+import { FormsModule } from '@angular/forms';
 import { HealthComponent } from './health/health.component';
 import { FormsComponent } from './health/forms/forms.component';
 import { GeolocationComponent } from './geolocation/geolocation.component';
@@ -60,16 +69,21 @@ import { GeoFormComponent } from './geography/geo-form/geo-form.component';
 import { HistoryEventsComponent } from './history-events/history-events.component';
 import { HeventFormComponent } from './history-events/hevent-form/hevent-form.component';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-
-
-
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    // MethodsComponent,
+    FlightComponent,
+    FlightFormComponent,
+    ArticlesComponent,
+    ArticleFormComponent,
+    WeatherComponent,
+    WeatherFormComponent,
+    ReviewsComponent,
+    ReviewFormComponent,
+    SpaceValidatorDirective,
+    SidebarComponent,
+    DeleteConfirmationDailogComponent,
     StocksComponent,
     StockFormComponent,
     SongsComponent,
@@ -107,9 +121,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     GeographyComponent,
     HistoryEventsComponent,
     HeventFormComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -130,19 +145,21 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     BrowserModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    RouteModule,
-    MatTableModule,
-    MatSnackBarModule,
-    MatButtonModule,
     RouteModule,
     RouteRoutingModule,
-    CommonModule,
-    MatPaginatorModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatButtonModule,
     MatIconModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatMomentModule,
+    MatSnackBarModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

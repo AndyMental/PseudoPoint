@@ -1,0 +1,103 @@
+<mat-dialog-content>
+  <form [formGroup]="weatherForm">
+    <div>
+      <mat-form-field>
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city" required />
+        <mat-error *ngIf="city.invalid && city.touched">
+          <div *ngIf="city.errors?.required">City is required.</div>
+          <div *ngIf="city.errors?.minlength">
+            City must be at least 4 characters long.
+          </div>
+          <div *ngIf="city.errors?.maxlength">
+            City must not be 15 characters long.
+          </div>
+          <div *ngIf="city.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Temperature</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="temperature"
+          min="-40"
+          max="60"
+          required
+        />
+        <mat-error *ngIf="temperature.invalid && temperature.touched">
+          <div *ngIf="temperature.errors?.required">Temperature is required.</div>
+          <div *ngIf="temperature.errors?.min || temperature.errors?.max">
+            Temperature must be between -40 and 60.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Humidity</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="humidity"
+          min="0"
+          max="100"
+          required
+        />
+        <mat-error *ngIf="humidity.invalid && humidity.touched">
+          <div *ngIf="humidity.errors?.required">Humidity is required.</div>
+          <div *ngIf="humidity.errors?.min || humidity.errors?.max">
+            Humidity must be between 0 and 100.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Weather Condition</mat-label>
+        <textarea matInput formControlName="weather_condition" required></textarea>
+        <mat-error *ngIf="weather_condition.invalid && weather_condition.touched">
+          <div *ngIf="weather_condition.errors?.required">Weather Condition text is required.</div>
+          <div *ngIf="weather_condition.errors?.minlength">
+            Weather Condition must be at least 10 characters long.
+          </div>
+          <div *ngIf="weather_condition.errors?.maxlength">
+            Weather Condition must not be more than 150 characters long.
+          </div>
+          <div *ngIf="weather_condition.errors?.forbiddenSpaceInput">
+            Whitespaces are not allowed before or after alphabets.
+          </div>
+        </mat-error>
+      </mat-form-field>
+      
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="addWeather()"
+    *ngIf="!weatherDetails; else update"
+    [disabled]="weatherForm.invalid"
+  >
+    Submit
+  </button>
+  <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+</mat-dialog-actions>
+
+<ng-template #update>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="updateWeather()"
+    [disabled]="weatherForm.invalid"
+  >
+    Update
+  </button>
+</ng-template>
