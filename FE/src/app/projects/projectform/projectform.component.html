@@ -1,0 +1,106 @@
+<div class="p-4">
+  <h2 class="text-xl font-serif">
+    {{ editMode ? "Update" : "Add" }} Project Record
+  </h2>
+  <form [formGroup]="projectForm" (ngSubmit)="submitForm(projectForm)">
+    <div class="mb-4">
+      <label for="id" class="block font-sans">ID</label>
+      <input
+        type="number"
+        id="id"
+        name="id"
+        class="border rounded p-2 w-full"
+        formControlName="id"
+        placeholder="Id"
+      />
+      <div
+        *ngIf="
+          projectForm.get('id').errors?.required &&
+          projectForm.get('id').touched
+        "
+        class="text-red-600"
+      >
+        ID is required.
+      </div>
+      <div
+        *ngIf="
+          projectForm.get('id').errors?.min && projectForm.get('id').touched
+        "
+        class="text-red-600"
+      >
+        ID must be greater than or equal to 1.
+      </div>
+    </div>
+
+
+  <div class="mb-4">
+  <label for="project_name" class="block font-sans">Project Name</label>
+  <input
+    type="text"
+    id="project_name"
+    name="project_name"
+    class="border rounded p-2 w-full"
+    formControlName="project_name"
+    placeholder="Project Name"
+  />
+  <div *ngIf="projectForm.get('project_name').errors?.required && projectForm.get('project_name').touched" class="text-red-600">
+    Project Name is required.
+  </div>
+  <div *ngIf="projectForm.get('project_name').errors?.pattern" class="text-red-600">
+    Characters only are allowed!
+  </div>
+</div>
+
+
+
+    <div class="mb-4">
+      <label for="company" class="block font-sans">Company</label>
+      <input
+        type="text"
+        id="company"
+        name="company"
+        class="border rounded p-2 w-full"
+        formControlName="company"
+        placeholder="Company"
+      />
+      <div
+        *ngIf="
+          projectForm.get('company').errors?.required &&
+          projectForm.get('company').touched
+        "
+        class="text-red-600"
+      >
+        Company is required.
+      </div>
+      <div *ngIf="projectForm.get('company').errors?.pattern" class="text-red-600">
+        Characters only are allowed!
+      </div>
+      <div
+        *ngIf="
+          projectForm.get('company').errors?.min &&
+          projectForm.get('company').touched
+        "
+        class="text-red-600"
+      >
+        Cannot exceed length
+      </div>
+    </div>
+    <div class="flex justify-center">
+      <button
+        type="button"
+        class="mr-2 bg-gray-200 px-4 py-2 rounded"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+        [disabled]="!projectForm.valid"
+        type="submit"
+        [ngClass]="{ 'disabled-button': !projectForm.valid }"
+        class="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        {{ editMode ? "Update" : "Submit" }}
+      </button>
+    </div>
+  </form>
+</div>
