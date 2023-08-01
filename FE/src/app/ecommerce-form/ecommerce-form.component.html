@@ -1,0 +1,104 @@
+<div class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+  <div class="bg-white p-6 rounded-lg w-96">
+    <h2 class="text-2xl font-bold mb-4">
+      {{ data.editingProduct ? 'Edit' : 'Add New' }} Item
+    </h2>
+    <form [formGroup]="ecommerceForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="title" class="block text-sm font-medium"
+          >Title</label
+        >
+        <input
+          formControlName="title"
+          type="text"
+          id="title"
+          class="w-full border rounded py-2 px-3"
+        />
+        <div
+          *ngIf="isControlInvalid('title')"
+          class="text-red-500 text-sm mt-1"
+        >
+          <div *ngIf="ecommerceForm.get('title')?.errors?.required">
+            Title is required
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="color" class="block text-sm font-medium"
+          >Color</label
+        >
+        <input
+          formControlName="color"
+          type="text"
+          id="color"
+          class="w-full border rounded py-2 px-3"
+        />
+        <div
+          *ngIf="isControlInvalid('color')"
+          class="text-red-500 text-sm mt-1"
+        >
+          <div *ngIf="ecommerceForm.get('color')?.errors?.required">
+            Color is required
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="description" class="block text-sm font-medium"
+          >Description</label
+        >
+        <textarea
+          formControlName="description"
+          id="description"
+          class="w-full border rounded py-2 px-3"
+        ></textarea>
+        <div
+          *ngIf="isControlInvalid('description')"
+          class="text-red-500 text-sm mt-1"
+        >
+          <div *ngIf="ecommerceForm.get('description')?.errors?.required">
+            Description is required
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="price" class="block text-sm font-medium"
+          >Price</label
+        >
+        <input
+          formControlName="price"
+          type="number"
+          id="price"
+          class="w-full border rounded py-2 px-3"
+        />
+        <div
+          *ngIf="isControlInvalid('price')"
+          class="text-red-500 text-sm mt-1"
+        >
+          <div *ngIf="ecommerceForm.get('price')?.errors?.required">
+            Price is required
+          </div>
+          <div *ngIf="ecommerceForm.get('price')?.errors?.min">
+            Price cannot be less than 0
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between">
+        <button
+          type="button"
+          class="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2"
+        >
+          {{ data.editingProduct ? 'Update' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
