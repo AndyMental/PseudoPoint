@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { RecipeformComponent } from './recipeform/recipeform.component'; // Update the import
 import { ToastService,TOAST_STATE } from '../shared/services/toast.service';
 import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/deleteconfirmation-dialog.component';
+import { MatTable } from '@angular/material/table';
+
 @Component({
   selector: 'app-recipe',
   templateUrl: './recipe.component.html',
@@ -13,7 +15,8 @@ import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/
 export class RecipeComponent  {
   public displayedColumns: string[] = ['id', 'names', 'ingredients', 'instructions', 'actions'];
   public recipes: RecipeModel[] = [];
-  @ViewChild('recipesTable') recipesTable: any; 
+  
+  @ViewChild(MatTable) recipesTable!:MatTable<any>;
   public newRecipe: RecipeModel = {
     id: 0,
     names: '',
@@ -29,13 +32,8 @@ export class RecipeComponent  {
       this.recipes = data
   })
 }
-private refreshData() {
-  this.recipeService.getRecipes().subscribe((data) => {
-    this.recipes = data;
-  });
-}
 
-  public  openAddRecipe(): void {
+  public  openAddRecipe():void {
     const dialogRef = this.dialog.open(RecipeformComponent, {
       width: '400px',
       data: { editMode: false, record: { ...this.newRecipe } },
@@ -43,13 +41,14 @@ private refreshData() {
     dialogRef.afterClosed().subscribe((result: RecipeModel | undefined) => {
       
       if (result) {
-        this.refreshData();
+        
+        this.recipesTable.renderRows();
       }
-      this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
+      
     });
   }
 
-  private addNewRecipe(newRecipeData: RecipeModel): void {
+  public addNewRecipe(newRecipeData: RecipeModel): void {
     const newRecipe: RecipeModel = {
       id: 0, // Set the initial ID to 0 or generate an appropriate ID
       names: newRecipeData.names,
@@ -60,14 +59,21 @@ private refreshData() {
       (response: RecipeModel) => {
         
         this.recipes.push(response);
+        this.recipesTable.renderRows();
+      
+        this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
       },
       (error) => {
-        
+        this.toastservice.showToast(
+          TOAST_STATE.danger,
+          `Error occurred while adding new Recipe: ${error}`
+        );
       }
     );
+    
   }
 
-  private updateExistingRecipe(id: number): void {
+  public updateExistingRecipe(id: number): void {
       const existingRecipe = this.recipes.find((recipe) => recipe.id === id);
       if (existingRecipe) {
         const dialogRef = this.dialog.open(RecipeformComponent, {
@@ -80,6 +86,7 @@ private refreshData() {
             const index = this.recipes.findIndex((recipe) => recipe.id === result.id);
             if (index !== -1) {
               this.recipes[index] = result;
+              this.recipesTable.renderRows();
               this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
             }
             (error) => {
@@ -90,9 +97,7 @@ private refreshData() {
             this.updateRecipe(result);
           }
         });
-      } else {
-        
-      }
+      } 
     }
   
 
@@ -100,7 +105,7 @@ private refreshData() {
     this.recipeService.updateRecipe(updatedRecipe).subscribe(
       (response: RecipeModel) => {
         
-        this.refreshData();
+        this.recipesTable.renderRows();
       },
       (error) => {
         
@@ -108,7 +113,7 @@ private refreshData() {
     );
   }
 
-  deleteRecipe(id: number) {
+  deleteRecipe(id: number):void {
     const dialogRef = this.dialog.open(DeleteconfirmationDialogComponent, {
       width: '400px',
       data: {
@@ -122,7 +127,8 @@ private refreshData() {
         this.recipeService.deleteRecipe(id).subscribe(
           () => {
             this.recipes = this.recipes.filter((item) => item.id !== id);
-            this.refreshData();
+            //this.refreshData();
+            this.recipesTable.renderRows();
             this.toastservice.showToast(TOAST_STATE.success, 'Deleted Successfully');
           },
           (error) => {

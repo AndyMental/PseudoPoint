@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EventformComponent } from './eventform/eventform.component';
 import { ToastService,TOAST_STATE } from '../shared/services/toast.service';
 import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/deleteconfirmation-dialog.component';
+import { MatTable } from '@angular/material/table';
+
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -14,7 +16,8 @@ import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/
 export class EventsComponent implements OnInit {
   public displayedColumns: string[] = ['event_id', 'names', 'date','location', 'description','actions'];
   public event:EventData[] = [];
-  @ViewChild('eventsTable') eventsTable: any;
+  @ViewChild(MatTable) eventsTable!:MatTable<any>;
+  
   public newEvent:EventData = {
     event_id:0,
     names:'',
@@ -30,13 +33,8 @@ export class EventsComponent implements OnInit {
     })
   }
 
-  private refreshData() {
-    this.eventservice.getAllEvents().subscribe((data) => {
-      this.event = data;
-    });
-  }
 
-  public openAddEvent() {
+  public openAddEvent():void {
     const dialogRef = this.dialog.open(EventformComponent, {
       width: '400px',
       data: { editMode: false, record:{ ...this.newEvent }, eventsTable: this.eventsTable }
@@ -44,13 +42,13 @@ export class EventsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: EventData|undefined) => {
       
       if (result) {
-        this.refreshData();
+        this.eventsTable.renderRows();
       }
       this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
     });    
   }
 
-  private addNewEvent(newEventData: EventData): void {
+  public addNewEvent(newEventData: EventData): void {
     const newEvent: EventData = {
       event_id: 0, 
       names: newEventData.names,
@@ -63,15 +61,13 @@ export class EventsComponent implements OnInit {
       (response: EventData) => {
         
         this.event.push(response);
-        this.refreshData(); 
+        this.eventsTable.renderRows(); 
       },
-      (error) => {
-        
-      }
+      
     );
   }
 
-  private updateExistingEvent(event_id: number) {
+  public updateExistingEvent(event_id: number):void {
       const existingEvent = this.event.find((item) => item.event_id === event_id);
       if (existingEvent) {
         const dialogRef = this.dialog.open(EventformComponent, {
@@ -84,6 +80,7 @@ export class EventsComponent implements OnInit {
             const index = this.event.findIndex((item) => item.event_id === result.event_id);
             if (index !== -1) {
               this.event[index] = result;
+              this.eventsTable.renderRows();
               this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
             }
           
@@ -97,23 +94,20 @@ export class EventsComponent implements OnInit {
           
         });
         
-      } else {
-        
-      }
+      } 
     }
   
   public updateEvent(updatedEvent: EventData): void {
     this.eventservice.updateEvent(updatedEvent).subscribe(
       (response: EventData) => {
         
-        this.refreshData();
+        this.eventsTable.renderRows();
+
       },
-      (error) => {
-        
-      }
+     
     );
   }
-  public deleteEvent(event_id: number) {
+  public deleteEvent(event_id: number):void {
     const dialogRef = this.dialog.open(DeleteconfirmationDialogComponent, {
       width: '400px',
       data: {
@@ -127,7 +121,7 @@ export class EventsComponent implements OnInit {
         this.eventservice.deleteEvent(event_id).subscribe(
           () => {
             this.event = this.event.filter((item) => item.event_id !== event_id);
-            this.refreshData();
+            this.eventsTable.renderRows();
             this.toastservice.showToast(TOAST_STATE.success, 'Deleted Successfully');
           },
           (error) => {

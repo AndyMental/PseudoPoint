@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoursesService } from 'src/app/shared/services/courses.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgForm } from '@angular/forms';
-import {NgToastService} from 'ng-angular-popup';
+
 @Component({
   selector: 'app-popupform',
   templateUrl: './popupform.component.html',
@@ -28,7 +28,6 @@ export class PopupFormComponent {
   constructor(
     private coursesService: CoursesService,
     private fb: FormBuilder,
-    private toast:NgToastService,
     private dialogRef: MatDialogRef<PopupFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { editMode: boolean; record?: CoursesModel }
   ) {
@@ -54,33 +53,27 @@ export class PopupFormComponent {
         this.coursesService.updateCourse(this.formData).subscribe(
           (updatedCourse: CoursesModel) => {
             
-            this.toast.success({detail:"Success Message",summary:'Record updated successfully!',duration:5000}); // Show success toast message
             this.dialogRef.close(updatedCourse);
             this.myForm.resetForm();
             this.editMode = false;
           },
-          (error) => {
-            
-          }
+          
         );
       } else {
         this.coursesService.addCourse(this.formData).subscribe(
           (newCourse: CoursesModel) => {
             
-            this.toast.success({detail:"Success Message",summary:'Record added successfully!',duration:5000}); // Show success toast message
             this.dialogRef.close(newCourse);
             this.myForm.resetForm();
             this.editMode = false;
           },
-          (error) => {
-            
-          }
+          
         );
       }
     }
   }
 
-  public cancelCourse() {
+  public cancelCourse():void {
     this.dialogRef.close();
     this.myForm.resetForm();
   }

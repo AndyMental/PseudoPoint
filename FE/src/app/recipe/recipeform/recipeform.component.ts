@@ -14,7 +14,7 @@ export class RecipeformComponent {
   public form: FormGroup;
   public editMode: boolean = false;
   @ViewChild('myForm', { static: false }) myForm!: NgForm;
-
+  
   constructor(
     private recipeservice: RecipeService,
     private fb: FormBuilder,
@@ -75,9 +75,7 @@ export class RecipeformComponent {
             this.dialogRef.close(updatedRecipe);
             this.editMode = false;
           },
-          (error) => {
-            
-          }
+          
         );
       } else {
         this.recipeservice.addRecipe(formData).subscribe(
@@ -88,9 +86,7 @@ export class RecipeformComponent {
             this.myForm.resetForm();
             this.editMode = false;
           },
-          (error) => {
-            
-          }
+          
         );
       }
     }

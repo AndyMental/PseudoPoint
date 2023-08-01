@@ -92,42 +92,40 @@ def create_course(course: OnlineCourse):
         course.course_id = latest_course_id
         online_courses.append(course)
         return course
-        # online_courses.append(course)
-        # return course
 
 
 @router.put("/{course_id}", response_model=OnlineCourse, description="Updates an existing online course.", tags=["Courses"])
 def update_course(course_id: int, course: OnlineCourse):
-        logger.info(f"Updating course with title {course_id}")
+        logger.info(f"Updating course with id {course_id}")
         for index, existing_course in enumerate(online_courses):
             if existing_course.course_id == course_id:
-                online_courses[index] = course
+                online_courses  [index] = course
                 return course
 
-@router.put("/title/{title}", response_model=OnlineCourse, description="Updates an existing online course.", tags=["Courses"])
-def update_course(title: str, course: OnlineCourse):
-        """Update a specific online course.
+# @router.put("/title/{title}", response_model=OnlineCourse, description="Updates an existing online course.", tags=["Courses"])
+# def update_course(title: str, course: OnlineCourse):
+#         """Update a specific online course.
 
-        This endpoint updates a specific online course and returns it.
+#         This endpoint updates a specific online course and returns it.
 
-        Args:
-            title (str): The title of the course.
-            course (OnlineCourse): The new course data.
+#         Args:
+#             title (str): The title of the course.
+#             course (OnlineCourse): The new course data.
 
-        Returns:
-            OnlineCourse: The updated course.
+#         Returns:
+#             OnlineCourse: The updated course.
 
-        Raises:
-            HTTPException: If the course is not found, a 404 error is raised.
+#         Raises:
+#             HTTPException: If the course is not found, a 404 error is raised.
 
-        """
-        logger.info(f"Updating course with title {title}")
-        for index, existing_course in enumerate(online_courses):
-            if existing_course.title == title:
-                online_courses[index] = course
-                return course
-        logger.error(f"Course with title {title} not found")
-        raise HTTPException(status_code=404, detail=f"Course with title '{title}' not found")
+#         """
+#         logger.info(f"Updating course with title {title}")
+#         for index, existing_course in enumerate(online_courses):
+#             if existing_course.title == title:
+#                 online_courses[index] = course
+#                 return course
+#         logger.error(f"Course with title {title} not found")
+#         raise HTTPException(status_code=404, detail=f"Course with title '{title}' not found")
 
 
 

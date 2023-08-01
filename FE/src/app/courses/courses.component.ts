@@ -1,21 +1,21 @@
-import { Component,  OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CoursesService } from '../shared/services/courses.service';
 import { CoursesModel } from '../shared/model/courses';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupFormComponent } from './popupform/popupform.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
 import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/deleteconfirmation-dialog.component';
+import { MatTable } from '@angular/material/table';
 @Component({
   selector: 'app-course',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css'],
   
 })
-export class CoursesComponent implements OnInit {
+export class CoursesComponent  {
   public displayedColumns: string[] = ['course_id', 'title', 'instructor', 'description', 'price', 'duration', 'prerequisites','actions'];
   public course:CoursesModel[] = [];
-  @ViewChild('coursesTable') coursesTable: any;
+  @ViewChild(MatTable) coursesTable!:MatTable<any>;
   public newCourse:CoursesModel = {
     course_id:0,
     title:'',
@@ -26,34 +26,32 @@ export class CoursesComponent implements OnInit {
     prerequisites:''
   }
 
-  constructor(private courseservice:CoursesService, private dialog:MatDialog, private toastservice:ToastService,private snackBar: MatSnackBar){}
-  ngOnInit() {
+  constructor(
+     private courseservice:CoursesService,
+     private dialog:MatDialog,
+     private toastservice:ToastService,){}
+    ngOnInit() {
     this.courseservice.getCourses().subscribe((data)=>{
       this.course = data
     })
   }
 
-  private refreshData() {
-    this.courseservice.getCourses().subscribe((data) => {
-      this.course = data;
-    });
-  }
-
-    public openAddCourse() {
+    public openAddCourse():void {
     const dialogRef = this.dialog.open(PopupFormComponent, {
       width: '500px',
       data: { editMode: false, record:{ ...this.newCourse }, coursesTable: this.coursesTable }
     });
     dialogRef.afterClosed().subscribe((result: CoursesModel|undefined) => { 
       if (result) {
-        this.refreshData();  
+         
+        this.coursesTable.renderRows();
       }
       
     });
     
     
   }
-  private addNewCourse(newCourseData: CoursesModel): void {
+  public addNewCourse(newCourseData: CoursesModel): void {
     const newCourse: CoursesModel = {
       course_id: 0, 
       title: newCourseData.title,
@@ -68,7 +66,7 @@ export class CoursesComponent implements OnInit {
       (response: CoursesModel) => {
         
         this.course.push(response);
-        this.refreshData();
+        this.coursesTable.renderRows();
         this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
       },
       (error) => {
@@ -78,9 +76,10 @@ export class CoursesComponent implements OnInit {
     );
   }
   
-  private updateExistingCourse(course_id: number) {
+  public updateExistingCourse(course_id: number):void {
 
-      const existingCourse = this.course.find((item) => item.course_id === course_id);
+      var existingCourse = this.course.find((item) => item.course_id === course_id);
+      
       if (existingCourse) {
         const dialogRef = this.dialog.open(PopupFormComponent, {
           width: '400px',
@@ -92,6 +91,7 @@ export class CoursesComponent implements OnInit {
             const index = this.course.findIndex((item) => item.course_id === result.course_id);
             if (index !== -1) {
               this.course[index] = result;
+              this.coursesTable.renderRows();
               this.toastservice.showToast(TOAST_STATE.success, 'Data Edited Successfully');
             }
             
@@ -102,24 +102,20 @@ export class CoursesComponent implements OnInit {
           
         });
         
-      } else {
-        
-      }
+      } 
     
   }
   public updateCourse(updatedCourse: CoursesModel): void {
     this.courseservice.updateCourse(updatedCourse).subscribe(
       (response: CoursesModel) => {
-        
-        this.refreshData();
+        this.coursesTable.renderRows();
+       
       },
-      (error) => {
-        
-      }
+      
     );
   }
   
-  public deleteCourse(course_id: number) {
+  public deleteCourse(course_id: number):void {
     const dialogRef = this.dialog.open(DeleteconfirmationDialogComponent, {
       width: '400px',
       data: {
@@ -133,7 +129,7 @@ export class CoursesComponent implements OnInit {
         this.courseservice.deleteCourse(course_id).subscribe(
           () => {
             this.course = this.course.filter((item) => item.course_id !== course_id);
-            this.refreshData();
+            this.coursesTable.renderRows();
             this.toastservice.showToast(TOAST_STATE.success, 'Deleted Successfully');
           },
           (error) => {

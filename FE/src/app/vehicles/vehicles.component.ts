@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { VehicleformComponent } from './vehicleform/vehicleform.component';
 import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/deleteconfirmation-dialog.component';
 import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
-
+import { MatTable } from '@angular/material/table';
 @Component({
   selector: 'app-vehicles',
   templateUrl: './vehicles.component.html',
@@ -14,7 +14,8 @@ import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
 export class VehiclesComponent {
   public displayedColumns: string[] = ['vehicle_id', 'make', 'model', 'year', 'mileage','actions'];
   public vehicle:VehicleModel[] = [];
-  @ViewChild('vehicleTable') vehicleTable: any;
+  
+  @ViewChild(MatTable) vehicleTable!:MatTable<any>;
   public newVehicle:VehicleModel = {
     vehicle_id:0,
     make:'',
@@ -23,7 +24,10 @@ export class VehiclesComponent {
     mileage:0,
   }
              
-  constructor(private vehicleservice:VehicleService, private dialog:MatDialog,private toastservice:ToastService){}
+  constructor(
+    private vehicleservice:VehicleService, 
+    private dialog:MatDialog,
+    private toastservice:ToastService){}
   ngOnInit() {
     this.vehicleservice.getVehicles().subscribe((data)=>{
       this.vehicle = data;
@@ -31,29 +35,20 @@ export class VehiclesComponent {
     })
   }
 
-  private refreshData() {
-    this.vehicleservice.getVehicles().subscribe((data) => {
-      this.vehicle = data;
-    });
-  }
-
-  public openAddVehicle() {
+  
+  public openAddVehicle():void{
     const dialogRef = this.dialog.open(VehicleformComponent, {
       width: '400px',
       data: { editMode: false, record:{ ...this.newVehicle }, vehicleTable: this.vehicleTable }
     });
     dialogRef.afterClosed().subscribe((result: VehicleModel|undefined) => {
       
-      if (result) {
-        this.refreshData()
-      }
       
     });
     
   }
 
-
-  private addNewVehicle(newVehicleData: VehicleModel): void {
+  public addNewVehicle(newVehicleData: VehicleModel): void {
     const newVehicle: VehicleModel = {
       vehicle_id: 0, // Set the initial ID to 0 or generate an appropriate ID
       make: newVehicleData.make,
@@ -66,22 +61,22 @@ export class VehiclesComponent {
       (response: VehicleModel) => {
         
         this.vehicle.push(response);
-        this.refreshData();
+        
+        this.vehicleTable.renderRows();
         this.toastservice.showToast(TOAST_STATE.success, 'Data Added Successfully');
       },
       (error) => {
         
         this.toastservice.showToast(
           TOAST_STATE.danger,
-          `Error occurred while adding new Course: ${error}`
+          `Error occurred while adding new Vehicle: ${error}`
         );
       }
     );
   }
   
-  public updateExistingVehicle(vehicle_id: number) {
-    const userConfirm = confirm("Are you sure you want to update?");
-    if (userConfirm) {
+  public updateExistingVehicle(vehicle_id: number):void {
+    
       const existingVehicle = this.vehicle.find((item) => item.vehicle_id === vehicle_id);
       if (existingVehicle) {
         const dialogRef = this.dialog.open(VehicleformComponent, {
@@ -103,23 +98,20 @@ export class VehiclesComponent {
           
         });
         
-      } else {
-        
-      }
+      } 
     }
-  }
+  
   public updateVehicle(updatedVehicle: VehicleModel): void {
     this.vehicleservice.updateVehicle(updatedVehicle).subscribe(
       (response: VehicleModel) => {
         
-        this.refreshData();
-      },
-      (error) => {
         
-      }
+        this.vehicleTable.renderRows();
+      },
+      
     );
   }
-  public deleteVehicle(vehicle_id: number) {
+  public deleteVehicle(vehicle_id: number):void {
     const dialogRef = this.dialog.open(DeleteconfirmationDialogComponent, {
       width: '400px',
       data: {
@@ -133,7 +125,8 @@ export class VehiclesComponent {
         this.vehicleservice.deleteVehicle(vehicle_id).subscribe(
           () => {
             this.vehicle = this.vehicle.filter((item) => item.vehicle_id !== vehicle_id);
-            this.refreshData();
+            
+            this.vehicleTable.renderRows();
             this.toastservice.showToast(TOAST_STATE.success, 'Deleted Successfully');
           },
           (error) => {

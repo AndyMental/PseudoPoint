@@ -53,9 +53,7 @@ export class VehicleformComponent  {
           this.myForm.resetForm();
           this.editMode = false;
         },
-        (error) => {
-          
-        }
+        
       );
     } else {
       this.vehicleservice.addVehicle(this.formData).subscribe(
@@ -65,15 +63,13 @@ export class VehicleformComponent  {
           this.myForm.resetForm();
           this.editMode = false;
         },
-        (error) => {
-          
-        }
+        
       );
     }
   }
 }
 
-  public cancelVehicle() {
+  public cancelVehicle():void {
     this.dialogRef.close();
     this.myForm.resetForm();
 

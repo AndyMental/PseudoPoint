@@ -54,9 +54,7 @@ export class EventformComponent {
           this.myForm.resetForm();
           this.editMode = false;
         },
-        (error) => {
-          
-        }
+        
       );
     } else {
       this.eventservice.addEvent(this.formData).subscribe(
@@ -66,15 +64,13 @@ export class EventformComponent {
           this.myForm.resetForm();
           this.editMode = false;
         },
-        (error) => {
-          
-        }
+        
       );
     }
   }
 }
 
-  public cancelEvent() {
+  public cancelEvent():void {
     this.dialogRef.close();
     this.myForm.resetForm();
   }
