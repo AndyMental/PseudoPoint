@@ -51,7 +51,7 @@ export class WeatherComponent {
     this.toast.showToast(state, message);
   }
 
-  deleteWeather(weatherId: string, city: string): void {
+  deleteWeather(weatherId: string): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDailogComponent);
     dialogRef.afterClosed().subscribe((result: string) : void => {
       if (result) {
@@ -62,7 +62,6 @@ export class WeatherComponent {
                 weatherDetails.weather_id != weatherId
             );
             this.showToast(TOAST_STATE.success, data.detail);
-            this.city = city;
           },
           (error: HttpErrorResponse): void => {
             this.showToast(TOAST_STATE.danger, error.error.detail);

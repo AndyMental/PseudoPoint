@@ -86,8 +86,8 @@
         <input
           matInput
           formControlName="departure_time"
-          [min]="minDate"
-          [max]="maxDate"
+          [min]="departureMinDate"
+          [max]="departureMaxDate"
           [ngxMatDatetimePicker]="departurePicker"
           placeholder="MM/DD/YYYY, 00:00:00 AM/PM"
           required
@@ -107,14 +107,8 @@
           <div *ngIf="departure_time.errors?.required">
             Departure Time is required.
           </div>
-          <div *ngIf="departure_time.errors?.minlength">
-            Departure Time must be at least 4 characters long.
-          </div>
-          <div *ngIf="departure_time.errors?.maxlength">
-            Departure Time not be 25 characters long.
-          </div>
-          <div *ngIf="departure_time.errors?.forbiddenSpaceInput">
-            Whitespaces are not allowed before or after alphabets.
+          <div *ngIf="departure_time.invalid">
+            Departure Time is invalid
           </div>
         </mat-error>
       </mat-form-field>
@@ -126,6 +120,8 @@
         <input
           matInput
           formControlName="arrival_time"
+          [min]="arrivalMinDate"
+          [max]="arrivalMaxDate"
           [ngxMatDatetimePicker]="arrivalPicker"
           placeholder="MM/DD/YYYY, 00:00:00 AM/PM"
           required
@@ -145,14 +141,11 @@
           <div *ngIf="arrival_time.errors?.required">
             Arrival Time is required.
           </div>
-          <div *ngIf="arrival_time.errors?.minlength">
-            Arrival Time must be at least 4 characters long.
+          <div *ngIf="arrival_time.invalid">
+            Arrival Time is invalid.
           </div>
-          <div *ngIf="arrival_time.errors?.maxlength">
-            Arrival Time not be 25 characters long.
-          </div>
-          <div *ngIf="arrival_time.errors?.forbiddenSpaceInput">
-            Whitespaces are not allowed before or after alphabets.
+          <div *ngIf="arrival_time.hasError">
+            Arrival time should be minimum 1 hour after the departure time 
           </div>
         </mat-error>
       </mat-form-field>

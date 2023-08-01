@@ -50,7 +50,7 @@ export class ReviewsComponent {
     this.toast.showToast(state, message);
   }
 
-  public deleteReview(reviewId: string, title: string): void {
+  public deleteReview(reviewId: string): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDailogComponent);
     dialogRef.afterClosed().subscribe((result: string): void => {
       if (result) {

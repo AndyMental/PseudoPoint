@@ -52,7 +52,7 @@ export class FlightComponent implements OnInit {
     this.toast.showToast(state, message);
   }
 
-  public deleteFlight(flightId: string, flightNumber: string): void {
+  public deleteFlight(flightId: string): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDailogComponent);
     dialogRef.afterClosed().subscribe((result: string): void => {
       if (result) {

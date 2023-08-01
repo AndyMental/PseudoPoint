@@ -19,25 +19,25 @@ class Flight(BaseModel):
 
 flights = [
     Flight(flight_id=uuid.uuid1().hex, flight_number="AA123", airline="American Airlines", origin="New York", destination="Los Angeles",
-           departure_time="2023-07-01 08:00:00", arrival_time="2023-07-15 11:00:00"),
+           departure_time="2023-08-01 08:00:00", arrival_time="2023-08-02 11:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="DL456", airline="Delta Air Lines", origin="Los Angeles", destination="New York",
-           departure_time="2023-07-01 12:00:00", arrival_time="2023-07-15 15:00:00"),
+           departure_time="2023-08-01 12:00:00", arrival_time="2023-08-01 15:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="UA789", airline="United Airlines", origin="Chicago", destination="San Francisco",
-           departure_time="2023-07-02 10:00:00", arrival_time="2023-07-16 13:00:00"),
+           departure_time="2023-08-02 10:00:00", arrival_time="2023-08-03 13:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="WN012", airline="Southwest Airlines", origin="Dallas", destination="Denver",
-           departure_time="2023-07-01 09:00:00", arrival_time="2023-07-15 10:00:00"),
+           departure_time="2023-08-06 09:00:00", arrival_time="2023-08-07 10:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="B6123", airline="JetBlue Airways", origin="Boston", destination="Miami",
-           departure_time="2023-07-05 11:00:00", arrival_time="2023-07-20 14:00:00"),
+           departure_time="2023-08-05 11:00:00", arrival_time="2023-08-06 14:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="AS456", airline="Alaska Airlines", origin="Seattle", destination="Portland",
-           departure_time="2023-07-01 13:00:00", arrival_time="2023-07-15 14:00:00"),
+           departure_time="2023-08-01 13:00:00", arrival_time="2023-08-01 14:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="F9123", airline="Frontier Airlines", origin="Denver", destination="Las Vegas",
-           departure_time="2023-07-01 15:00:00", arrival_time="2023-07-15 16:00:00"),
+           departure_time="2023-08-10 15:00:00", arrival_time="2023-08-12 16:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="NK456", airline="Spirit Airlines", origin="Orlando", destination="Newark",
-           departure_time="2023-07-01 16:00:00", arrival_time="2023-07-05 19:00:00"),
+           departure_time="2023-08-15 16:00:00", arrival_time="2023-08-16 19:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="SY789", airline="Sun Country Airlines", origin="Minneapolis", destination="Phoenix",
-           departure_time="2023-07-01 14:00:00", arrival_time="2023-07-06 17:00:00"),
+           departure_time="2023-08-20 14:00:00", arrival_time="2023-08-22 17:00:00"),
     Flight(flight_id=uuid.uuid1().hex, flight_number="G0123", airline="Allegiant Air", origin="Las Vegas", destination="Bellingham",
-           departure_time="2023-07-01 18:00:00", arrival_time="2023-07-23 20:00:00")
+           departure_time="2023-08-25 18:00:00", arrival_time="2023-08-27 20:00:00")
 ]
 
 router = APIRouter()

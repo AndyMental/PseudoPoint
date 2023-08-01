@@ -25,8 +25,10 @@ export class FlightFormComponent implements OnInit {
   private regEx: RegExp = /^[^\s]+(\s+[^\s]+)*$/;
   public flightForm: FormGroup;
   private currentDate: moment.Moment = moment(new Date());
-  public minDate: moment.Moment;
-  public maxDate: moment.Moment;
+  public departureMinDate: moment.Moment;
+  public arrivalMinDate: moment.Moment;
+  public departureMaxDate: moment.Moment;
+  public arrivalMaxDate: moment.Moment;
 
   constructor(
     private flightService: FlightsService,
@@ -34,11 +36,18 @@ export class FlightFormComponent implements OnInit {
     public dialogRef: MatDialogRef<FlightFormComponent>,
     @Inject(MAT_DIALOG_DATA) public flight: Flight
   ) {
-    this.minDate = moment(this.currentDate, 'DD-MM-YYYY').subtract(2, 'month');
-    this.maxDate = moment(this.currentDate, 'DD-MM-YYYY').add(2, 'month');
+    this.departureMinDate = moment(this.currentDate, 'DD-MM-YYYY').subtract(
+      2,
+      'days'
+    );
+    this.departureMaxDate = moment(this.currentDate, 'DD-MM-YYYY').add(
+      2,
+      'months'
+    );
   }
 
   ngOnInit(): void {
+    ('');
     this.flightForm = new FormGroup({
       flight_id: new FormControl(''),
       flight_number: new FormControl('', [
@@ -96,7 +105,9 @@ export class FlightFormComponent implements OnInit {
     return this.flightForm.get('destination');
   }
   public get departure_time(): AbstractControl<string> {
-    return this.flightForm.get('departure_time');
+    const departure_time = this.flightForm.get('departure_time');
+    this.setArrivalMinAndMaxDate(departure_time.value);
+    return departure_time;
   }
   public get arrival_time(): AbstractControl<string> {
     return this.flightForm.get('arrival_time');
@@ -104,6 +115,15 @@ export class FlightFormComponent implements OnInit {
 
   public showToast(state: any, message: string): void {
     this.toast.showToast(state, message);
+  }
+
+  private setArrivalMinAndMaxDate(departure_time: moment.Moment): void {
+    departure_time = moment(departure_time);
+    this.arrivalMinDate = moment(departure_time, 'DD-MM-YYYY').add(1, 'hour');
+    this.arrivalMaxDate = moment(this.arrivalMinDate, 'DD-MM-YYYY').add(
+      4,
+      'days'
+    );
   }
 
   public addFlight(): void {
