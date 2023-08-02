@@ -6,20 +6,15 @@ from . import (
     users, 
     products, 
     notifications, 
-    oauth, 
-    users, 
-    products, 
-    notifications, 
-    oauth, 
+    oauth,    
     ecommerce, 
-    stocks, 
+    stocks,
     songs, 
     flights, 
     reviews, 
     menu, 
     articles,  
     courses, 
-    articles, 
     events, 
     recipes, 
     vehicles, 
@@ -30,24 +25,28 @@ from . import (
     historical_events, 
     wine_ratings, 
     quotes, 
-    celebrities, 
+    celebrities,     
+    health,
+    realestate,
     cricket
 )
+
 
 def get_all_routers():
     return [
         {"router": billing.router, "prefix": "/billing", "tags": ["Billing"]},
         {"router": projects.router, "prefix": "/projects", "tags": ["Projects"]},
         {"router": geolocation.router, "prefix": "/geolocation", "tags": ["Geolocation"]},
+        
+        
         {"router": weather.router, "prefix": "/weather", "tags": ["Weather"]},
         {"router": users.router, "prefix": "/users", "tags": ["Users"]},
-        {"router": products.router, "prefix": "/products", "tags": ["Products"]},
-        {"router": notifications.router, "prefix": "/notifications", "tags": ["Notifications"]},
+        {"router": products.router,
+            "prefix": "/products", "tags": ["Products"]},
+        {"router": notifications.router,
+            "prefix": "/notifications", "tags": ["Notifications"]},
         {"router": oauth.router, "prefix": "/oauth", "tags": ["OAuth"]},
-        {"router": users.router, "prefix": "/users", "tags": ["Users"]},
-        {"router": products.router, "prefix": "/products", "tags": ["Products"]},
-        {"router": notifications.router, "prefix": "/notifications", "tags": ["Notifications"]},
-        {"router": oauth.router, "prefix": "/oauth", "tags": ["OAuth"]},
+        
         {"router": ecommerce.router, "prefix": "/ecommerce", "tags": ["Ecommerce"]},
         {"router": stocks.router, "prefix": "/stocks", "tags": ["Stocks"]},
         {"router": songs.router, "prefix": "/songs", "tags": ["Songs"]},
@@ -69,4 +68,9 @@ def get_all_routers():
         {"router": quotes.router, "prefix": "/quotes", "tags": ["Quotes"]},
         {"router": celebrities.router, "prefix": "/celebrities", "tags": ["Celebrities"]},
         {"router": cricket.router, "prefix": "/cricket", "tags": ["Cricket"]},
+        {"router": health.router, "prefix": "/health",
+            "tags": ["Health Data"]},
+        {"router": realestate.router,
+            "prefix": "/realestate", "tags": ["realestate"]}
+
     ]

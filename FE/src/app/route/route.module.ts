@@ -1,12 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { RouteRoutingModule } from './route-routing.module';
-import { RouterModule, Routes } from '@angular/router';
 import { CoursesComponent } from '../courses/courses.component';
 import { EventsComponent } from '../events/events.component';
 import { RecipeComponent } from '../recipe/recipe.component';
 import { VehiclesComponent } from '../vehicles/vehicles.component';
+import { RouteRoutingModule } from './route-routing.module';
+import { RouterModule, Routes } from '@angular/router';
+import { FlightComponent } from '../flight/flight.component';
+import { ArticlesComponent } from '../articles/articles.component';
+import { WeatherComponent } from '../weather/weather.component';
+import { ReviewsComponent } from '../reviews/reviews.component';
+import { SongsComponent } from '../songs/songs.component';
+import { RealEstateComponent } from '../real-estate/real-estate.component';
+import { StocksComponent } from '../stocks/stocks.component';
+import { EcommerceComponent } from '../ecommerce/ecommerce.component';
 import { NotificationsComponent } from '../notifications/notifications.component';
 import { UsersComponent } from '../users/users.component';
 import { ProductsComponent } from '../products/products.component';
@@ -26,10 +33,10 @@ const routes: Routes = [
   {path:'events',component:EventsComponent},
   {path:'vehicles',component:VehiclesComponent},
   {path:'notifications',component:NotificationsComponent},
-      {path:'users',component:UsersComponent},
-    {path:'products',component:ProductsComponent},
-    {path:'oauth1', component:Oauth1Component},
-    { path: '', component: MainComponent },
+  {path:'users',component:UsersComponent},
+  {path:'products',component:ProductsComponent},
+  {path:'oauth1', component:Oauth1Component},
+   { path: '', component: MainComponent },
     { path: 'health', component: HealthComponent },
     { path: 'geolocation', component: GeolocationComponent },
     { path: 'project', component: ProjectsComponent },
@@ -38,16 +45,20 @@ const routes: Routes = [
     { path: 'weight', component: WeightConversionComponent },
     { path: 'geography', component: GeographyComponent },
     { path: 'event', component: HistoryEventsComponent },
+    { path: 'flights', component: FlightComponent },
+  { path: 'articles', component: ArticlesComponent },
+  { path: 'weather', component: WeatherComponent },
+  { path: 'reviews', component: ReviewsComponent },
+  { path: 'songs', component: SongsComponent },
+  { path: 'real-estate', component: RealEstateComponent },
+  { path: 'stocks', component: StocksComponent },
+  { path: 'ecommerce', component: EcommerceComponent },
+  
 ]
+
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouteRoutingModule,
-    RouterModule.forRoot(routes)
-  ]
+  imports: [CommonModule, RouteRoutingModule, RouterModule.forRoot(routes)],
 })
-export class RouteModule { }
-
-
+export class RouteModule {}

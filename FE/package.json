@@ -10,6 +10,8 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^16.0.1",
+    "@angular-material-components/moment-adapter": "^16.0.0",
     "@angular/animations": "^16.1.0",
     "@angular/cdk": "^16.1.6",
     "@angular/common": "^16.1.0",
@@ -20,9 +22,9 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
-    "@ngneat/hot-toast": "^5.0.2",
-    "ng-angular-popup": "^0.4.7",
     "css": "^3.0.0",
+    "moment": "^2.29.4",
+    "ng-angular-popup": "^0.4.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

@@ -1,0 +1,62 @@
+<div class="bg-white p-6 rounded-lg w-96">
+  <h2 class="text-2xl font-semibold mb-4">{{ data.songToUpdate ? 'Edit Song' : 'Add New Song' }}</h2>
+  <form [formGroup]="songForm" (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label for="title" class="block font-bold mb-1">Title:</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+      />
+      <div *ngIf="isControlInvalid('title')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="songForm.get('title')?.errors?.required">Title is required</div>
+        <div *ngIf="songForm.get('title')?.errors?.minlength">Title should be at least 3 characters long</div>
+        <div *ngIf="songForm.get('title')?.errors?.maxlength">Title cannot exceed 100 characters</div>
+        <div *ngIf="songForm.get('title')?.errors?.pattern">Characters only are allowed</div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label for="artist" class="block font-bold mb-1">Artist:</label>
+      <input
+        type="text"
+        id="artist"
+        formControlName="artist"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+      />
+      <div *ngIf="isControlInvalid('artist')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="songForm.get('artist')?.errors?.required">Artist is required</div>
+        <div *ngIf="songForm.get('artist')?.errors?.minlength">Artist should be at least 3 characters long</div>
+        <div *ngIf="songForm.get('artist')?.errors?.maxlength">Artist cannot exceed 100 characters</div>
+        <div *ngIf="songForm.get('artist')?.errors?.pattern">Characters only are allowed, and the first character cannot be a special character or space</div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label for="lyrics" class="block font-bold mb-1">Lyrics:</label>
+      <textarea
+        id="lyrics"
+        formControlName="lyrics"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+      ></textarea>
+      <div *ngIf="isControlInvalid('lyrics')" class="text-red-500 text-sm mt-1">
+        <div *ngIf="songForm.get('lyrics')?.errors?.required">Lyrics are required</div>
+      </div>
+    </div>
+    <div class="flex justify-center">
+      <button
+        type="button"
+        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 mr-2"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        {{ data.songToUpdate ? 'Update' : 'Save' }}
+      </button>
+    </div>
+  </form>
+</div>
+

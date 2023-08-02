@@ -1,0 +1,28 @@
+<div class="bg-white rounded-lg p-4 w-96">
+  <h2 class="text-xl mb-4">{{ isEditing ? 'Update Stock' : 'Add New Stock' }}</h2>
+  <form [formGroup]="stockForm" (ngSubmit)="saveStock()">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Symbol:</label>
+      <input formControlName="symbol" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-black-700 leading-tight" />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+      <input formControlName="name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-black-700 leading-tight" />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Price:</label>
+      <input formControlName="price" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-black-700 leading-tight" />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Change:</label>
+      <input formControlName="change" type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-black-700 leading-tight" />
+    </div>
+
+    <div class="flex justify-end">
+      <button type="button" class="mr-2 px-4 py-2 bg-red-500 text-white rounded" (click)="closeDialog()">Cancel</button>
+      <button type="submit" [disabled]="!stockForm.valid" class="px-4 py-2 bg-blue-500 text-white rounded">{{ isEditing ? 'Update' : 'Save' }}</button>
+    </div>
+  </form>
+</div>
+
+
