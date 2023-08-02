@@ -3,7 +3,7 @@ import { EventData } from '../shared/model/events';
 import { EventsService } from '../shared/services/events.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EventformComponent } from './eventform/eventform.component';
-import { ToastService,TOAST_STATE } from '../shared/services/Toast.service';
+import { ToastService,TOAST_STATE } from '../shared/services/toast.service';
 import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/deleteconfirmation-dialog.component';
 import { MatTable } from '@angular/material/table';
 
