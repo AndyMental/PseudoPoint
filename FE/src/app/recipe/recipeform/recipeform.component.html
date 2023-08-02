@@ -1,0 +1,40 @@
+<div class="p-4" style="display: flex; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5);">
+  <div style="max-width: 800px; background-color: #fff; border: 2px solid #ddd; border-radius: 10px; padding: 30px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 600px; padding: 20px;max-height: 80vh;overflow-y: auto;">
+  <h2 class="text-xl font-serif">Add Recipe</h2>
+
+  <div class="table-wrapper">
+  
+  <form #myForm="ngForm" [formGroup]="form" (ngSubmit)="submitRecipe()">
+    <div class="mb-4">
+      <label for="names" class="block font-sans">Name</label>
+      <input type="text" id="names" formControlName="names" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('names').invalid && form.get('names').touched" class="text-red-500">Name is required and must be at least 3 characters long.</div>
+    </div>
+    <div class="mb-4">
+      <label for="ingredients" class="block font-sans">Ingredients</label>
+      <div formArrayName="ingredients">
+        <div *ngFor="let control of ingredientsControl.controls; let i = index">
+          <input type="text" [formControl]="control.get('ingredient')" class="border rounded p-2 flex" required>
+          <div *ngIf="control.get('ingredient').invalid && control.get('ingredient').touched" class="text-red-500">Ingredient is required.</div>
+          <button type="button" mat-icon-button (click)="removeIngredient(i)" class=" ml-2 underline cursor-pointer text-sm"style="color: red;">
+            <span class="text-sm">Remove</span>
+          </button>
+        </div>
+        <button type="button" mat-icon-button (click)="addIngredientControl()" class="ml-2 underline cursor-pointer text-sm"style="color: green;">
+          <div class="text-sm">Add </div>
+        </button>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label for="instructions" class="block font-sans">Instructions</label>
+      <textarea id="instructions" formControlName="instructions" class="border rounded p-2 w-full" required></textarea>
+      <div *ngIf="form.get('instructions').invalid && form.get('instructions').touched" class="text-red-500">Instructions are required.</div>
+    </div>
+    <div class="flex justify-center">
+      <button type="button" class="mr-2 bg-gray-200 px-4 py-2 rounded" (click)="cancelRecipe()">Cancel</button>
+      <button type="submit" [disabled]="form.invalid" class="bg-blue-500 text-white px-4 py-2 rounded">
+        {{ editMode ? 'Update' : 'Add' }}
+      </button>
+    </div>
+  </form>
+</div>

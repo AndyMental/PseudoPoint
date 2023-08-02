@@ -1,0 +1,32 @@
+<div class="p-4" style="display: flex; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5);">
+  <div style="max-width: 800px; background-color: #fff; border: 2px solid #ddd; border-radius: 10px; padding: 30px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 600px; padding: 20px;max-height: 80vh;overflow-y: auto;">
+  <h2 class="text-xl font-serif">Add Vehicle</h2>
+  <form #myForm="ngForm" [formGroup]="form" (ngSubmit)="submitVehicle(formData)">
+    <div class="mb-4">
+      <label for="make" class="block font-sans">Make</label>
+      <input type="text" id="make" formControlName="make" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('make').invalid && form.get('make').touched" class="text-red-500">Make is required.</div>
+    </div>
+    <div class="mb-4">
+      <label for="model" class="block font-sans">Model</label>
+      <input type="text" id="model" formControlName="model" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('model').invalid && form.get('model').touched" class="text-red-500">Model is required.</div>
+    </div>
+    <div class="mb-4">
+      <label for="year" class="block font-sans">Year</label>
+      <input type="number" id="year" formControlName="year" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('year').invalid && form.get('year').touched" class="text-red-500">Year is required.</div>
+    </div>
+    <div class="mb-4">
+      <label for="mileage" class="block font-sans">Mileage</label>
+      <input type="number" id="mileage" formControlName="mileage" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('mileage').invalid && form.get('mileage').touched" class="text-red-500">Mileage is required.</div>
+    </div>
+    <div class="flex justify-center">
+      <button type="button" class="mr-2 bg-gray-200 px-4 py-2 rounded" (click)="cancelVehicle()">Cancel</button>
+      <button type="submit" [disabled]="form.invalid" class="bg-blue-500 text-white px-4 py-2 rounded">
+        {{ editMode ? 'Update' : 'Submit' }}
+      </button>
+    </div>
+  </form>
+</div>

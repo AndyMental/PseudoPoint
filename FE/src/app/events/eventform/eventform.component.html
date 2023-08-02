@@ -1,0 +1,42 @@
+<div class="p-4"style="display: flex; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5);">
+  <div style="max-width: 2000px; background-color: #fff; border: 2px solid #ddd; border-radius: 10px; padding: 30px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 2000px; padding: 20px;">
+  <h2 class="text-xl font-serif">Add Event</h2>
+  <form #myForm="ngForm" [formGroup]="form" (ngSubmit)="submitEvent(formData)">
+    
+    <div class="mb-4">
+      <label for="names" class="block font-sans">Event Name</label>
+      <input type="text" id="names" formControlName="names" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('names').invalid && form.get('names').touched" class="text-red-500">Event Name is required.</div>
+      <div *ngIf="form.get('names').invalid && form.get('names')?.errors?.minlength" class="text-red-500">Should not be less than 3 characters.</div>
+      <div *ngIf="form.get('names').invalid && form.get('names')?.errors?.maxlength" class="text-red-500">Should not be greater than 100 characters.</div>
+      <div *ngIf="form.get('names').invalid && form.get('names')?.errors?.pattern" class="text-red-500">Only characters are allowed.</div>
+    </div>
+    <div class="mb-4">
+      <label for="date" class="block font-sans">Date</label>
+      <input type="date" id="date" formControlName="date" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('date').invalid && form.get('date').touched" class="text-red-500">Date is required.</div>
+    </div>
+    <div class="mb-4">
+      <label for="location" class="block font-sans">Location</label>
+      <input type="text" id="location" formControlName="location" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('location').invalid && form.get('location').touched" class="text-red-500">Location is required.</div>
+      <div *ngIf="form.get('location').invalid && form.get('location')?.errors?.minlength" class="text-red-500">Should not be less than 3 character.</div>
+      <div *ngIf="form.get('location').invalid && form.get('location')?.errors?.maxlength" class="text-red-500">Should not exceed 100 character.</div>
+      <div *ngIf="form.get('location').invalid && form.get('location')?.errors?.pattern" class="text-red-500">Only characters are allowed.</div>
+    </div>
+    <div class="mb-4">
+      <label for="description" class="block font-sans">Description</label>
+      <input type="text" id="description" formControlName="description" class="border rounded p-2 w-full" required>
+      <div *ngIf="form.get('description').invalid && form.get('description').touched" class="text-red-500">Description is required.</div>
+      <div *ngIf="form.get('description').invalid && form.get('description')?.minlength" class="text-red-500">Should not be less than 3 character.</div>
+      <div *ngIf="form.get('description').invalid && form.get('description')?.maxlength" class="text-red-500">Should not exceed 100 characters.</div>
+      <div *ngIf="form.get('description').invalid && form.get('description')?.pattern" class="text-red-500">Only characters are allowed.</div>
+    </div>
+    <div class="flex justify-center">
+      <button type="button" class="mr-2 bg-gray-200 px-4 py-2 rounded" (click)="cancelEvent()">Cancel</button>
+      <button type="submit" [disabled]="form.invalid" class="bg-blue-500 text-white px-4 py-2 rounded">
+        {{ editMode ? 'Update' : 'Submit' }}
+      </button>
+    </div>
+  </form>
+</div>

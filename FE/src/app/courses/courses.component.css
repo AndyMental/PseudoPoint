@@ -1,0 +1,66 @@
+.table-wrapper{
+  width: 80%; 
+}
+.my-table{
+  table-layout: fixed;
+}
+.my-table td,
+.my-table th{
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+table {
+    width: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .my-table {
+    margin-left: 300px; 
+    margin-right: 10px;
+  }
+  .add-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  
+  .add-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .add-button mat-icon {
+    margin-right: 8px;
+  }
+  
+  
+  .edit-button,.delete-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2196F3;
+    align-items: center;
+    text-align: center;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .delete-button{
+    background-color: #f44336; 
+    flex-direction: row-reverse;
+    margin-top: 8px;
+  }
