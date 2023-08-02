@@ -1,57 +1,55 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from typing import List
 
 router = APIRouter()
 
-@router.get("/", description="Returns an empty list of ecommerce records.", tags=["Ecommerce"])
-def read_ecommerce():
-    """Get an empty list of ecommerce records.
+class Product(BaseModel):
+    id: int
+    title: str
+    color: str
+    description: str
+    price: int
 
-    This endpoint returns an empty list of ecommerce records.
+products_new = [
+    Product(id=1, title="Shorts", color="black", description="It is a black cotton shorts", price=1000),
+    Product(id=2, title="T-Shirt", color="white", description="A stylish white t-shirt", price=800),
+    # Add more products...
+]
 
-    Returns:
-        dict: An empty dictionary representing the ecommerce records.
+@router.get("/", response_model=List[Product], description="Returns a list of products.", tags=["Products"])
+def read_products():
+    return products_new
 
-    """
-    return {"ecommerce": []}
+@router.get("/{product_id}", response_model=Product, description="Get a product by ID.", tags=["Products"])
+def get_product_by_id(product_id: int):
+    product = next((p for p in products_new if p.id == product_id), None)
+    if product is None:
+        raise HTTPException(status_code=404, detail=f"Product with ID {product_id} not found")
+    return product
 
-@router.post("/", description="Creates a new ecommerce record and returns a confirmation message.", tags=["Ecommerce"])
-def create_ecommerce():
-    """Create a new ecommerce record.
+@router.post("/new_item", response_model=Product, description="Creates a new product.", tags=["Products"])
+def create_product(product: Product):
+    
+    new_id = max(product.id for product in products_new )+1
+    product.id = new_id
+    products_new.append(product)
 
-    This endpoint creates a new ecommerce record and returns a confirmation message.
+    return product
 
-    Returns:
-        dict: A dictionary containing a confirmation message.
+@router.put("/{product_id}", response_model=Product, description="Updates a product by ID.", tags=["Products"])
+def update_product(product_id: int, product: Product):
+    for index, existing_product in enumerate(products_new):
+        if existing_product.id == product_id:
+            product.id = product_id
+            products_new[index] = product
+            return product
+    raise HTTPException(status_code=404, detail=f"Product with ID {product_id} not found")
 
-    """
-    return {"ecommerce": "created"}
+@router.delete("/{product_id}", description="Deletes a product by ID.", tags=["Products"])
+def delete_product(product_id: int):
+    global products_new
+    products_new = [p for p in products_new if p.id != product_id]
+    return {"detail": "Product deleted"}
 
-@router.put("/{ecommerce_id}", description="Updates an ecommerce record with the given id and returns a confirmation message.", tags=["Ecommerce"])
-def update_ecommerce(ecommerce_id: int):
-    """Update an ecommerce record.
 
-    This endpoint updates an ecommerce record with the given id and returns a confirmation message.
-
-    Args:
-        ecommerce_id (int): The ID of the ecommerce record to update.
-
-    Returns:
-        dict: A dictionary containing a confirmation message.
-
-    """
-    return {"ecommerce": "updated"}
-
-@router.delete("/{ecommerce_id}", description="Deletes an ecommerce record with the given id and returns a confirmation message.", tags=["Ecommerce"])
-def delete_ecommerce(ecommerce_id: int):
-    """Delete an ecommerce record.
-
-    This endpoint deletes an ecommerce record with the given id and returns a confirmation message.
-
-    Args:
-        ecommerce_id (int): The ID of the ecommerce record to delete.
-
-    Returns:
-        dict: A dictionary containing a confirmation message.
-
-    """
-    return {"ecommerce": "deleted"}

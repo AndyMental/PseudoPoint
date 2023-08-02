@@ -33,9 +33,6 @@ export class Oauth1Component implements OnInit {
       (data) => (this.dataSource = data),
       (error) => console.error('Error fetching OAuth data:', error)
     );
-    // this.refreshData();
-    this.OAuthTable.renderRows()
-   
   }
 
   public deleteOAuth(names: string): void {

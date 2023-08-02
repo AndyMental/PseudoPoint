@@ -1,0 +1,9 @@
+
+.pointer-cursor {
+    cursor: pointer;
+  }
+  
+  .disable-click {
+    pointer-events: none;
+  }
+  

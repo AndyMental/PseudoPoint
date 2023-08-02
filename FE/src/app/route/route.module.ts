@@ -7,6 +7,18 @@ import { WineRatingsComponent } from '../wine-ratings/wine-ratings.component';
 import { QuotesComponent } from '../quotes/quotes.component';
 import { CelebritiesComponent } from '../celebrities/celebrities.component';
 import { CricketersComponent } from '../cricketers/cricketers.component';
+import { CoursesComponent } from '../courses/courses.component';
+import { EventsComponent } from '../events/events.component';
+import { RecipeComponent } from '../recipe/recipe.component';
+import { VehiclesComponent } from '../vehicles/vehicles.component';
+import { FlightComponent } from '../flight/flight.component';
+import { ArticlesComponent } from '../articles/articles.component';
+import { WeatherComponent } from '../weather/weather.component';
+import { ReviewsComponent } from '../reviews/reviews.component';
+import { SongsComponent } from '../songs/songs.component';
+import { RealEstateComponent } from '../real-estate/real-estate.component';
+import { StocksComponent } from '../stocks/stocks.component';
+import { EcommerceComponent } from '../ecommerce/ecommerce.component';
 import { NotificationsComponent } from '../notifications/notifications.component';
 import { UsersComponent } from '../users/users.component';
 import { ProductsComponent } from '../products/products.component';
@@ -21,16 +33,19 @@ import { WeightConversionComponent } from '../weight-conversion/weight-conversio
 import { GeographyComponent } from '../geography/geography.component';
 import { HistoryEventsComponent } from '../history-events/history-events.component';
 
-
 const routes: Routes = [
-  {path:'quotes', component: QuotesComponent },
-  {path:'wine-rating', component: WineRatingsComponent},
-  {path:'celebrities', component: CelebritiesComponent},
-  {path:'cricketers', component: CricketersComponent},
-  {path:'notifications',component:NotificationsComponent},
-  {path:'users',component:UsersComponent},
-  {path:'products',component:ProductsComponent},
-  {path:'oauth1', component:Oauth1Component},
+  { path: 'quotes', component: QuotesComponent },
+  { path: 'wine-rating', component: WineRatingsComponent },
+  { path: 'celebrities', component: CelebritiesComponent },
+  { path: 'cricketers', component: CricketersComponent },
+  { path: 'courses', component: CoursesComponent },
+  { path: 'recipes', component: RecipeComponent },
+  { path: 'events', component: EventsComponent },
+  { path: 'vehicles', component: VehiclesComponent },
+  { path: 'notifications', component: NotificationsComponent },
+  { path: 'users', component: UsersComponent },
+  { path: 'products', component: ProductsComponent },
+  { path: 'oauth1', component: Oauth1Component },
   { path: '', component: MainComponent },
   { path: 'health', component: HealthComponent },
   { path: 'geolocation', component: GeolocationComponent },
@@ -40,20 +55,27 @@ const routes: Routes = [
   { path: 'weight', component: WeightConversionComponent },
   { path: 'geography', component: GeographyComponent },
   { path: 'event', component: HistoryEventsComponent },
-]
-
-
-    
-   
+  { path: '', component: MainComponent },
+  { path: 'health', component: HealthComponent },
+  { path: 'geolocation', component: GeolocationComponent },
+  { path: 'project', component: ProjectsComponent },
+  { path: 'billing', component: BillingComponent },
+  { path: 'wild', component: WildlifeComponent },
+  { path: 'weight', component: WeightConversionComponent },
+  { path: 'geography', component: GeographyComponent },
+  { path: 'event', component: HistoryEventsComponent },
+  { path: 'flights', component: FlightComponent },
+  { path: 'articles', component: ArticlesComponent },
+  { path: 'weather', component: WeatherComponent },
+  { path: 'reviews', component: ReviewsComponent },
+  { path: 'songs', component: SongsComponent },
+  { path: 'real-estate', component: RealEstateComponent },
+  { path: 'stocks', component: StocksComponent },
+  { path: 'ecommerce', component: EcommerceComponent },
+];
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouteRoutingModule,
-    RouterModule.forRoot(routes)
-  ]
+  imports: [CommonModule, RouteRoutingModule, RouterModule.forRoot(routes)],
 })
-export class RouteModule { }
-
-
+export class RouteModule {}
