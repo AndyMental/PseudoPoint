@@ -3,7 +3,7 @@ import { CoursesService } from '../shared/services/courses.service';
 import { CoursesModel } from '../shared/model/courses';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupFormComponent } from './popupform/popupform.component';
-import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
 import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/deleteconfirmation-dialog.component';
 import { MatTable } from '@angular/material/table';
 @Component({

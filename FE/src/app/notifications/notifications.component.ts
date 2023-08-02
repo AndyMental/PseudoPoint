@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NotificationsService } from '../shared/services/notifications.service';
 import { NotificationData } from '../shared/model/notifications';
 import { NotificationformComponent } from './notificationform/notificationform.component';
-import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
 import { MatTable } from '@angular/material/table';
 
 @Component({

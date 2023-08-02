@@ -4,7 +4,7 @@ import { VehicleModel } from '../shared/model/vehicle';
 import { MatDialog } from '@angular/material/dialog';
 import { VehicleformComponent } from './vehicleform/vehicleform.component';
 import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/deleteconfirmation-dialog.component';
-import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
 import { MatTable } from '@angular/material/table';
 @Component({
   selector: 'app-vehicles',

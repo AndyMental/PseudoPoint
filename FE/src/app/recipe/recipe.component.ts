@@ -3,7 +3,7 @@ import { RecipeModel } from '../shared/model/recipes'; // Update the import
 import { RecipeService } from '../shared/services/recipe.service'; // Update the import
 import { MatDialog } from '@angular/material/dialog';
 import { RecipeformComponent } from './recipeform/recipeform.component'; // Update the import
-import { ToastService,TOAST_STATE } from '../shared/services/toast.service';
+import { ToastService,TOAST_STATE } from '../shared/services/Toast.service';
 import { DeleteconfirmationDialogComponent } from '../deleteconfirmation-dialog/deleteconfirmation-dialog.component';
 import { MatTable } from '@angular/material/table';
 

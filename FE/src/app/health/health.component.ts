@@ -3,7 +3,7 @@ import { Health } from '../shared/model/health';
 import { HealthserviceService } from '../shared/services/healthservice.service';
 import { FormsComponent } from './forms/forms.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ToastService, TOAST_STATE } from '../shared/services/toast.service';
+import { ToastService, TOAST_STATE } from '../shared/services/Toast.service';
 
 @Component({
   selector: 'app-health',
