@@ -5,10 +5,11 @@ table {
   }
 
   .my-table {
-    margin-left: 390px; 
+    margin-left: 30px; 
   }
   .add-button-container {
-    display: flex;
+    margin-left: 30px;
+    /* display: flex; */
     justify-content: center;
     margin-bottom: 16px;
   }

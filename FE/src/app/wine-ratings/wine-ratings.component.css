@@ -1,0 +1,11 @@
+/* th.ps-36.py-4.text-l.bg-gray-300 {
+    width: 18% !important;
+}
+
+th.py-4.text-l.bg-gray-300 {
+    width: 14% !important;
+} */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+.button-space {
+    margin: 0 8px; 
+  }

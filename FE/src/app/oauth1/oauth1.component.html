@@ -1,10 +1,10 @@
-<h1 style="text-align: center; font-weight: bold;">OAuthTable</h1>
+<h1 style="text-align: center; font-weight: bold;" class="mb-4">OAuthTable</h1>
 
 <div class="add-button-container">
   <!-- Add Data Button -->
   <button mat-stroked-button (click)="createOAuth()">Add Data</button>
 </div>
-<div class="table-container ml-80">
+<div class="table-container">
   <div *ngIf="dataSource.length > 0">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 

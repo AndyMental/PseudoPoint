@@ -1,0 +1,51 @@
+/* .class2{} */
+    /* width: 480px; */
+    /* margin-left: 100px; */
+    /* border-radius: 10px; */
+    /* border: 2px solid rgb(174, 171, 171); */
+    /* padding: 10px 0px 0px 130px; */
+    
+    /* .dialog-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        
+        min-height: 300px; 
+    } */
+    /* Set an appropriate height for your dialog content */
+
+
+    /* .dialog-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 300px;
+      }
+      
+      .form-container {
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        padding: 16px;
+        border-radius: 8px;
+      } */
+      .dialog-content{
+        margin-left: 150px;
+    }
+    
+    .cancel{
+        border: 2px solid rgb(234, 10, 10);
+        
+    }
+    .cancel:hover {
+        background-color: rgb(244, 46, 46);
+        color: aliceblue;
+    }
+    .add{
+        border: 2px solid blue;
+    }
+    .add:hover {
+        background-color: rgb(37, 80, 233);
+        color: aliceblue;
+    }
+
+     

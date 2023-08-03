@@ -1,5 +1,5 @@
 table {
-    width: 80px;
+    width: 950px;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -8,11 +8,12 @@ table {
   
 }
   .my-table {
-    margin-left: 280px; 
+    margin-left: 20px; 
 
   }
   .add-button-container {
-    display: flex;
+    margin-left: 20px;
+    /* display: flex; */
     justify-content: center;
     margin-bottom: 16px;
   }

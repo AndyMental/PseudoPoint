@@ -1,0 +1,58 @@
+<div class="">
+  <app-forms
+    *ngIf="true"
+   
+    (addNewQuery)="on_adding_new_quote($event)"
+    (updateQuotes)="on_updating_quote($event)"
+  ></app-forms>
+  <button
+    class="bg-blue-500 hover:bg-blue-800 text-white py-3 px-5 rounded-md mb-3"
+    (click)="openDialog()"
+  >
+    + Add New Quote
+  </button>
+  <mat-table class="mat-elevation-z8" [dataSource]="filteredQuotes">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let quote">{{ quote.id }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="text">
+      <mat-header-cell *matHeaderCellDef>Quote</mat-header-cell>
+      <mat-cell *matCellDef="let quote">{{ quote.text }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="author">
+      <mat-header-cell *matHeaderCellDef>Author</mat-header-cell>
+      <mat-cell *matCellDef="let quote">{{ quote.author }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let quote">
+        <!-- <button mat-raised-button color="Primary" (click)="editQuote(quote)">
+        Edit
+      </button>
+      <button mat-raised-button color="Warn" (click)="deleteQuote(quote.id)">
+        delete
+      </button> -->
+        <button mat-raised-button color="primary" (click)="editQuote(quote)">
+          Edit
+        </button>
+        <span class="button-space"></span>
+        <button mat-raised-button color="warn" (click)="deleteQuote(quote.id)">
+          Delete
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>
+
+<app-delete-confirm
+  *ngIf="showDeleteConfirmationModal"
+  (confirmDelete)="delete_Quote_Confirmation()"
+  (cancelDelete)="closeDeleteConfirmationModal()"
+></app-delete-confirm>

@@ -1,0 +1,72 @@
+<div class="flex flex-col">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <button
+      class="bg-blue-500 hover:bg-blue-800 text-white py-3 px-5 rounded-md ml-12 mb-3"
+      (click)="openDialog()"
+    >
+      + Add New Wine
+    </button>
+
+    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+      <div class="overflow-hidden">
+        <app-wineratingsform
+          *ngIf="true"
+          (addNewWines)="On_Adding_New_Wine($event)"
+          (updateWines)="On_Updating_Wine_Details($event)"
+        ></app-wineratingsform>
+
+        <mat-table class="mat-elevation-z8" #WineRatingsTable [dataSource]="wines">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let winee">{{ winee.id }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="wine">
+            <mat-header-cell *matHeaderCellDef>Wine Name</mat-header-cell>
+            <mat-cell *matCellDef="let winee">{{ winee.wine }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="vintage">
+            <mat-header-cell *matHeaderCellDef>Vintage</mat-header-cell>
+            <mat-cell *matCellDef="let winee">{{ winee.vintage }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="rating">
+            <mat-header-cell *matHeaderCellDef>Ratings</mat-header-cell>
+            <mat-cell *matCellDef="let winee">{{ winee.rating }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let winee">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="edit_Wine_Details(winee)"
+              >
+                Edit
+              </button>
+              <span class="button-space"></span>
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="deleteWines(winee.id)"
+              >
+                Delete
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-delete-confirm
+  *ngIf="showDeleteConfirmationModal"
+  (confirmDelete)="delete_Wine_Confirmation()"
+  (cancelDelete)="closeDeleteConfirmationModal()"
+></app-delete-confirm>

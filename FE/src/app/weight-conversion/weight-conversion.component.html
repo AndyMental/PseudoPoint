@@ -29,8 +29,8 @@
 </div>
 
 <!-- this table display the celestial data depends on the weight -->
-<div id="results" *ngIf="display">
-  <div class="flex-container w-1/2 ml-96">
+<div id="results" *ngIf="display" class="ml-56">
+  <div class="flex-container w-1/2 ">
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
      
       <table class="w-full table-auto">
@@ -76,7 +76,7 @@
 
   
   <!-- Rendering of celestial data from backend -->
-  <div class="flex flex-col mt-1 ml-56">
+  <div class="flex flex-col mt-1">
     <div class="table-container border rounded overflow-x-auto ml-10 pl-10">
     
       <table mat-table [dataSource]="celestialData | keyvalue" class="w-full min-w-max text-sm text-left text-gray-500 dark:text-gray-400 ">
