@@ -1,8 +1,11 @@
-<div class="flex flex-col ml-80">
+<div class="flex flex-col">
   <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <button mat-raised-button color="primary" (click)="openDialog()">
-      + Add New Celebrities
-    </button>
+    <button
+    class="bg-blue-500 hover:bg-blue-800 text-white py-3 px-5 rounded-md ml-12 mb-3"
+    (click)="openDialog()"
+  >
+    + Add New Celebrity
+  </button>
     <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
       <div class="overflow-hidden">
         <app-celebrities-form

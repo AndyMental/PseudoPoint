@@ -19,11 +19,12 @@ table {
   }
 
   .my-table {
-    margin-left: 300px; 
+    margin-left: 30px; 
     margin-right: 10px;
   }
   .add-button-container {
-    display: flex;
+    /* display: flex; */
+    margin-left: 30px;
     justify-content: center;
     margin-bottom: 16px;
   }

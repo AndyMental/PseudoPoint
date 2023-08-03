@@ -1,8 +1,8 @@
-<h1 style="text-align: center; font-weight: bold;">UsersTable</h1>
+<h1 style="text-align: center; font-weight: bold " >UsersTable</h1>
 <div class="add-button-container">
   <button mat-stroked-button (click)="createUser()">Add New User</button>
 </div>
-<div class="table-container ml-80">
+<div class="table-container">
   <div *ngIf="usersDataSource?.data?.length > 0">
     <table mat-table [dataSource]="usersDataSource" class="mat-elevation-z8">
       <!-- Name Column -->

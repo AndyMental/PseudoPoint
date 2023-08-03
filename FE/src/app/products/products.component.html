@@ -2,7 +2,7 @@
 <div class="add-button-container">
   <button mat-stroked-button (click)="createProduct()">Add New Product</button>
 </div>
-<div class="table-container ml-80">
+<div class="table-container">
 <div *ngIf="productdataSource?.data?.length > 0">
   <table mat-table [dataSource]="productdataSource" class="mat-elevation-z8">
     <!-- ID Column -->

@@ -1,17 +1,18 @@
 table {
     width: 60px;
     overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
   }
   .table-wrapper{
-    width:100%
+    width:80%
   }
 
   .my-table {
-    margin-left: 360px; 
+    margin-left: 30px; 
   }
   .add-button-container {
-    display: flex;
+    margin-left: 30px;
+    /* display: flex; */
     justify-content: center;
     margin-bottom: 16px;
   }
